@@ -1,0 +1,244 @@
+<title>День матери: неделя 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+/* Layout: одна колонка-досье, внутри — ряды макетов в реальных пропорциях площадок, листаются вбок */
+:root {
+  --bg: #F4F1F2; --surface: #FFFFFF; --fg: #251B21; --muted: #6E6067; --line: #E3DADE;
+  --accent: #965A49; --accent-soft: #F3E6E1; --warn: #8A5A00; --warn-soft: #FFF3D6; --ok: #2F6B4A;
+  /* Цвета бренда в макетах: одинаковы в обеих темах, это сами публикации */
+  --b-ink: #3A2230; --b-rose: #C08A74; --b-blush: #F8EEEA; --b-white: #FFFFFF; --b-plum: #4A2A3B;
+  --tg-bg: #E7EBF0; --tg-bubble: #FFFFFF; --vk-bg: #FFFFFF;
+  --f-display: "Playfair Display", "Georgia", "Times New Roman", serif;
+  --f-body: "Golos Text", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #16111A; --surface: #211A24; --fg: #EFE7EC; --muted: #A89AA2; --line: #342A36;
+  --accent: #DCA391; --accent-soft: #3A2A2C; --warn: #F2C266; --warn-soft: #3A2F18; --ok: #7FC79E; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #16111A; --surface: #211A24; --fg: #EFE7EC; --muted: #A89AA2; --line: #342A36;
+  --accent: #DCA391; --accent-soft: #3A2A2C; --warn: #F2C266; --warn-soft: #3A2F18; --ok: #7FC79E; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 15px; line-height: 1.55; font-variant-numeric: lining-nums; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; font-variant-numeric: lining-nums; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12 }
+h2 { font-size: clamp(22px, 3.4vw, 30px); line-height: 1.2 }
+h3 { font-size: 19px }
+p { margin: 0 }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500 }
+.muted { color: var(--muted) }
+.stack { display: grid; gap: 14px }
+section { display: grid; gap: 18px; padding-top: 44px; border-top: 1px solid var(--line); margin-top: 44px }
+section > *, .stack > *, .head > *, .wrap > * { min-width: 0 }
+
+/* Шапка */
+.head { display: grid; gap: 16px }
+.status { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 999px;
+  background: var(--warn-soft); color: var(--warn); font-weight: 600; font-size: 13px; width: fit-content }
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px }
+.fact { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px }
+.fact b { font-family: var(--f-display); font-weight: 400; font-size: 22px }
+.offer { display: inline; background: var(--warn-soft); color: var(--warn); border-radius: 4px; padding: 0 5px; font-weight: 600; white-space: normal }
+
+/* Шкала сроков */
+.timeline-box { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 16px 12px }
+.timeline { position: relative; min-width: 760px; height: 178px }
+.tl-axis { position: absolute; left: 0; right: 0; top: 74px; height: 2px; background: var(--line) }
+.tl-week { position: absolute; top: 66px; height: 18px; background: var(--accent-soft); border-radius: 3px }
+.tl-day { position: absolute; top: 90px; transform: translateX(-50%); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums }
+.tl-mark { position: absolute; transform: translateX(-50%); display: grid; justify-items: center; gap: 4px; width: 128px; text-align: center }
+.tl-mark.up { top: 0 } .tl-mark.down { top: 104px }
+.tl-mark span { font-size: 11.5px; line-height: 1.3 }
+.tl-mark b { font-variant-numeric: tabular-nums; font-size: 12px }
+.tl-dot { position: absolute; top: 68px; width: 14px; height: 14px; border-radius: 50%; transform: translateX(-50%); background: var(--accent); border: 2px solid var(--surface) }
+.tl-dot.final { background: var(--fg) }
+
+/* Расписание */
+.table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface) }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 13.5px }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top }
+th { font-weight: 600; font-size: 12px; color: var(--muted); letter-spacing: .04em; text-transform: uppercase }
+tr:last-child td { border-bottom: 0 }
+td.day { font-weight: 600; white-space: nowrap }
+.chip { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 600; font-size: 12px; margin: 1px 2px 1px 0 }
+
+/* Блок поста */
+.post { display: grid; gap: 16px }
+.post-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px }
+.post-id { font-family: var(--f-display); font-size: 15px; color: var(--accent) }
+.rail { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x proximity }
+.rail > * { scroll-snap-align: start; flex: none }
+.cap { font-size: 12px; color: var(--muted); margin-top: 6px }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; align-items: start }
+.cols > * { min-width: 0 }
+
+/* Макеты: карусель Instagram 4:5 */
+.ig { width: 248px; aspect-ratio: 4 / 5; border-radius: 6px; overflow: hidden; position: relative; background: var(--b-white);
+  box-shadow: 0 1px 0 var(--line), 0 6px 18px rgba(40, 20, 30, .08); color: var(--b-ink); font-family: var(--f-body) }
+.ig img { width: 100%; height: 62%; object-fit: cover; display: block }
+.ig .band { position: absolute; left: 0; right: 0; bottom: 0; height: 38%; padding: 12px 16px; display: grid; align-content: center; gap: 4px; background: var(--b-blush) }
+.ig .band.dark { background: var(--b-plum); color: var(--b-blush) }
+.ig .big { font-family: var(--f-display); font-size: 21px; line-height: 1.15 }
+.ig .sm { font-size: 11.5px; line-height: 1.35 }
+.ig .date { font-family: var(--f-display); font-size: 26px; line-height: 1; color: var(--b-rose) }
+.ig .logo { position: absolute; top: 10px; left: 12px; font-family: var(--f-display); font-size: 10px; letter-spacing: .22em; color: var(--b-ink); opacity: .7 }
+.ig .num { position: absolute; top: 10px; right: 12px; font-size: 10px; background: rgba(58, 34, 48, .55); color: #fff; border-radius: 999px; padding: 1px 7px }
+.ig.cover { background: var(--b-plum); color: var(--b-blush) }
+.ig.cover .inner { position: absolute; left: 0; right: 0; bottom: 0; top: 55%; padding: 12px 18px; display: grid; align-content: center; gap: 6px }
+.ig.cover .inner .big { font-size: 17px }
+.ig.cover .logo { color: var(--b-blush) }
+.ig.cover .ph { position: absolute; top: 0; left: 0; right: 0; height: 55%; object-fit: cover; opacity: .95 }
+
+/* Сторис и Reels 9:16 */
+.story { width: 168px; aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; position: relative; background: var(--b-plum); color: var(--b-blush);
+  box-shadow: 0 6px 18px rgba(40, 20, 30, .12) }
+.story img { position: absolute; top: 18%; left: 0; width: 100%; height: 46%; object-fit: cover }
+.story .t { position: absolute; left: 12px; right: 12px; bottom: 14px; display: grid; gap: 6px }
+.story .t .big { font-family: var(--f-display); font-size: 17px; line-height: 1.2 }
+.story .t .sm { font-size: 11px; line-height: 1.35; opacity: .9 }
+.story .top { position: absolute; top: 10px; left: 12px; right: 12px; display: grid; gap: 6px }
+.story .bars { display: flex; gap: 3px } .story .bars i { flex: 1; height: 2px; background: rgba(248, 238, 234, .4); border-radius: 2px }
+.story .bars i.on { background: var(--b-blush) }
+.story .who { font-size: 10px; letter-spacing: .06em }
+.story .pill { width: fit-content; background: var(--b-blush); color: var(--b-ink); border-radius: 999px; font-size: 11px; padding: 4px 10px; font-weight: 600 }
+.story.frame { background: #2A2026 }
+.story.frame .scene { position: absolute; inset: 22% 10px auto; height: 44%; border: 1px dashed rgba(248, 238, 234, .45); border-radius: 8px;
+  display: grid; place-items: center; text-align: center; padding: 10px; font-size: 11.5px; line-height: 1.35; color: rgba(248, 238, 234, .85) }
+.story .sec { position: absolute; top: 26px; right: 12px; font-size: 10px; font-variant-numeric: tabular-nums; opacity: .8 }
+
+/* Telegram */
+.tg { max-width: 440px; background: var(--tg-bg); border-radius: 12px; padding: 14px; color: #1E1E1E; font-size: 14px; line-height: 1.5 }
+.tg .bubble { background: var(--tg-bubble); border-radius: 12px 12px 12px 4px; overflow: hidden; box-shadow: 0 1px 1px rgba(0, 0, 0, .06) }
+.tg .bubble img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; background: #fff }
+.tg .body { padding: 10px 12px 8px; display: grid; gap: 8px }
+.tg .ch { color: #2A7AB8; font-weight: 600; font-size: 13.5px }
+.tg .meta { font-size: 11px; color: #8A9199; text-align: right }
+.tg .btn { margin-top: 6px; background: var(--tg-bubble); border-radius: 8px; text-align: center; padding: 8px; color: #2A7AB8; font-weight: 600; font-size: 13.5px }
+
+/* ВК */
+.vk { max-width: 480px; background: var(--vk-bg); border: 1px solid #DCE1E6; border-radius: 12px; color: #000; font-size: 14px; line-height: 1.5; overflow: hidden }
+.vk .top { display: flex; gap: 10px; align-items: center; padding: 12px 14px 8px }
+.vk .ava { width: 36px; height: 36px; border-radius: 50%; background: var(--b-plum); color: var(--b-blush); display: grid; place-items: center; font-family: var(--f-display); font-size: 15px }
+.vk .name { font-weight: 600; font-size: 13.5px; color: #2C2D2E } .vk .when { font-size: 12px; color: #818C99 }
+.vk .pin { margin-left: auto; font-size: 11.5px; color: #818C99 }
+.vk .txt { padding: 0 14px 10px; display: grid; gap: 8px }
+.vk .tags { color: #2A5885 }
+.vk .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2px; background: #fff }
+.vk .grid img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 1 }
+.vk .grid .side { display: grid; gap: 2px }
+.vk .bar { display: flex; gap: 16px; padding: 10px 14px; font-size: 12.5px; color: #818C99; border-top: 1px solid #EEF0F2 }
+
+/* Pinterest 2:3 */
+.pin-card { width: 190px; display: grid; gap: 6px }
+.pin-card .img { aspect-ratio: 2 / 3; border-radius: 14px; overflow: hidden; position: relative; background: #fff; box-shadow: 0 4px 14px rgba(40, 20, 30, .1) }
+.pin-card img { width: 100%; height: 72%; object-fit: cover; display: block }
+.pin-card .ov { position: absolute; left: 0; right: 0; bottom: 0; height: 28%; background: var(--b-blush); color: var(--b-ink); padding: 8px 12px; display: grid; align-content: center;
+  font-family: var(--f-display); font-size: 15px; line-height: 1.2 }
+.pin-card .t { font-size: 12.5px; font-weight: 600 } .pin-card .d { font-size: 11.5px; color: var(--muted); line-height: 1.4 }
+
+/* Дзен */
+.zen { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid }
+.zen img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; display: block; background: #fff }
+.zen .body { padding: 14px 16px 16px; display: grid; gap: 8px }
+.zen .src { font-size: 12px; color: var(--muted) }
+.zen h3 { font-size: 20px; line-height: 1.25 }
+.zen ol { margin: 0; padding-left: 20px; font-size: 13.5px; color: var(--muted); display: grid; gap: 2px }
+
+.note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13.5px }
+.note.ok { border-left-color: var(--ok); background: var(--accent-soft) }
+.approve { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 12px }
+.approve ul { margin: 0; padding-left: 20px; display: grid; gap: 6px }
+.foot { font-size: 12px; color: var(--muted); margin-top: 36px }
+@media (prefers-reduced-motion: no-preference) { .rail { scroll-behavior: smooth } }
+</style>
+
+<div class="wrap">
+<header class="head">
+<div class="eyebrow">Juliette's jewelry · кампания «День матери, 29 ноября»</div>
+<h1>Неделя 2: 12–19 ноября</h1>
+<div class="status">Ждёт вашего согласования</div>
+<p class="muted" style="max-width:68ch">Тема недели — «Ещё успеваем»: срочное изготовление за 4 рабочих дня и готовые модели с гравировкой. Отдельные посты для мужей и для тех, кто дарит бабушке с внуками. Фото пока с сайта, финальные кадры подберём из вашей медиатеки. Комплаенс проверил тексты: ✅ с оговорками, они внизу.</p>
+<div class="facts">
+<div class="fact"><span class="eyebrow">Публикаций</span><b>6 постов, 1 видео, 1 статья</b><span class="muted">плюс сторис каждый день и 8 пинов</span></div>
+<div class="fact"><span class="eyebrow">Сроки недели</span><b>16.11 и 19.11</b><span class="muted">регионы: срочный заказ до 16.11 · Москва срочно и регионы с гравировкой до 19.11</span></div>
+<div class="fact"><span class="eyebrow">Нужны ваши ответы</span><b>5 вопросов</b><span class="muted">стоимость срочности, наличие, размер — внизу страницы</span></div>
+</div></header>
+<section><div class="stack"><div class="eyebrow">Сроки кампании</div><h2>Что ещё успевает к 29 ноября</h2></div>
+<div class="timeline-box"><div class="timeline" id="tl" role="img" aria-label="Сроки с 12 по 29 ноября"></div></div></section>
+<section><div class="stack"><div class="eyebrow">Расписание недели</div><h2>Что и где выходит</h2></div>
+<div class="table-box"><table><thead><tr><th>День</th><th>Telegram и ВК</th><th>Instagram*</th><th>Дзен</th><th>Видео</th><th>Pinterest</th></tr></thead><tbody>
+<tr><td class="day">Чт 12.11</td><td><span class="chip">П1</span>новый закреп</td><td>карусель, сторис</td><td>—</td><td>—</td><td>2 пина</td></tr>
+<tr><td class="day">Пт 13.11</td><td><span class="chip">П2</span>«Перешлите мужу»</td><td>карусель, сторис</td><td>статья</td><td>—</td><td>1 пин</td></tr>
+<tr><td class="day">Сб 14.11</td><td><span class="chip">П3</span>видео</td><td>Reels, сторис</td><td>—</td><td>Shorts, RuTube, клип ВК</td><td>—</td></tr>
+<tr><td class="day">Пн 16.11</td><td><span class="chip">П4</span>бабушке с внуками</td><td>карусель, сторис</td><td>—</td><td>—</td><td>2 пина</td></tr>
+<tr><td class="day">Ср 18.11</td><td><span class="chip">П5</span>пяточки</td><td>пост, сторис</td><td>—</td><td>—</td><td>2 пина</td></tr>
+<tr><td class="day">Чт 19.11</td><td><span class="chip">П6</span>последний день оффера</td><td>3 сторис</td><td>—</td><td>—</td><td>—</td></tr>
+</tbody></table></div><p class="muted">Вс 15.11 и Вт 17.11 — только сторис и 1 пин.</p></section>
+<section class="post"><div class="post-head"><span class="post-id">П1 · четверг, 12 ноября</span><h2>«Ещё успеваем к 29 ноября»</h2></div>
+<div><div class="eyebrow">Instagram* · карусель из 5 слайдов</div><div class="rail" style="margin-top:10px">
+<div><div class="ig cover"><img class="ph" src="{{P2}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">1/5</span><div class="inner"><div class=date>29.11</div><div class="big">Ещё успеваем к 29 ноября</div></div></div></div><div><div class="ig"><img src="{{P4}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">2/5</span><div class="band"><div class="sm">Срочное изготовление · 4 рабочих дня</div><div class="big">до 19 ноября</div><div class="sm">Москва · регионы до 16.11</div></div></div></div><div><div class="ig"><img src="{{P7}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">3/5</span><div class="band"><div class="sm">Готовая модель с гравировкой</div><div class="big">до 24 ноября</div><div class="sm">Москва · регионы до 19.11</div></div></div></div><div><div class="ig"><img src="{{P3}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">4/5</span><div class="band dark"><div class="sm">При заказе до 19.11</div><div class="big">Гравировка имён в подарок</div><div class="sm"></div></div></div></div><div><div class="ig"><img src="{{P1}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">5/5</span><div class="band"><div class="sm">Поможем выбрать</div><div class="big">Напишите нам в директ</div><div class="sm">ссылка в профиле</div></div></div></div>
+</div></div>
+<div class="cols"><div><div class="eyebrow" style="margin-bottom:8px">Telegram и ВК</div><div class="tg"><div class="bubble"><img src="{{P2}}" alt=""><div class="body"><div class="ch">Juliette's jewelry</div><p>Ещё успеваем к 29 ноября</p><p>Подарок маме, жене от вас и детей или бабушке от внуков ещё можно сделать к Дню матери. Есть два пути.</p><p>Срочное изготовление — 4 рабочих дня [уточнить: стоимость].<br>• Москва: заказ до 19.11<br>• регионы: заказ до 16.11</p><p>Готовая модель с гравировкой.<br>• регионы: до 19.11 · Москва: до 24.11</p><p><span class="offer">Гравировка имён в подарок до 19.11</span></p><p>Не знаете, что выбрать, — напишите нам: 8 800 201-59-38</p><div class="meta">👁 — · 10:00</div></div></div></div></div>
+<div><div class="eyebrow" style="margin-bottom:8px">Новый закреп в Telegram и ВК</div><div class="ig cover" style="width:100%;max-width:340px"><img class="ph" src="{{P6}}" alt=""><span class="logo">JULIETTE'S</span><div class="inner"><div class="big" style="font-size:16px">До какого числа можно заказать к 29.11</div><div class="sm" style="font-size:11.5px">Срочно: Москва 19.11, регионы 16.11 · С гравировкой: регионы 19.11, Москва 24.11</div></div></div></div></div></section>
+<section class="post"><div class="post-head"><span class="post-id">П2 · пятница, 13 ноября</span><h2>«Перешлите мужу»: подарок от мужа и детей</h2></div>
+<div class="rail"><div><div class="ig cover"><img class="ph" src="{{P1}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">1/5</span><div class="inner"><div class="big">Перешлите мужу</div></div></div></div><div><div class="ig"><img src="{{P2}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">2/5</span><div class="band"><div class="sm">Шаг 1</div><div class="big">По одной фигурке на каждого ребёнка</div><div class="sm"></div></div></div></div><div><div class="ig"><img src="{{P_ENGRAVE}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">3/5</span><div class="band"><div class="sm">Шаг 2</div><div class="big">Имена и даты на обороте</div><div class="sm"></div></div></div></div><div><div class="ig"><img src="{{P5}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">4/5</span><div class="band"><div class="sm">Совет</div><div class="big">Пусть подарят дети</div><div class="sm"></div></div></div></div><div><div class="ig"><img src="{{P3}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">5/5</span><div class="band dark"><div class="sm">Срочно: до 19.11 · регионы 16.11</div><div class="big">Гравировка имён в подарок</div><div class="sm">ссылка в профиле</div></div></div></div></div>
+<div class="cols"><div class="tg"><div class="bubble"><img src="{{P1}}" alt=""><div class="body"><div class="ch">Juliette's jewelry</div><p>Этот пост можно просто переслать мужу.</p><p>Самый тёплый подарок маме — тот, в котором есть её дети: фигурки по числу детей, а на обороте их имена и даты рождения.</p><p>Хватит четырёх ответов: металл, сколько детей, что выгравировать, размер [уточнить].</p><p>Не уверены — напишите нам, ювелир бесплатно поможет собрать браслет. Предоплата 30%.</p><p><span class="offer">Гравировка имён в подарок до 19.11</span></p><div class="meta">👁 — · 11:00</div></div></div></div>
+<div class="zen"><img src="{{P6}}" alt=""><div class="body"><div class="src">Дзен · статья · 13.11</div><h3>Как выбрать браслет маме: шпаргалка для мужа</h3><ol><li>Металл: посмотрите на её руки</li><li>Фигурки и пяточки</li><li>Гравировка: что написать</li><li>Размер [уточнить]</li><li>Готовый или на заказ</li><li>Сколько стоит и как платить</li><li>Как вручить, чтобы запомнилось</li></ol></div></div></div></section>
+<section class="post"><div class="post-head"><span class="post-id">П3 · суббота, 14 ноября</span><h2>Видео «От эскиза до браслета: 4 рабочих дня»</h2></div>
+<p class="muted">~25 секунд, вертикально. Reels, Shorts, RuTube, клип ВК. Лица детей не показываем.</p>
+<div class="rail"><div><div class="story frame"><span class="sec">0–3 с</span><div class="scene">Браслет на руке мамы, ребёнок касается фигурки, без лица</div><div class="t"><div class="sm">До Дня матери ещё успеваем</div></div></div></div><div><div class="story frame"><span class="sec">3–7 с</span><div class="scene">Эскиз с именами на столе мастерской</div><div class="t"><div class="sm">Срочное изготовление — 4 рабочих дня</div></div></div></div><div><div class="story frame"><span class="sec">7–11 с</span><div class="scene">Восковая модель фигурки в руках мастера</div><div class="t"><div class="sm">Своя мастерская</div></div></div></div><div><div class="story frame"><span class="sec">11–15 с</span><div class="scene">Литьё</div><div class="t"><div class="sm">Фигурки — под вашу семью</div></div></div></div><div><div class="story frame"><span class="sec">15–19 с</span><div class="scene">Гравировка имени, макро</div><div class="t"><div class="sm">Гравировка имён в подарок до 19.11</div></div></div></div><div><div class="story frame"><span class="sec">19–22 с</span><div class="scene">Полировка, браслет на ладони</div><div class="t"><div class="sm"></div></div></div></div>
+<div><div class="story"><img src="{{P1}}" alt=""><span class="sec">22–25 с</span><div class="t"><div class="big">Срочно: Москва — до 19.11, регионы — до 16.11</div><div class="pill">juliettes.ru</div></div></div></div></div></section>
+<section class="post"><div class="post-head"><span class="post-id">П4 · понедельник, 16 ноября</span><h2>Браслет бабушке с внуками</h2></div>
+<div class="rail"><div><div class="ig cover"><img class="ph" src="{{P2}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">1/4</span><div class="inner"><div class="big">Браслет бабушке с внуками</div></div></div></div><div><div class="ig"><img src="{{P5}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">2/4</span><div class="band"><div class="sm">Все внуки рядом</div><div class="big">Фигурки и пяточки по числу внуков</div><div class="sm"></div></div></div></div><div><div class="ig"><img src="{{P_ENGRAVE}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">3/4</span><div class="band"><div class="sm">На обороте</div><div class="big">Имена внуков и даты</div><div class="sm"></div></div></div></div><div><div class="ig"><img src="{{P4}}" alt=""><span class="logo">JULIETTE'S</span><span class="num">4/4</span><div class="band dark"><div class="sm">Регионы: срочный заказ — сегодня</div><div class="big">Москва — до 19.11</div><div class="sm">ссылка в профиле</div></div></div></div></div>
+<div class="tg"><div class="bubble"><img src="{{P2}}" alt=""><div class="body"><div class="ch">Juliette's jewelry</div><p>Бабушки хранят всё: первые рисунки внуков, фотографии на холодильнике. Подарите ей украшение, на котором все внуки рядом.</p><p>Такой подарок хорошо дарить от всех взрослых детей сразу.</p><p>Регионы: сегодня последний день срочного заказа к 29.11. Москва — до 19.11.</p><p><span class="offer">Гравировка имён в подарок до 19.11</span></p><div class="meta">👁 — · 12:00</div></div></div></div></section>
+<section class="post"><div class="post-head"><span class="post-id">П5 и П6 · 18 и 19 ноября</span><h2>Пяточки и последний день оффера</h2></div>
+<div class="rail"><div class="story"><img src="{{P3}}" alt=""><div class="top"><div class="bars"><i class="on"></i><i></i><i></i></div><div class="who">juliettes · сейчас</div></div><div class="t"><div class="big">Самые первые шаги</div><div class="sm">Пяточки — по числу детей, гравировка с двух сторон</div></div></div><div class="story"><img src="{{P7}}" alt=""><div class="top"><div class="bars"><i class="on"></i><i class="on"></i><i></i></div><div class="who">juliettes · сейчас</div></div><div class="t"><div class="big">Завтра последний день</div><div class="sm">гравировка имён в подарок</div></div></div><div class="story"><img src="{{P_ENGRAVE}}" alt=""><div class="top"><div class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></div><div class="who">juliettes · сейчас</div></div><div class="t"><div class="big">19 ноября · последний день</div><div class="sm">гравировка в подарок · срочно по Москве · регионы с гравировкой</div></div></div><div class="story"><img src="{{P6}}" alt=""><div class="top"><div class="bars"><i class="on"></i><i class="on"></i><i class="on"></i></div><div class="who">juliettes · сейчас</div></div><div class="t"><div class="big">Не успеваете?</div><div class="sm">Москва: готовые модели с гравировкой до 24.11, гравировка по обычной цене</div></div></div></div></section>
+<section class="post"><div class="post-head"><span class="post-id">Pinterest</span><h2>8 пинов недели (показаны 4)</h2></div>
+<div class="rail"><div class="pin-card"><div class="img"><img src="{{P1}}" alt=""><div class="ov">Сын и дочка — всегда рядом</div></div><div class="t">Браслет с фигурками сына и дочки</div><div class="d">подарок маме, гравировка имён</div></div><div class="pin-card"><div class="img"><img src="{{P2}}" alt=""><div class="ov">Все внуки рядом</div></div><div class="t">Браслет с тремя детками</div><div class="d">бабушке с внуками</div></div><div class="pin-card"><div class="img"><img src="{{P3}}" alt=""><div class="ov">Самые первые шаги</div></div><div class="t">Браслет с пяточкой</div><div class="d">красное золото 585</div></div><div class="pin-card"><div class="img"><img src="{{P7}}" alt=""><div class="ov">Имя дочки на обороте</div></div><div class="t">Браслет с девочкой</div><div class="d">гравировка имени</div></div></div></section>
+<section><div class="approve"><div class="eyebrow">Как согласовать</div><h2>Ответьте одной строкой и на 5 вопросов</h2>
+<ul><li><b>«Неделя 2 согласована»</b> или <b>«с правками: П…»</b>.</li></ul>
+<ol style="margin:0;padding-left:20px;display:grid;gap:6px">
+<li>Сколько стоит срочное изготовление (за 4 рабочих дня)? Без ответа пишем «стоимость уточняйте у менеджера».</li>
+<li>Оффер: 19.11 включительно и до какого часа? Распространяется на готовые модели и на даты на гравировке?</li>
+<li>Как подбираем размер браслета и можно ли изменить длину после вручения?</li>
+<li>Какие готовые модели сейчас в наличии (хотя бы металлы и сочетания)?</li>
+<li>Можно ли добавить фигурку к уже купленному браслету в срочном режиме?</li></ol>
+<p class="muted">Комплаенс убрал из текстов сравнение с конкурентами (риск по закону о рекламе) и советует показать юристу фразу сайта «предоплата не возвращается».</p></div>
+<p class="foot">* Instagram — продукт компании Meta Platforms Inc., деятельность которой запрещена на территории Российской Федерации как экстремистская.</p></section>
+</div>
+<script>
+// Шкала сроков: 5–29 ноября 2026, позиции по дням
+(function () {
+  var tl = document.getElementById('tl'); if (!tl) return;
+  var first = 12, last = 29, span = last - first;
+  function x(d) { return ((d - first) / span * 92 + 4) + '%'; }
+  var weeks = [[12, 19, 'Неделя 2'], [20, 25, 'Неделя 3'], [25, 29, 'Неделя 4']];
+  var axis = document.createElement('div'); axis.className = 'tl-axis'; tl.appendChild(axis);
+  weeks.forEach(function (w, i) {
+    var b = document.createElement('div'); b.className = 'tl-week';
+    b.style.left = x(w[0]); b.style.width = 'calc(' + x(w[1]) + ' - ' + x(w[0]) + ')';
+    if (i === 0) b.style.background = 'var(--accent)'; b.style.opacity = i === 0 ? '.35' : '1';
+    b.title = w[2]; tl.appendChild(b);
+  });
+  [12, 20, 25].forEach(function (d) {
+    var t = document.createElement('div'); t.className = 'tl-day'; t.style.left = x(d); t.textContent = d + '.11'; tl.appendChild(t);
+  });
+  var marks = [
+    [16, 'up', 'Регионы: срочное изготовление'],
+    [19, 'down', 'Москва: срочное · регионы: готовые с гравировкой'],
+    [24, 'up', 'Москва: готовые с гравировкой'],
+    [29, 'down', 'День матери']
+  ];
+  marks.forEach(function (m) {
+    var dot = document.createElement('div'); dot.className = 'tl-dot' + (m[0] === 29 ? ' final' : ''); dot.style.left = x(m[0]); tl.appendChild(dot);
+    var el = document.createElement('div'); el.className = 'tl-mark ' + m[1]; el.style.left = x(m[0]);
+    el.innerHTML = '<b>' + m[0] + ' ноября</b><span>' + m[2] + '</span>'; tl.appendChild(el);
+  });
+})();
+</script>
