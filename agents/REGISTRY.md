@@ -16,3 +16,5 @@
 | content-strategist | Контент-стратег и редактор площадок | активен | координатор | compliance → quality-control | 04.11.2026 | первичная настройка, утверждено владельцем |
 | quality-control | Контроль качества | активен | compliance | координатор, agent-registrar | 04.11.2026 | создан по поручению владельца |
 | agent-registrar | Интегратор агентов | активен | quality-control | координатор | 04.11.2026 | создан по поручению владельца |
+| brand-designer | Бренд-дизайнер (арт-директор), фирменный стиль и брендбук | активен | координатор | compliance → quality-control → координатор; палитра, шрифты, логотип → social-concepts | 04.11.2026 | [proposals/brand-designer.md](proposals/brand-designer.md), QC: ОДОБРЕНО · 04.11.2026 |
+| social-concepts | Креативный директор соцсетей, концепции ведения соцсетей | активен | координатор | compliance → quality-control → координатор; утверждённая концепция → content-strategist | 04.11.2026 | [proposals/social-concepts.md](proposals/social-concepts.md), QC: ОДОБРЕНО · 04.11.2026 |

@@ -1,0 +1,227 @@
+<title>Сертификаты: прототип</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+<style>
+/* Layout: сверху — панель решения для владельца; ниже — прототип страницы в стилистике текущего сайта (белый фон, коралл, Roboto) */
+:root {
+  --bg: #FFFFFF; --soft: #F4F4F4; --fg: #222222; --muted: #666666; --line: #E6E6E6;
+  --coral: #F8937A; --coral-deep: #B4523C; --coral-soft: #FDECE7;
+  --note-bg: #FFF4D6; --note-fg: #6B4D00; --panel: #1F2A37; --panel-fg: #F2F4F7; --panel-muted: #B7C0CC;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#141414; --soft:#1E1E1E; --fg:#EDEDED; --muted:#AAAAAA; --line:#333333; --coral-soft:#3A2520; --note-bg:#3A3018; --note-fg:#F2C266; --panel:#0E1620; color-scheme:dark } }
+:root[data-theme="dark"] { --bg:#141414; --soft:#1E1E1E; --fg:#EDEDED; --muted:#AAAAAA; --line:#333333; --coral-soft:#3A2520; --note-bg:#3A3018; --note-fg:#F2C266; --panel:#0E1620; color-scheme:dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font: 16px/1.55 "Roboto", -apple-system, "Segoe UI", Arial, sans-serif; font-weight: 400 }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.in { max-width: 1120px; margin: 0 auto }
+.in > *, .grid > *, .two > * { min-width: 0 }
+h1, h2, h3 { font-weight: 300; margin: 0; line-height: 1.2; text-wrap: balance }
+h1 { font-size: clamp(30px, 5vw, 46px) } h2 { font-size: clamp(24px, 3.4vw, 32px) } h3 { font-size: 19px; font-weight: 500 }
+p { margin: 0 } .muted { color: var(--muted) }
+
+/* Панель решения */
+.panel { background: var(--panel); color: var(--panel-fg); padding-block: 26px }
+.panel .in { display: grid; gap: 14px }
+.panel .eyebrow { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--panel-muted); font-weight: 500 }
+.panel h1 { font-size: clamp(24px, 4vw, 32px); font-weight: 400 }
+.panel p { color: var(--panel-muted); max-width: 75ch }
+.decide { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 10px }
+.decide div { background: rgba(255,255,255,.06); border-radius: 8px; padding: 12px 14px; font-size: 14px; color: var(--panel-fg) }
+.decide b { display: block; margin-bottom: 4px }
+.decide span { color: var(--panel-muted) }
+.badge { display: inline-block; background: #F8937A; color: #1F2A37; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 999px }
+
+/* Шапка сайта (как сейчас) */
+.site-hdr { border-bottom: 1px solid var(--line); padding-block: 14px }
+.site-hdr .in { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap }
+.logo { display: flex; align-items: center; gap: 10px } .logo i { width: 34px; height: 34px; background: var(--coral) }
+.logo b { font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: .06em; font-size: 15px } .logo small { display: block; color: var(--muted); font-size: 11px; letter-spacing: .1em }
+.phone { font-size: 18px }
+
+/* Первый экран */
+.hero { padding-block: 40px; background: var(--soft) }
+.hero .in { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px; align-items: center }
+@media (max-width: 820px) { .hero .in { grid-template-columns: 1fr } }
+.hero .lead { font-size: 18px; color: var(--muted); max-width: 52ch; margin-top: 14px }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px }
+.chips span { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: 14px }
+
+/* Сам сертификат */
+.cert { background: #FFFFFF; color: #222; border-radius: 6px; box-shadow: 0 14px 40px rgba(0,0,0,.12); padding: 26px 28px; display: grid; gap: 14px; position: relative; overflow: hidden; aspect-ratio: 1.6 / 1; max-width: 520px; width: 100% }
+.cert::after { content: ""; position: absolute; right: 0; top: 0; width: 56px; height: 56px; background: #F8937A }
+.cert .top { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1 }
+.cert .nm { font-family: Georgia, serif; letter-spacing: .08em; font-size: 13px }
+.cert .ttl { font-size: clamp(18px, 2.4vw, 24px); font-weight: 300; line-height: 1.25; max-width: calc(100% - 60px) }
+.cert .sum { font-size: clamp(26px, 3.6vw, 34px); font-weight: 500 }
+.cert .who { font-size: 13px; color: #555; display: grid; gap: 2px }
+.cert .msg { font-size: 13.5px; font-style: italic; color: #444; border-left: 2px solid #F8937A; padding-left: 10px; min-height: 1.4em }
+.cert .bottom { display: flex; justify-content: space-between; font-size: 11.5px; color: #777; align-self: end }
+
+/* Шаги оформления */
+section.block { padding-block: 44px; border-bottom: 1px solid var(--line) }
+.block .in { display: grid; gap: 20px }
+.step-h { display: flex; gap: 12px; align-items: baseline } .step-h b { color: var(--coral-deep); font-weight: 500 }
+.tabs { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 4px; gap: 4px; width: fit-content; flex-wrap: wrap }
+.tabs button { border: 0; background: transparent; padding: 8px 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; color: var(--fg) }
+.tabs button[aria-pressed="true"] { background: var(--coral); color: #222; font-weight: 500 }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px }
+.opt { border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 6px; cursor: pointer; background: var(--bg); text-align: left; font: inherit; color: var(--fg) }
+.opt:hover { border-color: var(--coral) }
+.opt[aria-pressed="true"] { border: 2px solid var(--coral); background: var(--coral-soft); padding: 15px }
+.opt .p { font-size: 22px; font-weight: 500 } .opt small { color: var(--muted); font-size: 13px }
+.opt img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; background: #fff }
+.custom { display: flex; gap: 10px; align-items: center; flex-wrap: wrap }
+input[type=text], input[type=number], textarea, input[type=date] { font: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); width: 100% }
+input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid var(--coral-deep); outline-offset: 2px }
+label { font-size: 14px; color: var(--muted); display: grid; gap: 6px }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 24px; align-items: start }
+.form { display: grid; gap: 14px }
+.sticky { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); display: grid; gap: 14px }
+.total { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; border-top: 1px solid var(--line); padding-top: 12px }
+.total b { font-size: 24px; font-weight: 500 }
+.cta { background: var(--coral); color: #222; border: 0; border-radius: 6px; padding: 14px 20px; font: inherit; font-weight: 500; font-size: 16px; cursor: pointer; width: 100% }
+.proto-note { font-size: 13px; color: var(--note-fg); background: var(--note-bg); padding: 8px 12px; border-radius: 6px }
+.how { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 14px; counter-reset: s }
+.how div { background: var(--soft); border-radius: 8px; padding: 16px; display: grid; gap: 6px }
+.how div::before { counter-increment: s; content: counter(s); width: 28px; height: 28px; border-radius: 50%; background: var(--coral); color: #222; display: grid; place-items: center; font-weight: 700; font-size: 14px }
+details { border-bottom: 1px solid var(--line); padding-block: 12px } summary { cursor: pointer; font-weight: 500 } details p { margin-top: 8px; color: var(--muted) }
+.q { background: var(--note-bg); color: var(--note-fg); border-radius: 4px; padding: 0 4px; font-size: .92em }
+</style>
+
+<div class="panel gut"><div class="in">
+  <span class="eyebrow">Прототип · на сайт не публикуется · SITE-005</span>
+  <h1>Подарочный сертификат: как может выглядеть новый блок</h1>
+  <p>Ниже — рабочий прототип страницы в стиле текущего сайта: можно нажимать, выбирать номинал и вписывать имена — карточка сертификата меняется сразу. Цвета и шрифты поменяются под новый брендбук, когда он будет утверждён. Жёлтым отмечены условия, которые нужно решить вам.</p>
+  <div class="decide">
+    <div><b>Главная идея</b><span>Сертификат решает проблему мужа: он не знает металл, размер и что гравировать. Поэтому продаём не «сумму», а «браслет с детками» — мама соберёт его сама.</span></div>
+    <div><b>1. Номиналы</b><span>«На изделие» (4 карточки по ценам каталога) + «на сумму» (4 суммы и своя). Или только суммы?</span></div>
+    <div><b>2. Форматы</b><span>Электронный (сразу или к нужной дате) и в коробке с курьером. Есть ли физическая карта сейчас?</span></div>
+    <div><b>3. Срок действия и правила</b><span>12 месяцев? Доплата разницы — да; остаток — сгорает или переносится?</span></div>
+    <div><b>4. Текущая страница</b><span>Сейчас на сайте сертификат на 100 000 ₽ продаётся за 10 000 ₽. Пока новый блок не готов, рекомендую скрыть старую страницу.</span></div>
+  </div>
+</div></div>
+
+<header class="site-hdr gut"><div class="in">
+  <div class="logo"><i></i><div><b>JULIETTE'S JEWELRY</b><small>ЮВЕЛИРНАЯ СТУДИЯ</small></div></div>
+  <div class="phone">8 800 201-59-38</div>
+</div></header>
+
+<section class="hero gut"><div class="in">
+  <div>
+    <h1>Подарочный сертификат на браслет с детками</h1>
+    <p class="lead">Не знаете, какой металл она носит, какой размер и что выгравировать? Подарите сертификат — она сама соберёт браслет со своими детками в конструкторе, а мастерская сделает его за 5–10 рабочих дней.</p>
+    <div class="chips"><span>Электронный — за минуту</span><span>Можно к точной дате</span><span>В коробке с курьером</span><span>Действует <span class="q">12 месяцев</span></span></div>
+  </div>
+  <div class="cert" id="cert" aria-live="polite">
+    <div class="top"><div class="nm">JULIETTE'S JEWELRY</div></div>
+    <div class="ttl" id="c-title">Сертификат на браслет с двумя детками из золота</div>
+    <div class="sum" id="c-sum">86 200 ₽</div>
+    <div class="who"><span id="c-to">Для: Анны</span><span id="c-from">От: Михаила, Маши и Саши</span></div>
+    <div class="msg" id="c-msg">С Днём матери! Пусть мы всегда будем рядом.</div>
+    <div class="bottom"><span>№ JJ-2026-0001</span><span id="c-valid">до 29.11.2027</span></div>
+  </div>
+</div></section>
+
+<section class="block gut"><div class="in">
+  <div class="step-h"><b>Шаг 1</b><h2>Выберите сертификат</h2></div>
+  <div class="tabs" role="group" aria-label="Тип сертификата">
+    <button type="button" id="t-item" aria-pressed="true">На изделие</button>
+    <button type="button" id="t-sum" aria-pressed="false">На сумму</button>
+  </div>
+  <div class="grid" id="g-item">
+    <button type="button" class="opt" data-title="Сертификат на браслет с одной фигуркой из серебра" data-sum="17400"><img src="{{P_SILVER}}" alt=""><span>Браслет с одной фигуркой · серебро 925</span><span class="p">17 400 ₽</span><small>минимальная цена в каталоге</small></button>
+    <button type="button" class="opt" data-title="Сертификат на браслет с одной фигуркой из золота" data-sum="54200"><img src="{{P7}}" alt=""><span>Браслет с одной фигуркой · золото 585</span><span class="p">54 200 ₽</span><small><span class="q">сверить с каталогом</span></small></button>
+    <button type="button" class="opt" aria-pressed="true" data-title="Сертификат на браслет с двумя детками из золота" data-sum="86200"><img src="{{P1}}" alt=""><span>Браслет с двумя детками · золото 585</span><span class="p">86 200 ₽</span><small><span class="q">сверить с каталогом</span></small></button>
+    <button type="button" class="opt" data-title="Сертификат на браслет с тремя детками из золота" data-sum="118200"><img src="{{P2}}" alt=""><span>Браслет с тремя детками · золото 585</span><span class="p">118 200 ₽</span><small><span class="q">сверить с каталогом</span></small></button>
+  </div>
+  <div id="g-sum" hidden>
+    <div class="grid">
+      <button type="button" class="opt" data-title="Подарочный сертификат" data-sum="15000"><span class="p">15 000 ₽</span><small>подвеска или серебро</small></button>
+      <button type="button" class="opt" data-title="Подарочный сертификат" data-sum="30000"><span class="p">30 000 ₽</span><small>браслет из серебра с детками</small></button>
+      <button type="button" class="opt" data-title="Подарочный сертификат" data-sum="50000"><span class="p">50 000 ₽</span><small>основа для золотого браслета</small></button>
+      <button type="button" class="opt" data-title="Подарочный сертификат" data-sum="100000"><span class="p">100 000 ₽</span><small>золото с несколькими детками</small></button>
+    </div>
+    <div class="custom" style="margin-top:12px"><label style="max-width:260px">Своя сумма, ₽ <input type="number" id="own" min="5000" step="1000" placeholder="от 5 000"></label></div>
+  </div>
+  <p class="muted">Если выбранное изделие окажется дороже сертификата — разницу можно доплатить. Если дешевле — <span class="q">остаток сохраняется на следующую покупку?</span></p>
+</div></section>
+
+<section class="block gut"><div class="in two">
+  <div class="form">
+    <div class="step-h"><b>Шаг 2</b><h2>Как вручить</h2></div>
+    <div class="tabs" role="group" aria-label="Формат">
+      <button type="button" id="f-el" aria-pressed="true">Электронный</button>
+      <button type="button" id="f-box" aria-pressed="false">В коробке с курьером</button>
+    </div>
+    <p class="muted" id="f-desc">Пришлём PDF на почту или в WhatsApp — сразу или в выбранный день и час: например, утром 29 ноября.</p>
+    <label>Когда отправить <input type="date" id="send" value="2026-11-29"></label>
+    <div class="step-h" style="margin-top:10px"><b>Шаг 3</b><h2>Подпишите</h2></div>
+    <label>Кому <input type="text" id="to" value="Анне" maxlength="40"></label>
+    <label>От кого <input type="text" id="from" value="Михаила, Маши и Саши" maxlength="60"></label>
+    <label>Пожелание (до 160 знаков) <textarea id="msg" rows="3" maxlength="160">С Днём матери! Пусть мы всегда будем рядом.</textarea></label>
+  </div>
+  <aside class="sticky">
+    <div class="cert" style="aspect-ratio:auto;padding:20px" aria-hidden="true">
+      <div class="nm" style="position:relative;z-index:1;font-family:Georgia,serif;letter-spacing:.08em;font-size:12px">JULIETTE'S JEWELRY</div>
+      <div class="ttl" id="c2-title" style="font-size:18px">Сертификат на браслет с двумя детками из золота</div>
+      <div class="sum" id="c2-sum" style="font-size:26px">86 200 ₽</div>
+    </div>
+    <div class="total"><span>Итого <span id="dlv" class="muted"></span></span><b id="tot">86 200 ₽</b></div>
+    <button type="button" class="cta" id="buy">Оформить сертификат</button>
+    <p class="proto-note" id="buy-note" hidden>Это прототип: оплата и отправка не подключены.</p>
+  </aside>
+</div></section>
+
+<section class="block gut"><div class="in">
+  <h2>Как это работает</h2>
+  <div class="how">
+    <div><h3>Вы оформляете</h3><p class="muted">Выбираете изделие или сумму, подписываете и оплачиваете онлайн.</p></div>
+    <div><h3>Она получает</h3><p class="muted">Красивый PDF в нужный день или коробку с карточкой от курьера.</p></div>
+    <div><h3>Собирает свой браслет</h3><p class="muted">В конструкторе или с ювелиром: металл, фигурки по числу деток, имена и даты.</p></div>
+    <div><h3>Мастерская делает</h3><p class="muted">За 5–10 рабочих дней, фото готового изделия перед отправкой.</p></div>
+  </div>
+</div></section>
+
+<section class="block gut" style="border-bottom:0"><div class="in">
+  <h2>Вопросы</h2>
+  <div>
+    <details open><summary>Можно ли выбрать любое изделие?</summary><p>Да, любое из каталога или на заказ, включая гравировку. Если дороже — доплата разницы.</p></details>
+    <details><summary>Сколько действует сертификат?</summary><p><span class="q">12 месяцев с даты покупки — нужно ваше решение.</span></p></details>
+    <details><summary>Можно отправить сертификат в точную дату?</summary><p>Да, выберите день при оформлении — пришлём утром этого дня.</p></details>
+    <details><summary>Что если она не знает размер?</summary><p>Ювелир подскажет, как измерить запястье, а длину цепочки можно подобрать <span class="q">уточнить: можно ли менять после изготовления</span>.</p></details>
+    <details><summary>Можно ли вернуть сертификат?</summary><p><span class="q">Нужно решение и проверка юриста: по закону о защите прав потребителей неиспользованный сертификат обычно можно вернуть.</span></p></details>
+  </div>
+</div></section>
+
+<script>
+(function () {
+  var fmt = function (n) { return n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽'; };
+  var st = { title: 'Сертификат на браслет с двумя детками из золота', sum: 86200, box: false };
+  var $ = function (id) { return document.getElementById(id); };
+  function render() {
+    $('c-title').textContent = st.title; $('c2-title').textContent = st.title;
+    $('c-sum').textContent = fmt(st.sum); $('c2-sum').textContent = fmt(st.sum);
+    var dl = st.box ? 750 : 0;
+    $('dlv').textContent = st.box ? '(+ доставка по Москве 750 ₽)' : '';
+    $('tot').textContent = fmt(st.sum + dl);
+    $('c-to').textContent = 'Для: ' + ($('to').value || '…');
+    $('c-from').textContent = 'От: ' + ($('from').value || '…');
+    $('c-msg').textContent = $('msg').value;
+    var d = new Date($('send').value || '2026-11-29'); if (!isNaN(d)) { d.setFullYear(d.getFullYear() + 1); $('c-valid').textContent = 'до ' + d.toLocaleDateString('ru-RU'); }
+  }
+  function pick(btn) {
+    document.querySelectorAll('.opt').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+    btn.setAttribute('aria-pressed', 'true'); st.title = btn.dataset.title; st.sum = +btn.dataset.sum; $('own').value = ''; render();
+  }
+  document.querySelectorAll('.opt').forEach(function (b) { b.addEventListener('click', function () { pick(b); }); });
+  function tab(a, b, showA) { $(a).setAttribute('aria-pressed', showA); $(b).setAttribute('aria-pressed', !showA); }
+  $('t-item').onclick = function () { tab('t-item', 't-sum', true); $('g-item').hidden = false; $('g-sum').hidden = true; pick(document.querySelector('#g-item .opt[data-sum="86200"]')); };
+  $('t-sum').onclick = function () { tab('t-item', 't-sum', false); $('g-item').hidden = true; $('g-sum').hidden = false; pick(document.querySelector('#g-sum .opt[data-sum="50000"]')); };
+  $('own').oninput = function () { var v = +this.value; if (v >= 5000) { document.querySelectorAll('.opt').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); }); st.title = 'Подарочный сертификат'; st.sum = v; render(); } };
+  $('f-el').onclick = function () { tab('f-el', 'f-box', true); st.box = false; $('f-desc').textContent = 'Пришлём PDF на почту или в WhatsApp — сразу или в выбранный день и час: например, утром 29 ноября.'; render(); };
+  $('f-box').onclick = function () { tab('f-el', 'f-box', false); st.box = true; $('f-desc').textContent = 'Сертификат-карта в фирменной коробке с вашей открыткой. Курьер по Москве — 750 ₽, по России — СДЭК 950 ₽. Дата доставки — на ваш выбор.'; render(); };
+  ['to', 'from', 'msg', 'send'].forEach(function (id) { $(id).addEventListener('input', render); });
+  $('buy').onclick = function () { $('buy-note').hidden = false; };
+  render();
+})();
+</script>

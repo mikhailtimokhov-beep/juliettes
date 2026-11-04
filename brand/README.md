@@ -1,3 +1,5 @@
+> ⚠️ Брендбук 2.0 отклонён владельцем 04.11.2026; токены ниже не действуют, новый брендбук готовит brand-designer.
+
 # Брендбук Juliette's jewelry 2.0 (черновик)
 
 Визуализация: https://claude.ai/artifact/2msiezpSzZiqJhnLE5JRWH · исходник: `brandbook.template.html`.
