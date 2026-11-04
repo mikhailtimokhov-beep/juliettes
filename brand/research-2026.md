@@ -1,5 +1,7 @@
 # Айдентика Juliette's jewelry: исследование ниши и трендов, этапы 1–3
 
+Визуализация (этап 4, направления): https://claude.ai/artifact/RLVMKSwEDb2kwsQabYynLE · исходник: `brand/directions-v1.template.html` · сборка: `python3 -I scripts/build-visual.py brand/directions-v1.template.html <imgs.json> <out.html>`
+
 Подготовил `brand-designer`, 04.11.2026. Статус: внутренний материал. Владельцу он уходит приложением к странице направлений (`brand/directions-v1.template.html`, этап 4).
 
 **Как собирали данные.** Сайты открыты 04.11.2026 через локальный Playwright (Chromium 1440×900 и 390×844). Шрифты и цвета взяты из вычисленных стилей страницы, а не на глаз:
@@ -42,7 +44,7 @@
 | **Monica Vinader** | сайт за проверкой от ботов | — | — | бесплатная гравировка, гравировальные стойки в бутиках, кампания с певицей Sienna Spiro ([Jewellery Focus](https://www.jewelleryfocus.co.uk/220100-monica-vinader-to-open-first-manchester-boutique), [страница гравировки](https://www.monicavinader.com/shop/engraved-jewellery)) | **Гравировка как сервис и шоу**, а не опция |
 | **Missoma**, [missoma.com](https://www.missoma.com/) | MISSOMA тонкой капителью | `#121212`, бордо `#4B0A0D`, `#A5C7DB` | IvyPresto Headline (антиква) + Neue Haas Grotesk | тёплый вечерний свет, модели, слоистые цепочки | антиква + гротеск: стандарт демифайна |
 | **Catbird**, [catbirdnyc.com](https://www.catbirdnyc.com/) | рукописное «Catbird» + «est. 2004» | фон `#F9F7F3` (сливочный), `#EEF8EF` (мята), `#F9F1EE`, `#4CA642`, текст `#2A2A2A` | Denton Condensed (узкая антиква) + TT Fors; EB Garamond | мелкие изделия на коже, очень близко, «интимно» | **Сливочный фон вместо белого** + узкая антиква |
-| **Merci Maman** (Лондон–Париж), [mercimamanboutique.com](https://www.mercimamanboutique.com/en/) | рукописное «Merci Maman» оранжевым | `#002F63` (тёмно-синий текст), `#F7F0E3` (крем), `#EE721E` (оранжевый) | Abril Display + Gill Sans | изделия в натюрмортах, тёплый свет; «Engraved by hand, ready in 24h» | **Ближайший мировой аналог Juliette's.** Скорость и ручная гравировка вынесены в заголовок сайта. Коллекция «Eternal Bonds» к Дню матери 2025 ([Bench Peg](https://benchpeg.com/news/merci-maman-unveils-the-eternal-bonds-collection-for-mothers-day-2025/)) |
+| **Merci Maman** (Лондон–Париж), [mercimamanboutique.com](https://www.mercimamanboutique.com/en/) | рукописное «Merci Maman» оранжевым | `#002F63` (тёмно-синий текст), `#F7F0E3` (крем), `#EE721E` (оранжевый) | Abril Display + Gill Sans | изделия в натюрмортах, тёплый свет; «Hand-engraved in 24hrs» в шапке, «Engraved & Ready in 24h» в заголовке страницы | **Ближайший мировой аналог Juliette's.** Скорость и ручная гравировка вынесены в шапку и заголовок сайта. Коллекция «Eternal Bonds» к Дню матери 2025 ([Bench Peg](https://benchpeg.com/news/merci-maman-unveils-the-eternal-bonds-collection-for-mothers-day-2025/)) |
 | **Atelier Paulin** (Париж), [atelierpaulin.com](https://atelierpaulin.com/) | «atelier PAULIN»: строчные + капитель | `#1C1C1C`, `#FDF8F3` (крем), `#C9A96E` (золото) | Gotham, Cormorant Garamond, Instrument Sans | **коллаж**: прописи, проволочные буквы, руки мастера, процесс | **Процесс и почерк как айдентика** |
 
 ### 1.3 Бренды для мам и малышей с сильным стилем
@@ -78,7 +80,7 @@
 | 7 | **Шрифты 2026:** тёплые редакционные антиквы и «мягкие» засечки в паре с чистым гротеском | антиква + гротеск, но не Cormorant (отклонён) | [Creative Bloq, typography 2026](https://www.creativebloq.com/design/fonts-typography/breaking-rules-and-bringing-joy-top-typography-trends-for-2026); [Vistaprint font trends](https://www.vistaprint.ca/hub/font-trends) |
 | 8 | **Упаковка 2026:** переработанный картон, крафт, бархат; тёплые (терракота, карамель, бордо) и холодные (ледяной голубой, сине-серый, шалфей) палитры; тиснение, фольга, персональное послание | коробка и вкладыш — главный носитель стиля при подарке от мужа | [Laval Europe, Display & Packaging Trends 2026](https://www.laval-europe.com/en/our-world/trend-guides/display-and-packaging-trends.html) |
 | 9 | **Соцсети ювелирных брендов: «раскрытие», а не распаковка.** Алгоритм поощряет удержание: процесс изготовления, медленное раскрытие, история человека, ASMR-звук инструментов | видео гравировки и литья — готовый контент (мастер Сергей); стиль должен работать в движении | [National Jeweler, 16.12.2025](https://www.nationaljeweler.com/articles/14532-beyond-unboxing-creative-reveals-to-drive-reach-and-engagement) |
-| 10 | **Гравировка как сервис и шоу:** бесплатная гравировка, гравировальные стойки в бутиках (Monica Vinader), «гравируем вручную за 24 часа» в заголовке сайта (Merci Maman) | гравировка — главный герой стиля, а не строка в описании | [Monica Vinader](https://www.monicavinader.com/shop/engraved-jewellery); [Jewellery Focus](https://www.jewelleryfocus.co.uk/220100-monica-vinader-to-open-first-manchester-boutique); [Merci Maman](https://www.mercimamanboutique.com/en/) |
+| 10 | **Гравировка как сервис и шоу:** бесплатная гравировка, гравировальные стойки в бутиках (Monica Vinader), «гравируем вручную за 24 часа» в шапке сайта (Merci Maman) | гравировка — главный герой стиля, а не строка в описании | [Monica Vinader](https://www.monicavinader.com/shop/engraved-jewellery); [Jewellery Focus](https://www.jewelleryfocus.co.uk/220100-monica-vinader-to-open-first-manchester-boutique); [Merci Maman](https://www.mercimamanboutique.com/en/) |
 
 Оговорка: большая часть трендовых материалов — блоги брендов и агентств. Цифры Pinterest — данные самой платформы. Независимых исследований именно по «семейным» украшениям не нашлось.
 
@@ -93,9 +95,9 @@
 
 Где стоят бренды:
 - **«Магазин + шаблон»:** Vesna, Velvetin, Sokolov, mama585, Personal Gold, а также Juliette's сейчас.
-- **«Ателье + шаблон»:** Happy Memories и Katerina (тёплые, но на Montserrat и Open Sans).
-- **Середина:** Geoma (арт-фото, но Playfair и Open Sans).
-- **«Ателье + свой код»:** в России никого. В мире здесь Merci Maman, Atelier Paulin, Konges Sløjd, Catbird.
+- **«Ателье + шаблон»:** Happy Memories и Katerina (тёплые, но на Montserrat и Open Sans), Geoma (арт-фото, но Playfair и Open Sans).
+- **«Магазин + свой код»:** Tiffany, Mejuri, Missoma, Liewood (большие бренды: свои шрифты, один закреплённый цвет).
+- **«Ателье + свой код»:** в России никого. В мире здесь Merci Maman, Atelier Paulin, Konges Sløjd, Catbird, Bonpoint.
 
 **Свободно:**
 1. Данные рождения как графика: бирка, метрика, рост, вес, время.
@@ -122,7 +124,7 @@
 |---|---|---|---|
 | A «Метрика» | данные рождения, бирка из роддома | становится биркой | Golos Text, IBM Plex Mono, Caveat |
 | B «Рисунок» | иллюстрация из фигурок | становится листком для рисунка | Unbounded, Onest |
-| C «Шкатулка» | тихий премиум, глубокий малахит | уходит, остаётся монограмма в рамке | Prata, Jost |
+| C «Шкатулка» | тихий премиум, глубокий малахит | срезает углы: шкатулка с монограммой J | Prata, Jost |
 | D «Альбом» | документальная семейная съёмка | становится фоторамкой | Lora, Commissioner, Marck Script |
 
 Кириллицу во всех шрифтах проверили 04.11.2026 по CSS Google Fonts: у каждого есть подмножество `cyrillic`. Все шрифты распространяются по лицензии OFL, поэтому лицензия бесплатна. На живом сайте шрифты лучше раздавать со своего хостинга (Tilda), а не с серверов Google: так не уходят данные посетителей.
@@ -136,3 +138,5 @@
 \* Instagram — продукт компании Meta Platforms Inc., деятельность которой запрещена на территории Российской Федерации как экстремистская.
 
 Комплаенс: OK · 04.11.2026 · оговорки: очевидные правки внесены сразу (счёт конкурентов 8/6, «лучший рейтинг» → «рейтинг 5,0», «гравируем вручную» → «в своей мастерской», пометка Instagram* у Reels, «сток» у Happy Memories убран, гипотезы помечены как оценка, правило реестра согласий и «без фамилии, города и даты рождения вместе» для A, список платных шрифтов, риски сходства A/C/D); при выборе D сменить акцент и проверить тексты на сходство с Happy Memories; перед брендбуком проверить знак на сходство с зарегистрированными товарными знаками; значения [уточнить] (подписчики, сметы, возраст аудитории, услуга «по рисунку») до публикации не выводить; рейтинг и число оценок сверить в день выхода.
+
+QC: ОДОБРЕНО · 04.11.2026 · проверено: соответствие регламенту brand-designer (этапы 1–4: 18 брендов с HEX/шрифтами/ссылками, 10 трендов со ссылками, выводы и наследие, 4 принципиально разных направления — по каждому идея, адресат, палитра, шрифты с кириллицей, логотип, фото, мудборд, пост/сторис/первый экран, плюсы/риски/цена), нет повторов черновика 2.0 (коралл/пудра, Cormorant/Manrope, гравировочная строка), понятность для владельца (рекомендация, сравнение, формат ответа, последствия, 0 ₽ на этом шаге), совпадение .md и страницы, факты по analiz/01, analiz/04, team.md и первоисточникам (Theo Grace, National Jeweler, Merci Maman), кириллица 10 шрифтов загружается, страница собрана, Playwright 390/1280 px и тёмная тема: без горизонтальной прокрутки и ошибок консоли; исправлено QC: вёрстка мобильных первых экранов A–D и мудборда/сторис D, «повторных покупок 8,6%» → «повторных клиентов 8,6%», формулировки про квадрат, цитата Merci Maman, пометка о частичной свободе ниши C/D, пометка «розовый ≠ пудра» в A, карта ниши и квадрат C в .md синхронизированы со страницей · условие: до отправки владельцу опубликовать страницу и вставить ссылку в строку «Визуализация» в начале файла; значения [уточнить] и рейтинг 5,0/43 — как в отметке комплаенса
