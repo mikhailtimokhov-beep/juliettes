@@ -1,0 +1,913 @@
+<title>Направления айдентики</title>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@500;700&family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;700&family=Prata&family=Jost:wght@300;400;500&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Commissioner:wght@400;500;600&family=Marck+Script&display=swap");
+/* Layout: решение сверху → карта ниши и тренды → 4 направления (идея, палитра, шрифты, логотип, мудборд, 3 макета, плюсы/риски/цена) → сравнение → как ответить */
+:root { --bg:#F5F4F1; --surface:#FFFFFF; --fg:#1D1C1F; --muted:#5F5C62; --line:#E2DFDA; --chip:#EEECE7; --accent:#2B4C7E; --good:#2F6B4A; --bad:#9B3B2E; --warn:#7A5600; --warn-bg:#FBF0D6; --rec-bg:#E7EEF7; --q-free:#E4F0E7; --q-free-line:#9CC3A6; --now:#C2553B; color-scheme:light }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#151417; --surface:#1F1E22; --fg:#EDEBEF; --muted:#A8A4AC; --line:#35333A; --chip:#2A282E; --accent:#8DB6E8; --good:#8FC4A0; --bad:#F09A86; --warn:#E8C060; --warn-bg:#3A3018; --rec-bg:#1E2A3A; --q-free:#1D3024; --q-free-line:#4C7A5A; --now:#E8876F; color-scheme:dark } }
+:root[data-theme="dark"] { --bg:#151417; --surface:#1F1E22; --fg:#EDEBEF; --muted:#A8A4AC; --line:#35333A; --chip:#2A282E; --accent:#8DB6E8; --good:#8FC4A0; --bad:#F09A86; --warn:#E8C060; --warn-bg:#3A3018; --rec-bg:#1E2A3A; --q-free:#1D3024; --q-free-line:#4C7A5A; --now:#E8876F; color-scheme:dark }
+* { box-sizing:border-box }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif; -webkit-text-size-adjust:100% }
+img { max-width:100%; display:block }
+a { color:var(--accent) }
+.wrap { max-width:1100px; margin:0 auto; padding:28px max(16px, env(safe-area-inset-right, 0px)) 72px max(16px, env(safe-area-inset-left, 0px)) }
+h1, h2, h3, h4 { margin:0; line-height:1.15; text-wrap:balance }
+h1 { font-size:clamp(28px, 5vw, 44px); letter-spacing:-.01em }
+h2 { font-size:clamp(23px, 3.4vw, 31px); margin-bottom:6px }
+h3 { font-size:18px; margin-bottom:8px }
+h4 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px; font-weight:600 }
+p { margin:0 0 10px }
+.kicker { font-size:13px; color:var(--muted); letter-spacing:.04em }
+.lead { font-size:17.5px; max-width:68ch }
+.muted { color:var(--muted) }
+.small { font-size:13.5px }
+section { margin-top:56px }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 0 }
+.chip { display:inline-block; font-size:13px; font-weight:600; padding:4px 11px; border-radius:999px; background:var(--chip) }
+.chip.ask { background:var(--warn-bg); color:var(--warn) }
+.rec { background:var(--rec-bg); border-radius:16px; padding:20px; margin-top:22px }
+.rec ol { margin:8px 0 0; padding-left:20px }
+.rec li { margin-bottom:4px }
+.grid2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:16px }
+.grid3 { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap:14px }
+.toc { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap:10px; margin-top:18px }
+.toc a { display:block; text-decoration:none; color:var(--fg); background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 14px }
+.toc a b { display:block; font-size:16px }
+.toc a span { font-size:13px; color:var(--muted) }
+.toc .dot { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px }
+
+/* Карта ниши */
+.mapbox { margin-top:16px }
+.map { display:grid; grid-template-columns:1fr 1fr; gap:6px }
+.q { border:1px solid var(--line); background:var(--surface); border-radius:12px; padding:12px; min-height:150px }
+.q.free { background:var(--q-free); border:2px dashed var(--q-free-line) }
+.q h4 { margin-bottom:8px }
+.q .b { display:inline-block; font-size:13px; padding:3px 9px; margin:0 4px 6px 0; border-radius:999px; background:var(--chip); line-height:1.3 }
+.q .b.ru { font-weight:600 }
+.q .b.now { background:var(--now); color:#fff; font-weight:700 }
+.q .goal { font-weight:700; color:var(--good); font-size:14px; margin-top:4px }
+.axis { display:flex; justify-content:space-between; gap:8px; font-size:12.5px; color:var(--muted); margin:6px 2px 0 }
+.axis-y { font-size:12.5px; color:var(--muted); margin:0 2px 6px }
+.legend { font-size:12.5px; color:var(--muted); margin-top:8px }
+
+.niche { margin-top:18px; display:grid; gap:8px }
+.nrow { display:grid; grid-template-columns:minmax(110px, 170px) 1fr; gap:10px; align-items:center; padding:8px 0; border-top:1px solid var(--line) }
+.nrow .n { font-size:14px; font-weight:600; line-height:1.25 }
+.nrow .n small { display:block; font-weight:400; color:var(--muted); font-size:12px }
+.sws { display:flex; flex-wrap:wrap; gap:6px }
+.sws span { display:inline-flex; flex-direction:column; justify-content:flex-end; width:58px; height:42px; border-radius:6px; padding:3px 4px; font:10.5px/1.1 ui-monospace,"SF Mono",Menlo,monospace; border:1px solid rgba(127,127,127,.25) }
+.find { margin:0; padding-left:20px }
+.find li { margin-bottom:8px }
+
+.trend { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px }
+.trend b { display:block; margin-bottom:4px }
+.trend p { font-size:14.5px; margin-bottom:6px }
+.trend .src { font-size:12.5px; color:var(--muted) }
+
+.keep { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap:14px; margin-top:14px }
+.oldlogo { display:flex; align-items:center; gap:12px; background:#FFFFFF; border-radius:10px; padding:14px; border:1px solid var(--line) }
+.oldlogo i { width:40px; height:40px; background:#F7927B; flex:none }
+.oldlogo div { font-family:Georgia,"Times New Roman",serif; color:#2E2A2B; font-size:17px; line-height:1.15; letter-spacing:.02em }
+.oldlogo small { display:block; font-family:system-ui,sans-serif; color:#818181; font-size:12px; letter-spacing:.08em }
+
+/* Направление */
+.dir { margin-top:64px; background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:22px; overflow:hidden }
+.dhead { display:flex; gap:14px; align-items:flex-start; margin-bottom:18px }
+.dletter { flex:none; width:52px; height:52px; border-radius:12px; display:grid; place-items:center; font-size:26px; font-weight:800 }
+.idea { font-size:18px; max-width:62ch; margin:6px 0 0 }
+.who { font-size:14.5px; color:var(--muted); margin-top:6px; max-width:70ch }
+.block { margin-top:24px }
+.pal { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 112px), 1fr)); gap:10px }
+.sw { border:1px solid var(--line); border-radius:10px; overflow:hidden; background:var(--surface) }
+.sw .c { height:62px }
+.sw .m { padding:8px 9px; font-size:12.5px; line-height:1.3 }
+.sw .m b { display:block; font-size:13px }
+.sw code { font:12px ui-monospace,"SF Mono",Menlo,monospace; color:var(--muted) }
+.spec { padding:12px 0; border-top:1px solid var(--line) }
+.spec:first-of-type { border-top:0; padding-top:0 }
+.spec .nm { font-size:12.5px; color:var(--muted); margin-bottom:4px }
+.spec .s { font-size:27px; line-height:1.15; overflow-wrap:anywhere }
+.logo-box { border-radius:14px; min-height:170px; display:flex; align-items:center; justify-content:center; padding:22px; gap:14px; flex-wrap:wrap }
+.note { font-size:14px; color:var(--muted); margin-top:8px }
+
+.mood { display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); grid-auto-rows:minmax(92px, 13vw); gap:6px }
+.mood > * { border-radius:8px; overflow:hidden; position:relative; min-width:0 }
+.mood .big { grid-column:span 2; grid-row:span 2 }
+.mood .wide { grid-column:span 2 }
+.mood img { width:100%; height:100%; object-fit:cover }
+.mood .t { display:flex; align-items:center; justify-content:center; text-align:center; padding:6px; line-height:1.1 }
+@media (max-width:560px) { .mood { grid-template-columns:repeat(2, minmax(0, 1fr)); grid-auto-rows:minmax(110px, 30vw) } }
+
+.apps { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, .62fr); gap:16px; align-items:start }
+.apps .sitewrap { grid-column:1 / -1 }
+.apps figure { margin:0 }
+.apps figcaption { font-size:13px; color:var(--muted); margin-top:6px }
+@media (max-width:600px) { .apps { grid-template-columns:minmax(0, 1fr) } .apps .storywrap { width:78%; margin:0 auto } }
+.cq { container-type:inline-size }
+.mock { position:relative; overflow:hidden; border-radius:12px; isolation:isolate; box-shadow:0 1px 3px rgba(0,0,0,.12) }
+.post { aspect-ratio:4 / 5 }
+.story { aspect-ratio:9 / 16 }
+.site { aspect-ratio:16 / 10 }
+.abs { position:absolute }
+.mul { mix-blend-mode:multiply }
+
+.prc { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap:12px }
+.prc > div { border-radius:12px; padding:14px; border:1px solid var(--line) }
+.prc h4 { margin-bottom:6px }
+.prc ul { margin:0; padding-left:18px; font-size:14.5px }
+.prc li { margin-bottom:5px }
+.prc .plus h4 { color:var(--good) }
+.prc .minus h4 { color:var(--bad) }
+.price { font-weight:700; font-size:15px; margin-top:8px }
+
+/* Сравнение */
+.tbl { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch }
+table { border-collapse:collapse; width:100%; font-size:14px; min-width:0 }
+th, td { padding:9px 8px; border-top:1px solid var(--line); text-align:left; vertical-align:top }
+thead th { border-top:0; font-size:13px; color:var(--muted); font-weight:600 }
+td.r { white-space:nowrap; letter-spacing:.05em }
+td:first-child { font-weight:600; width:28% }
+@media (max-width:560px) { .card.tbl { padding:8px } table { font-size:11.5px } th, td { padding:7px 3px; hyphens:auto; -webkit-hyphens:auto; overflow-wrap:anywhere } td.r { letter-spacing:-.1em; font-size:9.5px } td:first-child { width:27% } }
+.answer { background:var(--rec-bg); border-radius:16px; padding:20px; margin-top:14px }
+.answer code { font:600 15px ui-monospace,"SF Mono",Menlo,monospace; background:var(--surface); border:1px solid var(--line); padding:2px 8px; border-radius:6px; display:inline-block; margin:3px 4px 3px 0 }
+.pick { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap:10px; margin:12px 0 }
+.pick div { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px; font-size:14.5px }
+.pick b { font-size:18px }
+.foot { margin-top:48px; font-size:13px; color:var(--muted) }
+.foot ol { padding-left:18px }
+
+/* ---------- A «Метрика»: фиксированные цвета образца ---------- */
+.A-letter { background:#26348C; color:#F4F0E8 }
+.fA { font-family:"Golos Text",system-ui,sans-serif }
+.mA { font-family:"IBM Plex Mono",ui-monospace,monospace }
+.hA { font-family:"Caveat",cursive }
+.markA { width:58px; height:58px; background:#26348C; border-radius:12px; position:relative; flex:none }
+.markA::before { content:""; position:absolute; left:9px; top:9px; width:12px; height:12px; border-radius:50%; background:#F4F0E8 }
+.markA::after { content:"J"; position:absolute; right:10px; bottom:4px; font:600 30px/1 "Golos Text",sans-serif; color:#F4F0E8 }
+.wmA b { display:block; font:600 30px/1 "Golos Text",sans-serif; color:#1F1F22; letter-spacing:-.01em }
+.wmA small { display:block; font:500 12px/1 "IBM Plex Mono",monospace; color:#26348C; letter-spacing:.12em; margin-top:7px; text-transform:uppercase }
+.tagA { position:absolute; border-radius:3cqw; padding:3.2cqw 4cqw 3.2cqw 10cqw; box-shadow:0 .6cqw 1.6cqw rgba(31,31,34,.14) }
+.tagA::before { content:""; position:absolute; left:3.4cqw; top:50%; width:3.6cqw; height:3.6cqw; margin-top:-1.8cqw; border-radius:50%; background:#F4F0E8; box-shadow:inset 0 0 0 .5cqw rgba(31,31,34,.12) }
+.tagA .row { display:flex; align-items:baseline; gap:2.4cqw; white-space:nowrap }
+.tagA .k { font:500 2.6cqw/1.9 "IBM Plex Mono",monospace; color:#1F1F22; opacity:.7; letter-spacing:.06em; min-width:9cqw }
+.tagA .v { font:700 5.4cqw/1.05 "Caveat",cursive; color:#26348C }
+
+/* ---------- B «Рисунок» ---------- */
+.B-letter { background:#2846B4; color:#FBF8F1 }
+.fB { font-family:"Unbounded",system-ui,sans-serif }
+.tB { font-family:"Onest",system-ui,sans-serif }
+.draw { fill:none; stroke:currentColor; stroke-width:3.6; stroke-linecap:round; stroke-linejoin:round }
+.wmB { font:700 32px/1 "Unbounded",sans-serif; color:#1E1E1E; letter-spacing:-.02em }
+.wmB small { display:block; font:500 12px/1 "Onest",sans-serif; color:#2846B4; letter-spacing:.08em; margin-top:8px; text-transform:uppercase }
+.sheetB { width:62px; height:62px; flex:none; position:relative; color:#2846B4 }
+
+/* ---------- C «Шкатулка» ---------- */
+.C-letter { background:#1F3B34; color:#E6C9B4 }
+.fC { font-family:"Prata",Georgia,serif; font-weight:400 }
+.tC { font-family:"Jost",system-ui,sans-serif }
+.oct { clip-path:polygon(18% 0, 82% 0, 100% 18%, 100% 82%, 82% 100%, 18% 100%, 0 82%, 0 18%) }
+.markC { width:60px; height:60px; background:#B57A5E; display:grid; place-items:center; flex:none }
+.markC span { width:54px; height:54px; background:#1F3B34; display:grid; place-items:center; font:400 32px/1 "Prata",serif; color:#E6C9B4 }
+.wmC b { display:block; font:400 27px/1 "Prata",serif; color:#F3EEE4; letter-spacing:.16em }
+.wmC small { display:block; font:400 11.5px/1 "Jost",sans-serif; color:#C99377; letter-spacing:.32em; margin-top:9px; text-transform:uppercase }
+
+/* ---------- D «Альбом» ---------- */
+.D-letter { background:#F1E2BE; color:#5B4636 }
+.fD { font-family:"Lora",Georgia,serif }
+.tD { font-family:"Commissioner",system-ui,sans-serif }
+.hD { font-family:"Marck Script",cursive }
+.photoD { position:absolute; background:#fff; padding:2.4cqw 2.4cqw 9cqw; box-shadow:0 .8cqw 2.4cqw rgba(43,39,36,.22) }
+.photoD img { width:100%; aspect-ratio:1 / 1; object-fit:cover }
+.photoD .cap { position:absolute; left:3cqw; right:3cqw; bottom:1.6cqw; font:400 5.2cqw/1.1 "Marck Script",cursive; color:#5B4636; text-align:center; white-space:nowrap }
+.corners { position:relative }
+.corners::before, .corners::after { content:""; position:absolute; width:22%; height:22%; border:0 solid #5B4636 }
+.corners::before { left:-6px; top:-6px; border-left-width:3px; border-top-width:3px }
+.corners::after { right:-6px; bottom:-6px; border-right-width:3px; border-bottom-width:3px }
+.wmD b { display:block; font:italic 600 34px/1 "Lora",serif; color:#2B2724 }
+.wmD small { display:block; font:500 11.5px/1 "Commissioner",sans-serif; color:#5B4636; letter-spacing:.2em; margin-top:8px; text-transform:uppercase }
+</style>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="kid-girl" viewBox="0 0 60 100"><g class="draw"><circle cx="30" cy="20" r="11.5"/><circle cx="15.5" cy="13" r="4.2"/><circle cx="44.5" cy="13" r="4.2"/><path d="M30 33 L14.5 70 Q30 73 45.5 70 Z"/><path d="M21 45 L7 55"/><path d="M39 45 L53 55"/><path d="M24 71 L23 93"/><path d="M36 71 L37 93"/></g></symbol>
+  <symbol id="kid-boy" viewBox="0 0 60 100"><g class="draw"><circle cx="30" cy="20" r="11.5"/><path d="M19.5 15 Q23 7 29 10 Q35 6 40.5 14"/><path d="M20.5 34 Q30 32 39.5 34 L40 64 Q30 66 20 64 Z"/><path d="M21 40 L7 53"/><path d="M39 40 L53 53"/><path d="M25 65 L22 93"/><path d="M35 65 L38 93"/></g></symbol>
+  <symbol id="kid-heart" viewBox="0 0 60 60"><path class="draw" d="M30 51 C12 39 5 27 10.5 17 C16 8 27 9.5 30 18.5 C33 9.5 44 8 49.5 17 C55 27 48 39 30 51 Z"/></symbol>
+  <symbol id="kid-foot" viewBox="0 0 60 80"><g class="draw"><path d="M22 30 C12 42 12 62 22 72 C30 79 42 74 44 62 C46 50 42 40 36 30 C32 24 26 25 22 30 Z"/><circle cx="21" cy="17" r="4"/><circle cx="30" cy="12" r="4.4"/><circle cx="39" cy="14" r="3.8"/><circle cx="46" cy="20" r="3.2"/></g></symbol>
+  <symbol id="wobble" viewBox="0 0 100 100" preserveAspectRatio="none"><path class="draw" d="M6 7 Q50 3 94 6 Q97 50 94 94 Q50 97 5 94 Q3 50 6 7 Z"/></symbol>
+</svg>
+
+<div class="wrap" lang="ru">
+
+<header>
+  <div class="kicker">Juliette's jewelry · фирменный стиль · этап 4 из 5 · 04.11.2026</div>
+  <h1 style="margin-top:8px">Новый фирменный стиль: 4 направления на выбор</h1>
+  <p class="lead" style="margin-top:12px">Черновик 2.0 вы отклонили. Мы изучили 18 брендов: 9 российских конкурентов, 7 мировых ювелирных и 3 бренда для мам и малышей. Ещё посмотрели тренды 2025–2026 годов. В нише нашлось четыре свободных места, под каждое — своё направление. Выберите одно, и мы сделаем по нему брендбук.</p>
+  <div class="chips">
+    <span class="chip ask">Нужно ваше решение: одно направление</span>
+    <span class="chip">Денег на этом шаге: 0 ₽ (шрифты бесплатные)</span>
+    <span class="chip">Наружу ничего не публикуется</span>
+  </div>
+  <div class="rec">
+    <h3>Рекомендую A «Метрика»</h3>
+    <ol>
+      <li>Это единственное направление, которое показывает то, за что клиентки платят: имя, рост, вес и дату ребёнка в металле.</li>
+      <li>Место свободно: так не работает ни один из 7 конкурентов, которых удалось открыть.</li>
+      <li>Внедрить дешевле всего: подходят нынешние фото изделий на белом, шрифты бесплатные, съёмка не обязательна.</li>
+      <li>Квадрат из логотипа становится биркой, поэтому узнаваемость сохраняется.</li>
+    </ol>
+    <p class="small muted" style="margin:8px 0 0">Сильная альтернатива — C «Шкатулка», если главная цель — продавать дороже золото и подарки от мужей.</p>
+  </div>
+  <nav class="toc" aria-label="Направления">
+    <a href="#dir-a"><b><span class="dot" style="background:#26348C"></span>A «Метрика»</b><span>данные рождения, бирка из роддома</span></a>
+    <a href="#dir-b"><b><span class="dot" style="background:#F2BE3C"></span>B «Рисунок»</b><span>семья, нарисованная ребёнком</span></a>
+    <a href="#dir-c"><b><span class="dot" style="background:#1F3B34"></span>C «Шкатулка»</b><span>тихий премиум, малахит и красное золото</span></a>
+    <a href="#dir-d"><b><span class="dot" style="background:#F1E2BE;border:1px solid #5B4636"></span>D «Альбом»</b><span>настоящие семьи в дневном свете</span></a>
+  </nav>
+</header>
+
+<!-- ============ ИССЛЕДОВАНИЕ ============ -->
+<section id="research">
+  <div class="kicker">Сводка исследования</div>
+  <h2>Где стоят конкуренты и где свободно</h2>
+  <p class="muted" style="max-width:70ch">Сайты открыли 04.11.2026. Шрифты и цвета взяты из стилей самих страниц. Sokolov, mama585 и Monica Vinader закрыты защитой от ботов, по ним данные из открытых источников. Полные таблицы, ссылки и HEX лежат в <code>brand/research-2026.md</code>.</p>
+
+  <div class="mapbox card">
+    <div class="axis-y">↑ свой узнаваемый код (шрифт, цвет, приём)</div>
+    <div class="map">
+      <div class="q">
+        <h4>Магазин + свой код</h4>
+        <span class="b">Tiffany</span><span class="b">Mejuri</span><span class="b">Missoma</span><span class="b">Liewood</span>
+        <p class="small muted" style="margin:6px 0 0">Большие бренды: свои шрифты, один закреплённый цвет.</p>
+      </div>
+      <div class="q free">
+        <h4>Ателье + свой код</h4>
+        <span class="b">Merci Maman</span><span class="b">Atelier Paulin</span><span class="b">Konges Sløjd</span><span class="b">Catbird</span><span class="b">Bonpoint</span>
+        <div class="goal">В России здесь никого. Сюда и идём.</div>
+      </div>
+      <div class="q">
+        <h4>Магазин + шаблон</h4>
+        <span class="b now">Juliette's сейчас</span><span class="b ru">Vesna</span><span class="b ru">Velvetin</span><span class="b ru">Personal Gold</span><span class="b ru">Sokolov</span><span class="b ru">mama585</span>
+        <p class="small muted" style="margin:6px 0 0">Montserrat, Open Sans, Roboto, баннеры со скидками.</p>
+      </div>
+      <div class="q">
+        <h4>Ателье + шаблон</h4>
+        <span class="b ru">Happy Memories</span><span class="b ru">Katerina</span><span class="b ru">Geoma</span>
+        <p class="small muted" style="margin:6px 0 0">Тёплые истории, но системные шрифты и стоковые приёмы.</p>
+      </div>
+    </div>
+    <div class="axis"><span>← каталог, скидки</span><span>ремесло, история →</span></div>
+    <div class="axis-y" style="margin-top:4px">↓ шаблонный стиль</div>
+    <p class="legend">Жирным — российские конкуренты. Положение на карте — экспертная оценка по скриншотам и стилям сайтов, а не измерение.</p>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3>Цвета ниши: у всех белый и один акцент</h3>
+      <div class="niche">
+        <div class="nrow"><div class="n">Juliette's сейчас<small>Roboto</small></div><div class="sws"><span style="background:#FF8562;color:#fff">FF8562</span><span style="background:#F7927B;color:#2E2A2B">F7927B</span><span style="background:#444444;color:#fff">444444</span><span style="background:#E9E9E9;color:#333">E9E9E9</span></div></div>
+        <div class="nrow"><div class="n">Happy Memories<small>Montserrat, Georgia</small></div><div class="sws"><span style="background:#350E01;color:#fff">350E01</span><span style="background:#A08462;color:#fff">A08462</span><span style="background:#F3F0EF;color:#333">F3F0EF</span></div></div>
+        <div class="nrow"><div class="n">Velvetin<small>Core Sans C</small></div><div class="sws"><span style="background:#212529;color:#fff">212529</span><span style="background:#B89B6B;color:#fff">B89B6B</span><span style="background:#F6F3F1;color:#333">F6F3F1</span></div></div>
+        <div class="nrow"><div class="n">Geoma<small>Open Sans, Playfair</small></div><div class="sws"><span style="background:#08143D;color:#fff">08143D</span><span style="background:#52575D;color:#fff">52575D</span><span style="background:#F6F4F5;color:#333">F6F4F5</span></div></div>
+        <div class="nrow"><div class="n">Katerina<small>Open Sans</small></div><div class="sws"><span style="background:#62C1DF;color:#10323D">62C1DF</span><span style="background:#D95F58;color:#fff">D95F58</span><span style="background:#303030;color:#fff">303030</span></div></div>
+        <div class="nrow"><div class="n">Vesna<small>Montserrat</small></div><div class="sws"><span style="background:#38B5E6;color:#0D2E3B">38B5E6</span><span style="background:#666666;color:#fff">666666</span><span style="background:#F8F8F8;color:#333">F8F8F8</span></div></div>
+        <div class="nrow"><div class="n">Personal Gold<small>PT Sans, PT Serif</small></div><div class="sws"><span style="background:#792D2C;color:#fff">792D2C</span><span style="background:#FFC107;color:#333">FFC107</span><span style="background:#212529;color:#fff">212529</span></div></div>
+      </div>
+      <p class="small muted" style="margin-top:10px">Никто не использует глубокий зелёный, чернильно-синий, тёплый «бумажный» фон и иллюстрацию.</p>
+    </div>
+    <div class="card">
+      <h3>Пять наблюдений</h3>
+      <ol class="find">
+        <li><b>Своего шрифтового голоса нет ни у кого из российских конкурентов.</b> У мировых лидеров всегда своя пара шрифтов: Tiffany (Sterling + Santral), Missoma (IvyPresto + Neue Haas), Catbird (Denton + TT Fors).</li>
+        <li><b>Рукописный логотип у трёх из семи</b> (Katerina, Vesna, Personal Gold). Ещё одним скриптом не выделиться.</li>
+        <li><b>Данные гравировки никто не делает героем</b>, хотя именно за них платят. Фото везде одинаковые: изделие на белом или руки в полумраке.</li>
+        <li><b>Ближайший мировой аналог — Merci Maman.</b> У него в заголовке сайта стоит «гравируем вручную, готово за 24 часа», а оранжевый акцент <code>#EE721E</code> близок к нашему кораллу.</li>
+        <li><b>Сильные бренды закрепляют один носитель стиля:</b> цвет упаковки (Tiffany), почерк (Merci Maman), коллаж (Atelier Paulin). У Juliette's таким носителем может стать квадрат.</li>
+      </ol>
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px">Тренды 2025–2026, которые влияют на выбор</h3>
+  <div class="grid3">
+    <div class="trend"><b>Смысл важнее блеска</b><p>72,8% покупателей называют главной причиной покупки «значимый подарок». Тонкий классический дизайн выбирают 43,7%.</p><div class="src"><a href="https://www.theograce.com/a/blog/2026-jewelry-trends-report-consumer-insights-shaping-the-jewelry-industry">Theo Grace, опрос, июнь 2026</a> (данные бренда)</div></div>
+    <div class="trend"><b>«Тихая роскошь» стала мягче</b><p>Сдержанность остаётся, но ценится личный смысл. Параллельно растёт максимализм: «gold cuff» +50%.</p><div class="src"><a href="https://www.classicharms.com/blogs/our-journal/quiet-luxury-is-evolving-the-rise-of-soft-statement-jewelry-in-2026">Classic Charms</a>; <a href="https://www.nationaljeweler.com/articles/14522-pinterest-2026-trend-report-brooches-bold-gold-cool-blue">National Jeweler о Pinterest</a></div></div>
+    <div class="trend"><b>Семейные реликвии</b><p>Поиск «heirloom jewelry» +45% (Pinterest Predicts 2026, данные 09.2024–08.2025).</p><div class="src"><a href="https://www.nationaljeweler.com/articles/14522-pinterest-2026-trend-report-brooches-bold-gold-cool-blue">National Jeweler, 05.01.2026</a></div></div>
+    <div class="trend"><b>Цвета года: тёплый белый и сине-зелёный</b><p>Pantone 2026 — Cloud Dancer, мягкий белый. WGSN и Coloro — Transformative Teal. Pinterest: «icy blue» +50%.</p><div class="src"><a href="https://hypebeast.com/2025/12/pantone-2026-color-of-the-year-cloud-dancer-info">Hypebeast</a>; <a href="https://mr-mag.com/wgsn-and-coloro-announce-colour-of-the-year-2026-transformative-teal-and-the-key-colours-for-a-w-26-27">Mr Mag</a></div></div>
+    <div class="trend"><b>Аналоговое и «человеческое»</b><p>Почерк, фактура бумаги, высокая печать — ответ на усталость от гладких ИИ-картинок.</p><div class="src"><a href="https://www.adobe.com/express/learn/blog/design-trends-2026">Adobe Express, Design trends 2026</a></div></div>
+    <div class="trend"><b>Упаковка: крафт, бархат, тиснение</b><p>Тёплые (терракота, карамель) и холодные (ледяной голубой, шалфей) палитры, персональное послание внутри.</p><div class="src"><a href="https://www.laval-europe.com/en/our-world/trend-guides/display-and-packaging-trends.html">Laval Europe, 2026</a></div></div>
+    <div class="trend"><b>Соцсети: раскрытие вместо распаковки</b><p>Алгоритм поощряет досмотры: процесс изготовления, медленное раскрытие, звук инструментов.</p><div class="src"><a href="https://www.nationaljeweler.com/articles/14532-beyond-unboxing-creative-reveals-to-drive-reach-and-engagement">National Jeweler, 16.12.2025</a></div></div>
+    <div class="trend"><b>Россия: персонализация вместо масштаба</b><p>Рынок переходит от роста к перестройке. Выигрывают эмоциональная ценность и прозрачность производства.</p><div class="src"><a href="https://secrets.tbank.ru/blogi-kompanij/kak-razvivaetsya-segment-ukrashenij/">Т-Бизнес секреты</a>; <a href="https://companies.rbc.ru/news/dvX1LTGXSp/podveski-i-kole-pochemu-ryinok-delaet-stavku-na-personalizatsiyu/">РБК Компании</a></div></div>
+  </div>
+
+  <h3 style="margin-top:28px">Что сохраняем из наследия</h3>
+  <div class="keep">
+    <div class="card">
+      <div class="oldlogo"><i></i><div>JULIETTE'S JEWELRY<small>Ювелирная студия</small></div></div>
+      <p class="small" style="margin-top:10px"><b>Квадрат</b> стоит на сайте с 2020 года. Это единственный знак, который покупатель может узнать. Его <b>форму</b> сохраняем в каждом направлении, а <b>цвет</b> можно менять. Коралл с пудрой вы отклонили, а коралловый акцент к тому же уже есть у Merci Maman.</p>
+    </div>
+    <div class="card">
+      <p class="small"><b>Название Juliette's jewelry</b> пишем с апострофом.</p>
+      <p class="small"><b>Сами фигурки</b> (мальчик, девочка, пяточка, сердце) — главный графический актив, клиентки их уже знают.</p>
+      <p class="small"><b>Instagram* @mamy_braslets</b> (подписчиков [уточнить]). Новый стиль должен лечь в существующую ленту, не обнуляя её.</p>
+      <p class="small" style="margin:0"><b>Не сохраняем:</b> логотип 2019 года (бриллиант, Gabriola), Roboto, баннеры с цветами и сердечками.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A ============ -->
+<section class="dir" id="dir-a">
+  <div class="dhead">
+    <div class="dletter A-letter">A</div>
+    <div>
+      <h2>«Метрика»</h2>
+      <p class="idea"><b>Украшение — это метрика ребёнка: имя, рост, вес и время рождения, которые хранятся в золоте.</b> Язык стиля — бирка из роддома и запись шариковой ручкой.</p>
+      <p class="who">Кому: мамам, которые до сих пор хранят бирку из роддома (возраст аудитории [уточнить]). Мужьям сразу понятно, что именно они дарят и что на нём написано.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="block" style="margin-top:0">
+      <h4>Палитра</h4>
+      <div class="pal">
+        <div class="sw"><div class="c" style="background:#F4F0E8"></div><div class="m"><b>Бумага</b><code>#F4F0E8</code><br>фон всего</div></div>
+        <div class="sw"><div class="c" style="background:#26348C"></div><div class="m"><b>Чернила</b><code>#26348C</code><br>акцент, кнопки, «от руки»</div></div>
+        <div class="sw"><div class="c" style="background:#1F1F22"></div><div class="m"><b>Графит</b><code>#1F1F22</code><br>текст</div></div>
+        <div class="sw"><div class="c" style="background:#CADCE6"></div><div class="m"><b>Клеёнка голубая</b><code>#CADCE6</code><br>бирки, плашки</div></div>
+        <div class="sw"><div class="c" style="background:#F0D2CE"></div><div class="m"><b>Клеёнка розовая</b><code>#F0D2CE</code><br>бирки, плашки</div></div>
+        <div class="sw"><div class="c" style="background:#FFFFFF"></div><div class="m"><b>Белый</b><code>#FFFFFF</code><br>карточки товаров</div></div>
+      </div>
+      <p class="note">Голубой и розовый — цвета бирок, а не «для мальчиков» и «для девочек». В одном макете их можно смешивать.</p>
+    </div>
+    <div class="block" style="margin-top:0">
+      <h4>Шрифты (Google Fonts, кириллица есть)</h4>
+      <div class="spec"><div class="nm">Golos Text — заголовки и текст</div><div class="s fA" style="font-weight:600">Метрика ребёнка в золоте</div></div>
+      <div class="spec"><div class="nm">IBM Plex Mono — поля и данные</div><div class="s mA" style="font-size:20px">РОСТ 52 СМ   ВЕС 3 400 Г</div></div>
+      <div class="spec"><div class="nm">Caveat — «заполнено от руки», только данные ребёнка</div><div class="s hA" style="font-size:34px;color:#26348C">Миша, 04:35</div></div>
+    </div>
+  </div>
+
+  <div class="grid2 block">
+    <div>
+      <h4>Логотип: эволюция квадрата</h4>
+      <div class="logo-box" style="background:#F4F0E8">
+        <div class="markA"></div>
+        <div class="wmA"><b>Juliette's</b><small>ювелирная студия</small></div>
+      </div>
+      <p class="note">Квадрат остаётся, но превращается в бирку: скруглённые углы и дырочка для шнурка. Цвет — чернила вместо коралла.</p>
+    </div>
+    <div>
+      <h4>Стиль фото</h4>
+      <p class="small">Подходят <b>нынешние фото изделий на белом</b>: на бумажном фоне белый исчезает. Героем кадра становится <b>оборот фигурки с гравировкой</b> крупным планом. Флэтлей: бирка, первая распашонка, браслет. Никаких персональных данных: имена и цифры в примерах вымышленные.</p>
+      <p class="small">Свет дневной, ровный, без бликов «под бриллиант».</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Мудборд</h4>
+    <div class="mood">
+      <div class="big" style="background:#fff"><img src="{{P_ENGRAVE}}" alt="Гравировка на обороте фигурок"></div>
+      <div class="t" style="background:#F0D2CE;color:#26348C"><span class="hA" style="font-size:30px;font-weight:700">3 400 г</span></div>
+      <div class="t" style="background:#26348C;color:#F4F0E8"><span class="fA" style="font-size:34px;font-weight:600">Аа</span></div>
+      <div style="background:#F4F0E8"><img class="mul" src="{{P3}}" alt="Пяточка и сердце"></div>
+      <div class="t mA" style="background:#F4F0E8;color:#1F1F22;font-size:11px;text-align:left;align-items:flex-start;flex-direction:column;justify-content:center;gap:6px"><span>ИМЯ ________</span><span>РОСТ ______</span><span>ВЕС _______</span></div>
+      <div class="wide" style="background:#CADCE6"><img class="mul" src="{{P_SILVER}}" alt="Серебряный браслет с девочкой" style="object-fit:contain"></div>
+      <div class="t" style="background:#1F1F22;color:#CADCE6"><span class="mA" style="font-size:13px">12.03.2025<br>04:35</span></div>
+      <div class="t" style="background:#F4F0E8;color:#26348C"><span class="hA" style="font-size:26px;font-weight:700">Аня, 50 см</span></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Как выглядит в работе</h4>
+    <div class="apps">
+      <figure class="cq">
+        <div class="mock post" style="background:#F4F0E8">
+          <div class="abs mA" style="left:6cqw;top:5.5cqw;font-size:2.6cqw;letter-spacing:.14em;color:#26348C">JULIETTE'S / МЕТРИКА</div>
+          <div class="abs fA" style="left:6cqw;top:11cqw;right:6cqw;font-size:8.4cqw;font-weight:600;line-height:1.02;color:#1F1F22;letter-spacing:-.02em">Его первые цифры — в золоте</div>
+          <img class="abs mul" src="{{P1}}" alt="Браслет мальчик и девочка" style="left:8cqw;top:34cqw;width:84cqw">
+          <div class="tagA" style="left:7cqw;bottom:7cqw;background:#CADCE6;transform:rotate(-4deg)">
+            <div class="row"><span class="k">ИМЯ</span><span class="v">Миша</span></div>
+            <div class="row"><span class="k">РОСТ</span><span class="v">52 см</span><span class="k" style="min-width:0">ВЕС</span><span class="v">3 400 г</span></div>
+          </div>
+          <div class="tagA" style="right:5cqw;bottom:20cqw;background:#F0D2CE;transform:rotate(5deg);padding-right:3cqw">
+            <div class="row"><span class="k">ИМЯ</span><span class="v">Аня</span></div>
+          </div>
+        </div>
+        <figcaption>Пост 4:5 в ленту</figcaption>
+      </figure>
+      <figure class="cq storywrap">
+        <div class="mock story" style="background:#26348C">
+          <div class="abs mA" style="left:8cqw;top:8cqw;font-size:4.2cqw;letter-spacing:.14em;color:#CADCE6">ЧТО МОЖНО ВЫГРАВИРОВАТЬ</div>
+          <div class="abs" style="left:8cqw;right:8cqw;top:18cqw;background:#F4F0E8;border-radius:5cqw;padding:5cqw">
+            <img class="mul" src="{{P_ENGRAVE}}" alt="Гравировка" style="width:100%;border-radius:3cqw">
+            <div class="mA" style="margin-top:4cqw;font-size:4.4cqw;line-height:1.75;color:#1F1F22">
+              <div>ИМЯ <span class="hA" style="font-size:8cqw;color:#26348C;font-weight:700">Варя</span></div>
+              <div>РОСТ <span class="hA" style="font-size:8cqw;color:#26348C;font-weight:700">50 см</span></div>
+              <div>ВЕС <span class="hA" style="font-size:8cqw;color:#26348C;font-weight:700">3 150 г</span></div>
+              <div>ДАТА <span class="hA" style="font-size:8cqw;color:#26348C;font-weight:700">01.06.2025</span></div>
+            </div>
+          </div>
+          <div class="abs fA" style="left:8cqw;right:8cqw;bottom:9cqw;background:#F4F0E8;color:#26348C;border-radius:99px;text-align:center;padding:4.2cqw 0;font-size:5cqw;font-weight:600">Собрать браслет →</div>
+        </div>
+        <figcaption>Сторис 9:16</figcaption>
+      </figure>
+      <figure class="cq sitewrap">
+        <div class="mock site sA" style="background:#F4F0E8">
+          <style>
+            .sA .hdr { position:absolute; left:4cqw; right:4cqw; top:2.6cqw; display:flex; align-items:center; gap:1.4cqw }
+            .sA .mk { width:3.4cqw; height:3.4cqw; background:#26348C; border-radius:.7cqw; position:relative; flex:none }
+            .sA .mk::before { content:""; position:absolute; left:.55cqw; top:.55cqw; width:.75cqw; height:.75cqw; border-radius:50%; background:#F4F0E8 }
+            .sA .nav { margin-left:auto; display:flex; gap:2.2cqw; font:500 1.25cqw/1 "Golos Text",sans-serif; color:#1F1F22 }
+            .sA .h1 { position:absolute; left:4cqw; top:13cqw; width:46cqw; font:600 4.6cqw/1.04 "Golos Text",sans-serif; color:#1F1F22; letter-spacing:-.02em }
+            .sA .p { position:absolute; left:4cqw; top:30cqw; width:40cqw; font:400 1.55cqw/1.45 "Golos Text",sans-serif; color:#1F1F22 }
+            .sA .btns { position:absolute; left:4cqw; top:40cqw; display:flex; gap:1.2cqw }
+            .sA .btn { font:600 1.45cqw/1 "Golos Text",sans-serif; padding:1.3cqw 2.2cqw; border-radius:99px }
+            .sA .trust { position:absolute; left:4cqw; bottom:3.4cqw; font:500 1.2cqw/1 "IBM Plex Mono",monospace; color:#26348C; letter-spacing:.06em }
+            .sA .card { position:absolute; right:5cqw; top:9cqw; width:40cqw; height:48cqw; background:#F0D2CE; border-radius:2.6cqw; padding:0 }
+            .sA .card::before { content:""; position:absolute; left:2.2cqw; top:2.2cqw; width:2.4cqw; height:2.4cqw; border-radius:50%; background:#F4F0E8 }
+            .sA .card img { position:absolute; left:3cqw; right:3cqw; top:5cqw; width:34cqw }
+            .sA .card .hw { position:absolute; left:4cqw; bottom:2.6cqw; font:700 3.4cqw/1 "Caveat",cursive; color:#26348C }
+            @container (max-width:520px) {
+              .sA { aspect-ratio:9 / 16 }
+              .sA .hdr > span { font-size:4.4cqw !important }
+              .sA .nav { display:none }
+              .sA .hdr { top:4cqw } .sA .mk { width:7cqw; height:7cqw; border-radius:1.4cqw } .sA .mk::before { left:1.1cqw; top:1.1cqw; width:1.6cqw; height:1.6cqw }
+              .sA .h1 { top:16cqw; width:auto; right:5cqw; font-size:8.6cqw }
+              .sA .p { top:36cqw; width:auto; right:5cqw; font-size:3.4cqw }
+              .sA .card { top:56cqw; left:5cqw; right:5cqw; width:auto; height:70cqw }
+              .sA .card img { left:14cqw; right:14cqw; width:auto; top:4cqw }
+              .sA .card::before { left:4cqw; top:4cqw; width:4.4cqw; height:4.4cqw }
+              .sA .card .hw { font-size:7cqw; left:7cqw; bottom:4cqw }
+              .sA .btns { top:auto; bottom:12cqw; left:5cqw; right:5cqw } .sA .btn { font-size:3.4cqw; padding:3.2cqw 4.8cqw }
+              .sA .trust { font-size:2.8cqw; left:5cqw; bottom:5cqw }
+            }
+          </style>
+          <div class="hdr"><div class="mk"></div><span class="fA" style="font-weight:600;font-size:1.9cqw;color:#1F1F22">Juliette's</span><div class="nav"><span>Браслеты</span><span>Подвески</span><span>Кольца для мам</span><span>Гравировка</span><span>Отзывы</span><span style="color:#26348C">8 800 201-59-38</span></div></div>
+          <div class="h1">Метрика ребёнка — в золоте и серебре</div>
+          <div class="p">Гравируем имя, рост, вес и дату рождения на обороте фигурок. Готово за 5–10 рабочих дней, предоплата 30%.</div>
+          <div class="btns"><span class="btn" style="background:#26348C;color:#F4F0E8">Собрать браслет</span><span class="btn" style="border:1px solid #26348C;color:#26348C">Каталог</span></div>
+          <div class="trust">5,0 НА ЯНДЕКС ОТЗЫВАХ / 43 ОЦЕНКИ</div>
+          <div class="card"><img class="mul" src="{{P6}}" alt="Тонкий браслет мальчик-девочка"><div class="hw">Аня и Лёва</div></div>
+        </div>
+        <figcaption>Первый экран сайта (на узком экране — мобильная версия)</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="block prc">
+    <div class="plus"><h4>Плюсы</h4><ul><li>Свободная зона: так не делает никто из конкурентов.</li><li>Стиль прямо про продукт: показывает, что гравируем, и снимает вопрос мужа «что написать».</li><li>Работает с нынешними фото на белом, пересъёмка не нужна.</li><li>Квадрат сохраняется, поэтому узнаваемость не теряется.</li><li>Естественно ложится на сертификаты, вкладыш в коробку (бирка с данными) и видео гравировки.</li></ul></div>
+    <div class="minus"><h4>Риски</h4><ul><li>Если переборщить с «клеёнкой», стиль станет больничным. Лечится долей: бирка — акцент, а не фон.</li><li>Для части мам роддом — не самое тёплое воспоминание. Перед запуском покажем 5–10 клиенткам.</li><li>Голубой и розовый легко прочитать как гендерный штамп. Смешиваем их в одном кадре.</li></ul></div>
+    <div><h4>Цена внедрения</h4><ul><li>Шрифты: 0 ₽ (лицензия OFL).</li><li>Съёмка: не обязательна.</li><li>Печать вкладыша-бирки в коробку: смета типографии [уточнить].</li><li>Работа агентов: брендбук и макеты для тестового проекта Tilda.</li></ul><div class="price">Итог: низкая. Первые макеты через 1–2 недели после выбора (оценка)</div></div>
+  </div>
+</section>
+
+<!-- ============ B ============ -->
+<section class="dir" id="dir-b">
+  <div class="dhead">
+    <div class="dletter B-letter">B</div>
+    <div>
+      <h2>«Рисунок»</h2>
+      <p class="idea"><b>Семья, нарисованная рукой ребёнка: фигурки с браслета оживают в линиях и ярких цветах.</b> Язык стиля — детский рисунок фломастером на альбомном листе.</p>
+      <p class="who">Кому: молодым мамам, активным в соцсетях; мамам двоих-троих детей («сколько нас»). Сильнее всего работает в ленте и в Reels.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="block" style="margin-top:0">
+      <h4>Палитра</h4>
+      <div class="pal">
+        <div class="sw"><div class="c" style="background:#FBF8F1"></div><div class="m"><b>Альбомный лист</b><code>#FBF8F1</code><br>фон</div></div>
+        <div class="sw"><div class="c" style="background:#2846B4"></div><div class="m"><b>Кобальт</b><code>#2846B4</code><br>главный, линии</div></div>
+        <div class="sw"><div class="c" style="background:#F2BE3C"></div><div class="m"><b>Подсолнух</b><code>#F2BE3C</code><br>фон постов</div></div>
+        <div class="sw"><div class="c" style="background:#3F8F5B"></div><div class="m"><b>Трава</b><code>#3F8F5B</code><br>акцент</div></div>
+        <div class="sw"><div class="c" style="background:#B9A6E0"></div><div class="m"><b>Сирень</b><code>#B9A6E0</code><br>акцент</div></div>
+        <div class="sw"><div class="c" style="background:#1E1E1E"></div><div class="m"><b>Графит</b><code>#1E1E1E</code><br>текст</div></div>
+      </div>
+      <p class="note">Цвета «как в наборе фломастеров», но приглушённые, чтобы не спорить с золотом.</p>
+    </div>
+    <div class="block" style="margin-top:0">
+      <h4>Шрифты (Google Fonts, кириллица есть)</h4>
+      <div class="spec"><div class="nm">Unbounded — заголовки (российская разработка)</div><div class="s fB" style="font-weight:700;font-size:25px">Вся семья в одном браслете</div></div>
+      <div class="spec"><div class="nm">Onest — текст и интерфейс</div><div class="s tB" style="font-size:20px">Готово за 5–10 рабочих дней, предоплата 30%</div></div>
+      <div class="spec"><div class="nm">Иллюстрации — одна толщина линии, рисованные фигурки</div><div class="s" style="color:#2846B4;display:flex;gap:8px;height:52px"><svg width="32" height="52"><use href="#kid-girl"/></svg><svg width="32" height="52"><use href="#kid-boy"/></svg><svg width="34" height="34" style="align-self:center"><use href="#kid-heart"/></svg><svg width="30" height="40" style="align-self:center"><use href="#kid-foot"/></svg></div></div>
+    </div>
+  </div>
+
+  <div class="grid2 block">
+    <div>
+      <h4>Логотип: квадрат становится листком</h4>
+      <div class="logo-box" style="background:#FBF8F1">
+        <div class="sheetB"><svg width="62" height="62" style="position:absolute;inset:0"><use href="#wobble"/></svg><svg width="26" height="44" style="position:absolute;left:6px;top:10px"><use href="#kid-girl"/></svg><svg width="26" height="44" style="position:absolute;left:30px;top:10px"><use href="#kid-boy"/></svg></div>
+        <div class="wmB">juliette's<small>ювелирная студия</small></div>
+      </div>
+      <p class="note">Квадрат нарисован от руки, внутри — фигурки. Пишем строчными, Unbounded. Знак можно анимировать: фигурки берутся за руки.</p>
+    </div>
+    <div>
+      <h4>Стиль фото</h4>
+      <p class="small">Изделие крупно на <b>однотонном цветном фоне</b> из палитры, рядом рисованные линии: дорисованные руки, сердечки, следы. Нынешние фото на белом подходят, если фон светлый. В соцсетях — рисунки самих клиентских детей рядом с браслетом (с согласия, по реестру).</p>
+      <p class="small">Идея услуги «браслет по рисунку ребёнка» — только после проверки у мастерской [уточнить у производства].</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Мудборд</h4>
+    <div class="mood">
+      <div class="big" style="background:#F2BE3C"><img class="mul" src="{{P2}}" alt="Браслет с тремя детками" style="object-fit:contain"></div>
+      <div class="t" style="background:#2846B4;color:#FBF8F1"><svg width="46" height="76"><use href="#kid-girl"/></svg></div>
+      <div class="t" style="background:#FBF8F1;color:#1E1E1E"><span class="fB" style="font-size:34px;font-weight:800">Аа</span></div>
+      <div style="background:#FBF8F1"><img class="mul" src="{{P5}}" alt="Подвеска две девочки"></div>
+      <div class="t" style="background:#3F8F5B;color:#FBF8F1"><svg width="46" height="76"><use href="#kid-boy"/></svg></div>
+      <div class="t" style="background:#B9A6E0;color:#2846B4"><svg width="50" height="50"><use href="#kid-heart"/></svg></div>
+      <div class="t" style="background:#FBF8F1;color:#F2BE3C"><svg width="44" height="58"><use href="#kid-foot"/></svg></div>
+      <div class="wide" style="background:#B9A6E0"><img class="mul" src="{{P4}}" alt="Мальчик с камнями" style="object-fit:contain"></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Как выглядит в работе</h4>
+    <div class="apps">
+      <figure class="cq">
+        <div class="mock post" style="background:#F2BE3C">
+          <div class="abs fB" style="left:6cqw;top:6cqw;right:6cqw;font-size:7.6cqw;font-weight:800;line-height:1.05;color:#2846B4;letter-spacing:-.02em">Сколько вас в семье?</div>
+          <img class="abs mul" src="{{P2}}" alt="Браслет с тремя детками" style="left:10cqw;top:26cqw;width:80cqw">
+          <svg class="abs" style="left:5cqw;bottom:6cqw;width:14cqw;height:23cqw;color:#2846B4"><use href="#kid-girl"/></svg>
+          <svg class="abs" style="left:18cqw;bottom:6cqw;width:14cqw;height:23cqw;color:#2846B4"><use href="#kid-boy"/></svg>
+          <svg class="abs" style="left:31cqw;bottom:6cqw;width:14cqw;height:23cqw;color:#2846B4"><use href="#kid-girl"/></svg>
+          <div class="abs tB" style="right:6cqw;bottom:8cqw;font-size:3.6cqw;font-weight:700;color:#1E1E1E;text-align:right">juliette's<br><span style="font-weight:400">браслет «Трое»</span></div>
+        </div>
+        <figcaption>Пост 4:5 в ленту</figcaption>
+      </figure>
+      <figure class="cq storywrap">
+        <div class="mock story" style="background:#FBF8F1">
+          <svg class="abs" style="left:4cqw;top:3cqw;width:92cqw;height:94%;color:#2846B4" preserveAspectRatio="none"><use href="#wobble"/></svg>
+          <div class="abs fB" style="left:11cqw;right:11cqw;top:19cqw;font-size:7.2cqw;font-weight:800;line-height:1.08;color:#1E1E1E">Нарисуйте свою семью — мы соберём её в браслет</div>
+          <div class="abs" style="left:16cqw;right:16cqw;top:62cqw;aspect-ratio:1;border-radius:50%;background:#B9A6E0;overflow:hidden"><img class="mul" src="{{P4}}" alt="Мальчик с камнями" style="width:100%;height:100%;object-fit:cover"></div>
+          <svg class="abs" style="left:12cqw;top:132cqw;width:16cqw;height:26cqw;color:#3F8F5B"><use href="#kid-girl"/></svg>
+          <svg class="abs" style="left:29cqw;top:132cqw;width:16cqw;height:26cqw;color:#2846B4"><use href="#kid-boy"/></svg>
+          <svg class="abs" style="left:46cqw;top:138cqw;width:14cqw;height:14cqw;color:#F2BE3C"><use href="#kid-heart"/></svg>
+          <div class="abs tB" style="right:11cqw;bottom:9cqw;background:#3F8F5B;color:#FBF8F1;font-size:4.6cqw;font-weight:700;padding:3.4cqw 5cqw;border-radius:99px;transform:rotate(-4deg)">Конструктор →</div>
+        </div>
+        <figcaption>Сторис 9:16</figcaption>
+      </figure>
+      <figure class="cq sitewrap">
+        <div class="mock site sB" style="background:#FBF8F1">
+          <style>
+            .sB .hdr { position:absolute; left:4cqw; right:4cqw; top:2.6cqw; display:flex; align-items:center; gap:1.2cqw }
+            .sB .nav { margin-left:auto; display:flex; gap:2.2cqw; font:500 1.25cqw/1 "Onest",sans-serif; color:#1E1E1E }
+            .sB .h1 { position:absolute; left:4cqw; top:12cqw; width:50cqw; font:800 5cqw/1.04 "Unbounded",sans-serif; color:#1E1E1E; letter-spacing:-.02em }
+            .sB .ul { position:absolute; left:4cqw; top:28.6cqw; width:30cqw; height:2cqw; color:#F2BE3C }
+            .sB .p { position:absolute; left:4cqw; top:32cqw; width:40cqw; font:400 1.55cqw/1.45 "Onest",sans-serif; color:#1E1E1E }
+            .sB .btns { position:absolute; left:4cqw; top:42cqw; display:flex; gap:1.2cqw }
+            .sB .btn { font:700 1.45cqw/1 "Onest",sans-serif; padding:1.3cqw 2.2cqw; border-radius:99px }
+            .sB .blob { position:absolute; right:5cqw; top:8cqw; width:38cqw; height:50cqw; background:#B9A6E0; border-radius:46% 54% 42% 58% / 52% 44% 56% 48% }
+            .sB .blob img { position:absolute; left:4cqw; top:9cqw; width:30cqw }
+            .sB .f1 { position:absolute; right:39cqw; top:38cqw; width:7cqw; height:12cqw; color:#2846B4 }
+            .sB .f2 { position:absolute; right:3cqw; top:6cqw; width:7cqw; height:7cqw; color:#3F8F5B }
+            @container (max-width:520px) {
+              .sB .hdr > span { font-size:4.4cqw !important } .sB .hdr > svg { width:6cqw !important; height:6cqw !important }
+              .sB .nav { display:none }
+              .sB .hdr { top:4cqw }
+              .sB .h1 { top:15cqw; width:auto; right:5cqw; font-size:8.4cqw }
+              .sB .ul { top:35cqw; width:50cqw; height:4cqw }
+              .sB .p { top:40cqw; width:auto; right:5cqw; font-size:3.4cqw }
+              .sB .blob { top:60cqw; left:12cqw; right:12cqw; width:auto; height:62cqw }
+              .sB .blob img { left:8cqw; right:8cqw; width:auto; top:10cqw }
+              .sB .f1 { right:auto; left:4cqw; top:104cqw; width:12cqw; height:20cqw }
+              .sB .f2 { right:5cqw; top:57cqw; width:12cqw; height:12cqw }
+              .sB .btns { top:auto; bottom:6cqw; left:5cqw; right:5cqw } .sB .btn { font-size:3.4cqw; padding:3.2cqw 4.8cqw }
+            }
+            @container (max-width:520px) { .sB { aspect-ratio:9 / 15 } }
+          </style>
+          <div class="hdr"><svg style="width:3.4cqw;height:3.4cqw;color:#2846B4"><use href="#wobble"/></svg><span class="fB" style="font-weight:700;font-size:1.8cqw;color:#1E1E1E">juliette's</span><div class="nav"><span>Браслеты</span><span>Подвески</span><span>Кольца для мам</span><span>Конструктор</span><span style="color:#2846B4">8 800 201-59-38</span></div></div>
+          <div class="h1">Вся семья в одном браслете</div>
+          <svg class="ul" viewBox="0 0 100 10" preserveAspectRatio="none"><path class="draw" d="M2 6 Q25 1 50 5 T98 4" style="stroke-width:3"/></svg>
+          <div class="p">Фигурки ваших детей из золота или серебра. Гравируем имя, рост и дату. Готово за 5–10 рабочих дней.</div>
+          <div class="btns"><span class="btn" style="background:#2846B4;color:#FBF8F1">Собрать браслет</span><span class="btn" style="border:1.5px solid #2846B4;color:#2846B4">Каталог</span></div>
+          <div class="blob"><img class="mul" src="{{P2}}" alt="Браслет с тремя детками"></div>
+          <svg class="f1"><use href="#kid-girl"/></svg>
+          <svg class="f2"><use href="#kid-heart"/></svg>
+        </div>
+        <figcaption>Первый экран сайта (на узком экране — мобильная версия)</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="block prc">
+    <div class="plus"><h4>Плюсы</h4><ul><li>Самое заметное в ленте, лучше всего сохраняется и пересылается.</li><li>В нише иллюстраций нет ни у кого.</li><li>Стиль рождается из формы самих фигурок, поэтому выглядит родным.</li><li>Хорошо анимируется для Reels и сторис.</li></ul></div>
+    <div class="minus"><h4>Риски</h4><ul><li>Может удешевить восприятие при среднем чеке 67 тыс. ₽ и прочитаться как «детский бренд».</li><li>Мужу, который дарит, может показаться несерьёзным.</li><li>Держится на иллюстраторе: без дисциплины рисунки быстро станут разношёрстными.</li></ul></div>
+    <div><h4>Цена внедрения</h4><ul><li>Шрифты: 0 ₽ (OFL).</li><li>Иллюстратор: набор из 20–30 рисунков и правила [смета, уточнить].</li><li>Съёмка: не обязательна, но нужны цветные фоны.</li><li>Упаковка: печать рисунка на коробке [уточнить].</li></ul><div class="price">Итог: средняя. Первые макеты через 3–4 недели (оценка)</div></div>
+  </div>
+</section>
+
+<!-- ============ C ============ -->
+<section class="dir" id="dir-c">
+  <div class="dhead">
+    <div class="dletter C-letter">C</div>
+    <div>
+      <h2>«Шкатулка»</h2>
+      <p class="idea"><b>Тихая драгоценность: глубокий малахит, слоновая кость и красное золото, как в шкатулке, которую передают дочери.</b> Язык стиля — бархат, свет сбоку, много воздуха.</p>
+      <p class="who">Кому: покупательницам золота (основной вклад в средний чек 67 тыс. ₽) и мужьям, которые ищут солидный подарок к рождению, годовщине или Новому году.</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="block" style="margin-top:0">
+      <h4>Палитра</h4>
+      <div class="pal">
+        <div class="sw"><div class="c" style="background:#1F3B34"></div><div class="m"><b>Малахит тёмный</b><code>#1F3B34</code><br>фон, главный</div></div>
+        <div class="sw"><div class="c" style="background:#2F5D50"></div><div class="m"><b>Малахит</b><code>#2F5D50</code><br>плашки, ссылки</div></div>
+        <div class="sw"><div class="c" style="background:#F3EEE4"></div><div class="m"><b>Слоновая кость</b><code>#F3EEE4</code><br>светлый фон, текст на тёмном</div></div>
+        <div class="sw"><div class="c" style="background:#D9C9B0"></div><div class="m"><b>Замша</b><code>#D9C9B0</code><br>подложки</div></div>
+        <div class="sw"><div class="c" style="background:#B57A5E"></div><div class="m"><b>Красное золото</b><code>#B57A5E</code><br>знак, крупные акценты</div></div>
+        <div class="sw"><div class="c" style="background:#141816"></div><div class="m"><b>Почти чёрный</b><code>#141816</code><br>текст на светлом</div></div>
+      </div>
+      <p class="note">Зелёный в нише свободен и близок к цвету года WGSN и Coloro (Transformative Teal). Красное золото — только знак и крупные слова, не тонкие линии.</p>
+    </div>
+    <div class="block" style="margin-top:0">
+      <h4>Шрифты (Google Fonts, кириллица есть)</h4>
+      <div class="spec"><div class="nm">Prata — заголовки (контрастная антиква)</div><div class="s fC">Украшения, которые передают дочери</div></div>
+      <div class="spec"><div class="nm">Jost — текст, меню разрядкой</div><div class="s tC" style="font-size:20px">Красное золото и серебро с гравировкой</div></div>
+      <div class="spec"><div class="nm">Jost разрядкой — навигация и подписи</div><div class="s tC" style="font-size:14px;letter-spacing:.3em;text-transform:uppercase">Браслеты   Подвески   Кольца</div></div>
+    </div>
+  </div>
+
+  <div class="grid2 block">
+    <div>
+      <h4>Логотип: квадрат становится шкатулкой</h4>
+      <div class="logo-box" style="background:#1F3B34">
+        <div class="markC oct"><span class="oct">J</span></div>
+        <div class="wmC"><b>JULIETTE'S</b><small>ювелирная студия</small></div>
+      </div>
+      <p class="note">От квадрата остаётся силуэт со срезанными углами, как у крышки шкатулки или жетона. Внутри монограмма J. Название — антиквой с разрядкой.</p>
+    </div>
+    <div>
+      <h4>Стиль фото</h4>
+      <p class="small">Тёмно-зелёный бархат, свет сбоку, макро гравировки, женская рука с браслетом на светлом рукаве. Нынешние фото на белом годятся только в светлых «окнах» на тёмном фоне. Для главных изделий нужна <b>пересъёмка</b>.</p>
+      <p class="small">Упаковка: бархатная коробка цвета малахита, тиснение знака красным золотом.</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Мудборд</h4>
+    <div class="mood">
+      <div class="big" style="background:#F3EEE4"><img class="mul" src="{{P1}}" alt="Браслет мальчик и девочка" style="object-fit:contain"></div>
+      <div class="t" style="background:#1F3B34"><div class="markC oct" style="width:56px;height:56px"><span class="oct" style="width:50px;height:50px;font-size:28px">J</span></div></div>
+      <div class="t" style="background:radial-gradient(circle at 30% 25%, #3E7466 0%, #1F3B34 55%, #12241F 100%);color:#E6C9B4"><span class="tC" style="font-size:11px;letter-spacing:.3em">БАРХАТ</span></div>
+      <div class="t" style="background:#F3EEE4;color:#1F3B34"><span class="fC" style="font-size:38px">Аа</span></div>
+      <div style="background:#F3EEE4"><img class="mul" src="{{P8}}" alt="Кольца для мам"></div>
+      <div class="wide t" style="background:linear-gradient(115deg, #8A5540 0%, #C99377 38%, #EAC6AE 52%, #B57A5E 70%, #7A4935 100%);color:#1F3B34"><span class="fC" style="font-size:22px">красное золото</span></div>
+      <div style="background:#fff"><img src="{{P_ENGRAVE}}" alt="Гравировка"></div>
+      <div class="t" style="background:#D9C9B0;color:#141816"><span class="tC" style="font-size:11px;letter-spacing:.3em">ТИСНЕНИЕ<br>НА ЗАМШЕ</span></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Как выглядит в работе</h4>
+    <div class="apps">
+      <figure class="cq">
+        <div class="mock post" style="background:#1F3B34">
+          <div class="abs tC" style="left:0;right:0;top:6cqw;text-align:center;font-size:2.8cqw;letter-spacing:.4em;color:#C99377">JULIETTE'S</div>
+          <div class="abs" style="left:17cqw;right:17cqw;top:14cqw;height:72cqw;background:#F3EEE4;border-radius:33cqw 33cqw 2cqw 2cqw;overflow:hidden"><img class="mul" src="{{P1}}" alt="Браслет мальчик и девочка" style="position:absolute;left:3cqw;right:3cqw;top:16cqw;width:60cqw"></div>
+          <div class="abs fC" style="left:6cqw;right:6cqw;top:92cqw;text-align:center;font-size:7cqw;line-height:1.12;color:#F3EEE4">То, что передают дочери</div>
+          <div class="abs tC" style="left:0;right:0;bottom:6cqw;text-align:center;font-size:2.8cqw;letter-spacing:.24em;color:#D9C9B0">КРАСНОЕ ЗОЛОТО И СЕРЕБРО</div>
+        </div>
+        <figcaption>Пост 4:5 в ленту</figcaption>
+      </figure>
+      <figure class="cq storywrap">
+        <div class="mock story" style="background:radial-gradient(circle at 30% 20%, #2F5D50 0%, #1F3B34 50%, #12241F 100%)">
+          <div class="abs oct" style="left:10cqw;right:10cqw;top:16cqw;aspect-ratio:1;background:#B57A5E"><div class="oct" style="position:absolute;inset:1.2cqw;background:#F3EEE4;overflow:hidden"><img class="mul" src="{{P_ENGRAVE}}" alt="Гравировка" style="width:100%;height:100%;object-fit:cover"></div></div>
+          <div class="abs fC" style="left:9cqw;right:9cqw;top:106cqw;font-size:8.6cqw;line-height:1.12;color:#F3EEE4;text-align:center">Самое важное — на обороте</div>
+          <div class="abs tC" style="left:12cqw;right:12cqw;top:131cqw;font-size:4.2cqw;line-height:1.5;color:#D9C9B0;text-align:center">Имя, рост, вес и дата рождения. Гравируем вручную в мастерской</div>
+          <div class="abs tC" style="left:22cqw;right:22cqw;bottom:10cqw;border:1px solid #C99377;color:#F3EEE4;text-align:center;padding:3.6cqw 0;font-size:3.6cqw;letter-spacing:.3em">ВЫБРАТЬ</div>
+        </div>
+        <figcaption>Сторис 9:16</figcaption>
+      </figure>
+      <figure class="cq sitewrap">
+        <div class="mock site sC" style="background:#1F3B34">
+          <style>
+            .sC .hdr { position:absolute; left:4cqw; right:4cqw; top:2.8cqw; display:flex; align-items:center; gap:1.2cqw }
+            .sC .nav { margin-left:auto; display:flex; gap:2.6cqw; font:400 1.05cqw/1 "Jost",sans-serif; letter-spacing:.24em; color:#F3EEE4; text-transform:uppercase }
+            .sC .h1 { position:absolute; left:4cqw; top:15cqw; width:44cqw; font:400 4.4cqw/1.1 "Prata",serif; color:#F3EEE4 }
+            .sC .p { position:absolute; left:4cqw; top:34cqw; width:38cqw; font:300 1.55cqw/1.5 "Jost",sans-serif; color:#D9C9B0 }
+            .sC .btns { position:absolute; left:4cqw; top:44cqw; display:flex; gap:1.2cqw }
+            .sC .btn { font:500 1.2cqw/1 "Jost",sans-serif; letter-spacing:.2em; text-transform:uppercase; padding:1.5cqw 2.4cqw }
+            .sC .panel { position:absolute; right:0; top:0; bottom:0; width:44cqw; background:#F3EEE4 }
+            .sC .panel img { position:absolute; left:5cqw; right:5cqw; top:11cqw; width:34cqw }
+            .sC .panel .cap { position:absolute; left:5cqw; bottom:4cqw; font:400 1.1cqw/1.3 "Jost",sans-serif; letter-spacing:.2em; color:#1F3B34; text-transform:uppercase }
+            @container (max-width:520px) {
+              .sC { aspect-ratio:9 / 16 }
+              .sC .hdr > span { font-size:3.6cqw !important } .sC .hdr .markC { width:7cqw !important; height:7cqw !important } .sC .hdr .markC span { width:6.2cqw !important; height:6.2cqw !important; font-size:3.8cqw !important }
+              .sC .nav { display:none } .sC .hdr { top:5cqw }
+              .sC .panel { left:0; right:0; top:auto; bottom:0; width:auto; height:72cqw }
+              .sC .panel img { left:18cqw; right:18cqw; width:auto; top:6cqw }
+              .sC .panel .cap { font-size:2.6cqw; bottom:4cqw }
+              .sC .h1 { top:18cqw; width:auto; right:6cqw; font-size:8.6cqw }
+              .sC .p { top:52cqw; width:auto; right:6cqw; font-size:3.4cqw }
+              .sC .btns { top:76cqw } .sC .btn { font-size:2.8cqw; padding:3.4cqw 4.6cqw }
+            }
+          </style>
+          <div class="hdr"><div class="markC oct" style="width:3.6cqw;height:3.6cqw"><span class="oct" style="width:3.2cqw;height:3.2cqw;font-size:1.9cqw">J</span></div><span class="fC" style="font-size:1.6cqw;letter-spacing:.2em;color:#F3EEE4">JULIETTE'S</span><div class="nav"><span>Браслеты</span><span>Подвески</span><span>Кольца</span><span>Гравировка</span></div></div>
+          <div class="h1">Украшения, которые передают дочери</div>
+          <div class="p">Фигурки детей из красного золота и серебра с гравировкой имени, роста и даты. Готово за 5–10 рабочих дней.</div>
+          <div class="btns"><span class="btn" style="background:#F3EEE4;color:#1F3B34">Выбрать</span><span class="btn" style="border:1px solid #C99377;color:#F3EEE4">Гравировка</span></div>
+          <div class="panel"><img class="mul" src="{{P8}}" alt="Кольца для мам"><div class="cap">Кольца для мам</div></div>
+        </div>
+        <figcaption>Первый экран сайта (на узком экране — мобильная версия)</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="block prc">
+    <div class="plus"><h4>Плюсы</h4><ul><li>Самый «дорогой» вид: поддерживает цену золота и подарки от мужей.</li><li>Глубокого зелёного нет ни у одного конкурента, при этом он в тренде 2026 года.</li><li>Сильная упаковка: бархатная коробка запоминается при вручении.</li><li>Для русской аудитории считывается сразу: малахитовая шкатулка.</li></ul></div>
+    <div class="minus"><h4>Риски</h4><ul><li>Ближе всего к общему языку люкса (Tiffany, Missoma, Geoma), поэтому своего кода меньше.</li><li>Серебро (49% проданных фигурок, чек около 21 тыс. ₽) может выглядеть «не по статусу».</li><li>Тёмный фон сложнее в Tilda и не подходит для нынешних фото на белом.</li></ul></div>
+    <div><h4>Цена внедрения</h4><ul><li>Шрифты: 0 ₽ (OFL).</li><li>Пересъёмка 15–20 ключевых изделий на тёмном фоне [смета, уточнить].</li><li>Бархатные коробки с тиснением [смета поставщика, уточнить].</li><li>Работа агентов: брендбук и макеты Tilda.</li></ul><div class="price">Итог: высокая. Первые макеты через 3–5 недель, с учётом съёмки (оценка)</div></div>
+  </div>
+</section>
+
+<!-- ============ D ============ -->
+<section class="dir" id="dir-d">
+  <div class="dhead">
+    <div class="dletter D-letter">D</div>
+    <div>
+      <h2>«Альбом»</h2>
+      <p class="idea"><b>Семейный альбом: настоящие мамы, дети и руки в дневном свете. Украшение — страница семейной истории, а не товар с витрины.</b> Язык стиля — фотокарточки с белым полем, уголки альбома, подписи от руки.</p>
+      <p class="who">Кому: мамам, которые доверяют отзывам и реальным людям. Повторным клиенткам: родился ещё ребёнок — добавляем фигурку, как новую страницу альбома (сейчас повторных покупок 8,6%).</p>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="block" style="margin-top:0">
+      <h4>Палитра</h4>
+      <div class="pal">
+        <div class="sw"><div class="c" style="background:#FAF6EE"></div><div class="m"><b>Фотобумага</b><code>#FAF6EE</code><br>фон</div></div>
+        <div class="sw"><div class="c" style="background:#F1E2BE"></div><div class="m"><b>Сливочное масло</b><code>#F1E2BE</code><br>фон постов</div></div>
+        <div class="sw"><div class="c" style="background:#B9D3E0"></div><div class="m"><b>Ледяной голубой</b><code>#B9D3E0</code><br>стикеры, плашки</div></div>
+        <div class="sw"><div class="c" style="background:#5B4636"></div><div class="m"><b>Табак</b><code>#5B4636</code><br>подписи, кнопки</div></div>
+        <div class="sw"><div class="c" style="background:#8E3B46"></div><div class="m"><b>Бузина</b><code>#8E3B46</code><br>редкий акцент</div></div>
+        <div class="sw"><div class="c" style="background:#2B2724"></div><div class="m"><b>Графит тёплый</b><code>#2B2724</code><br>текст</div></div>
+      </div>
+      <p class="note">Тёплая плёночная гамма. Цвет задают сами фотографии, палитра их только обрамляет.</p>
+    </div>
+    <div class="block" style="margin-top:0">
+      <h4>Шрифты (Google Fonts, кириллица есть)</h4>
+      <div class="spec"><div class="nm">Lora — заголовки, курсив для акцентов</div><div class="s fD">Ваша семья — <i>страница за страницей</i></div></div>
+      <div class="spec"><div class="nm">Commissioner — текст и интерфейс</div><div class="s tD" style="font-size:20px">Добавим фигурку, когда родится следующий</div></div>
+      <div class="spec"><div class="nm">Marck Script — подписи под фото</div><div class="s hD" style="font-size:32px;color:#5B4636">Маша и Тёма, лето 2025</div></div>
+    </div>
+  </div>
+
+  <div class="grid2 block">
+    <div>
+      <h4>Логотип: квадрат становится фоторамкой</h4>
+      <div class="logo-box" style="background:#FAF6EE">
+        <div class="corners" style="width:56px;height:56px;display:grid;place-items:center;font:italic 600 34px/1 Lora,serif;color:#2B2724">J</div>
+        <div class="wmD"><b>Juliette's</b><small>ювелирная студия</small></div>
+      </div>
+      <p class="note">От квадрата остаются уголки альбома вокруг монограммы. Название набрано курсивом Lora, тёплым и «семейным».</p>
+    </div>
+    <div>
+      <h4>Стиль фото</h4>
+      <p class="small"><b>Реальные клиентки и дети</b> в дневном свете, слегка тёплая плёночная обработка, лёгкое зерно, кадры без постановки. Белое поле вокруг кадра, подпись от руки. Каждую публикацию сверяем с реестром согласий.</p>
+      <p class="small">Отличие от Happy Memories (тоже тёплые руки): у них полумрак и сток, у нас светлый документальный кадр и имена.</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Мудборд</h4>
+    <div class="mood">
+      <div class="big t" style="background:#F1E2BE"><div style="background:#fff;padding:7px 7px 28px;box-shadow:0 3px 10px rgba(43,39,36,.2);transform:rotate(-3deg);width:min(62%, 34vh);position:relative"><img src="{{P7}}" alt="Девочка с сердцем" style="aspect-ratio:1;object-fit:cover"><span class="hD" style="position:absolute;left:0;right:0;bottom:5px;text-align:center;color:#5B4636;font-size:17px">Варя, 3 года</span></div></div>
+      <div class="t" style="background:#FAF6EE;color:#5B4636"><span class="hD" style="font-size:24px">Миша, 2 года</span></div>
+      <div class="t" style="background:#B9D3E0;color:#2B2724"><span class="tD" style="font-size:12px;font-weight:600">+1 фигурка</span></div>
+      <div class="t" style="background:repeating-radial-gradient(circle at 20% 30%, rgba(91,70,54,.10) 0 1px, transparent 1px 3px), #E9D9B5;color:#5B4636"><span class="tD" style="font-size:11px;letter-spacing:.2em">ЗЕРНО ПЛЁНКИ</span></div>
+      <div class="t" style="background:#FAF6EE;color:#2B2724"><span class="fD" style="font-size:36px;font-style:italic">Аа</span></div>
+      <div class="t" style="background:#5B4636"><div style="background:#fff;padding:5px 5px 14px;transform:rotate(3deg);width:70%"><img src="{{P6}}" alt="Тонкий браслет" style="aspect-ratio:1;object-fit:cover"></div></div>
+      <div class="t" style="background:#FAF6EE"><div class="corners" style="width:70%"><img src="{{P3}}" alt="Пяточка и сердце" style="aspect-ratio:1;object-fit:cover"></div></div>
+      <div class="t" style="background:#8E3B46;color:#FAF6EE"><span class="fD" style="font-size:16px;font-style:italic">страница 1</span></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h4>Как выглядит в работе</h4>
+    <div class="apps">
+      <figure class="cq">
+        <div class="mock post" style="background:#F1E2BE">
+          <div class="abs fD" style="left:7cqw;top:6cqw;font-size:7.2cqw;font-weight:600;color:#2B2724">Страница <i>первая</i></div>
+          <div class="photoD" style="left:14cqw;top:20cqw;width:72cqw;transform:rotate(-3deg)"><img src="{{P7}}" alt="Девочка с сердцем"><div class="cap">Варя и сердце, 2025</div></div>
+          <div class="abs tD" style="right:6cqw;bottom:6cqw;background:#B9D3E0;color:#2B2724;font-size:3.4cqw;font-weight:600;padding:2.4cqw 3.6cqw;border-radius:2cqw;transform:rotate(4deg)">в реальном посте — фото клиентки</div>
+        </div>
+        <figcaption>Пост 4:5 в ленту</figcaption>
+      </figure>
+      <figure class="cq storywrap">
+        <div class="mock story" style="background:#FAF6EE">
+          <div class="abs fD" style="left:8cqw;top:9cqw;font-size:8cqw;font-weight:600;font-style:italic;color:#2B2724">Наш альбом</div>
+          <div class="photoD" style="left:8cqw;top:28cqw;width:56cqw;transform:rotate(-4deg)"><img src="{{P3}}" alt="Пяточка и сердце"><div class="cap">первый шаг</div></div>
+          <div class="photoD" style="right:7cqw;top:70cqw;width:50cqw;transform:rotate(3deg)"><img src="{{P5}}" alt="Подвеска две девочки"><div class="cap">Лиза и Соня</div></div>
+          <div class="abs hD" style="left:8cqw;bottom:24cqw;width:46cqw;font-size:6.2cqw;line-height:1.1;color:#5B4636">Родится следующий — добавим фигурку</div>
+          <div class="abs tD" style="left:8cqw;bottom:8cqw;background:#5B4636;color:#FAF6EE;font-size:4cqw;font-weight:600;padding:3.4cqw 5cqw;border-radius:99px">Добавить фигурку →</div>
+        </div>
+        <figcaption>Сторис 9:16</figcaption>
+      </figure>
+      <figure class="cq sitewrap">
+        <div class="mock site sD" style="background:#FAF6EE">
+          <style>
+            .sD .hdr { position:absolute; left:4cqw; right:4cqw; top:2.6cqw; display:flex; align-items:center; gap:1.2cqw }
+            .sD .nav { margin-left:auto; display:flex; gap:2.2cqw; font:500 1.25cqw/1 "Commissioner",sans-serif; color:#2B2724 }
+            .sD .h1 { position:absolute; left:4cqw; top:13cqw; width:44cqw; font:600 4.6cqw/1.08 "Lora",serif; color:#2B2724 }
+            .sD .p { position:absolute; left:4cqw; top:30cqw; width:38cqw; font:400 1.55cqw/1.5 "Commissioner",sans-serif; color:#2B2724 }
+            .sD .btns { position:absolute; left:4cqw; top:41cqw; display:flex; gap:1.2cqw }
+            .sD .btn { font:600 1.4cqw/1 "Commissioner",sans-serif; padding:1.3cqw 2.2cqw; border-radius:99px }
+            .sD .bg { position:absolute; right:0; top:0; bottom:0; width:50cqw; background:#F1E2BE }
+            .sD .p1 { left:56cqw; top:9cqw; width:19cqw; transform:rotate(-5deg) }
+            .sD .p2 { left:73cqw; top:6cqw; width:20cqw; transform:rotate(4deg) }
+            .sD .p3 { left:64cqw; top:31cqw; width:21cqw; transform:rotate(-1deg) }
+            .sD .photoD { padding:1cqw 1cqw 4cqw } .sD .photoD .cap { font-size:1.9cqw; bottom:.9cqw }
+            @container (max-width:520px) {
+              .sD { aspect-ratio:9 / 16 }
+              .sD .hdr > span { font-size:4.6cqw !important } .sD .hdr .corners { width:6cqw !important; height:6cqw !important; font-size:4cqw !important }
+              .sD .nav { display:none } .sD .hdr { top:4cqw }
+              .sD .h1 { top:15cqw; width:auto; right:6cqw; font-size:8.6cqw }
+              .sD .p { top:47cqw; width:auto; right:6cqw; font-size:3.4cqw }
+              .sD .bg { left:0; width:auto; top:auto; height:86cqw }
+              .sD .p1 { left:6cqw; top:auto; bottom:44cqw; width:40cqw }
+              .sD .p2 { left:50cqw; top:auto; bottom:46cqw; width:42cqw }
+              .sD .p3 { left:26cqw; top:auto; bottom:6cqw; width:44cqw }
+              .sD .photoD { padding:2cqw 2cqw 8cqw } .sD .photoD .cap { font-size:4cqw; bottom:1.6cqw }
+              .sD .btns { top:72cqw } .sD .btn { font-size:3.4cqw; padding:3.2cqw 4.8cqw }
+            }
+          </style>
+          <div class="bg"></div>
+          <div class="hdr"><div class="corners" style="width:3cqw;height:3cqw;display:grid;place-items:center;font:italic 600 2cqw/1 Lora,serif;color:#2B2724">J</div><span class="fD" style="font-style:italic;font-weight:600;font-size:2cqw;color:#2B2724">Juliette's</span><div class="nav"><span>Браслеты</span><span>Подвески</span><span>Кольца для мам</span><span>Истории клиентов</span></div></div>
+          <div class="h1">Ваша семья — <i>страница за страницей</i></div>
+          <div class="p">Фигурки детей из золота и серебра с гравировкой. Родится следующий — добавим ещё одну. Готово за 5–10 рабочих дней.</div>
+          <div class="btns"><span class="btn" style="background:#5B4636;color:#FAF6EE">Собрать браслет</span><span class="btn" style="border:1.5px solid #5B4636;color:#5B4636">Истории клиентов</span></div>
+          <div class="photoD p1"><img src="{{P1}}" alt="Браслет мальчик и девочка"><div class="cap">Аня и Лёва</div></div>
+          <div class="photoD p2"><img src="{{P5}}" alt="Подвеска две девочки"><div class="cap">две сестры</div></div>
+          <div class="photoD p3"><img src="{{P_SILVER}}" alt="Серебряный браслет с девочкой"><div class="cap">наша первая</div></div>
+        </div>
+        <figcaption>Первый экран сайта (на узком экране — мобильная версия)</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="block prc">
+    <div class="plus"><h4>Плюсы</h4><ul><li>Самое тёплое и «человечное» направление, на нём сильнее всего доверие.</li><li>Использует реальных клиенток: согласия есть, отзывы на Яндексе 5,0.</li><li>Механика «следующая страница» прямо работает на повторные покупки.</li><li>Естественно продолжает ленту в соцсетях.</li></ul></div>
+    <div class="minus"><h4>Риски</h4><ul><li>Ближе всех к Happy Memories и Katerina (лайфстайл, руки). Отличие держится только на качестве съёмки.</li><li>Зависит от регулярных съёмок и согласий. Со слабыми фото стиль разваливается.</li><li>Нынешние фото на белом не подходят для главных мест.</li></ul></div>
+    <div><h4>Цена внедрения</h4><ul><li>Шрифты: 0 ₽ (OFL).</li><li>Стартовая съёмка 5–8 семей и потом съёмки каждый месяц [смета, уточнить].</li><li>Ретушь в едином плёночном стиле.</li><li>Проверка согласий перед каждой публикацией.</li></ul><div class="price">Итог: средняя на старте, дальше постоянные расходы. Первые макеты через 4+ недели (оценка)</div></div>
+  </div>
+</section>
+
+<!-- ============ СРАВНЕНИЕ ============ -->
+<section id="compare">
+  <div class="kicker">Сравнение</div>
+  <h2>Четыре направления рядом</h2>
+  <p class="muted small">●●●●● — лучше всего. Оценки экспертные и основаны на исследовании (<code>brand/research-2026.md</code>).</p>
+  <div class="card tbl">
+    <table>
+      <thead><tr><th>Критерий</th><th>A Метрика</th><th>B Рисунок</th><th>C Шкатулка</th><th>D Альбом</th></tr></thead>
+      <tbody>
+        <tr><td>Свободно ли место в нише</td><td class="r">●●●●●</td><td class="r">●●●●●</td><td class="r">●●○○○</td><td class="r">●●○○○</td></tr>
+        <tr><td>Связь с гравировкой и продуктом</td><td class="r">●●●●●</td><td class="r">●●●●○</td><td class="r">●●○○○</td><td class="r">●●●○○</td></tr>
+        <tr><td>Впечатление цены (чек 67 тыс. ₽)</td><td class="r">●●●○○</td><td class="r">●●○○○</td><td class="r">●●●●●</td><td class="r">●●●○○</td></tr>
+        <tr><td>Понятно мужу, что он дарит</td><td class="r">●●●●●</td><td class="r">●●○○○</td><td class="r">●●●●○</td><td class="r">●●●○○</td></tr>
+        <tr><td>Заметность в соцсетях</td><td class="r">●●●●○</td><td class="r">●●●●●</td><td class="r">●●●○○</td><td class="r">●●●●○</td></tr>
+        <tr><td>Подходят нынешние фото на белом</td><td>да</td><td>да, на светлом цвете</td><td>частично, нужна пересъёмка</td><td>нет, нужны съёмки семей</td></tr>
+        <tr><td>Что с квадратом</td><td>бирка</td><td>листок с рисунком</td><td>шкатулка со срезанными углами</td><td>уголки альбома</td></tr>
+        <tr><td>Главный расход</td><td>вкладыш-бирка</td><td>иллюстратор</td><td>съёмка и коробки</td><td>регулярные съёмки</td></tr>
+        <tr><td>Цена внедрения</td><td><b>низкая</b></td><td>средняя</td><td>высокая</td><td>средняя + постоянная</td></tr>
+        <tr><td>Первые макеты (оценка)</td><td>1–2 недели</td><td>3–4 недели</td><td>3–5 недель</td><td>4+ недели</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ КАК ВЫБРАТЬ ============ -->
+<section id="choose">
+  <div class="kicker">Ваше решение</div>
+  <h2>Как выбрать: ответьте одной строкой</h2>
+  <div class="pick">
+    <div><b>A</b> — если главное отличаться от всех и говорить о гравировке</div>
+    <div><b>B</b> — если главное заметность в соцсетях и молодые мамы</div>
+    <div><b>C</b> — если главное продавать дороже золото и подарки от мужей</div>
+    <div><b>D</b> — если главное доверие через реальных клиенток и повторные покупки</div>
+  </div>
+  <div class="answer">
+    <p style="margin-bottom:8px"><b>Примеры ответа:</b></p>
+    <code>A</code><code>C</code><code>A, но фото как в D</code><code>B и C — доработать оба</code><code>Ни одно, потому что …</code>
+    <p class="small" style="margin:12px 0 0">Смешивать можно одно с одним: шрифты и цвета от одного направления, фото от другого. Стили целиком не смешиваем, иначе снова получится «как у всех».</p>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>Что будет после ответа</h3>
+    <ol class="find" style="margin-top:6px">
+      <li>Брендбук по выбранному направлению: логотип в нескольких версиях, палитра с правилами контраста, шрифты, стиль фото, упаковка, примеры для сайта и соцсетей.</li>
+      <li>Палитру, шрифты и логотип передаём агенту <code>social-concepts</code> для концепций соцсетей. Публикации пока остановлены, как вы решили.</li>
+      <li>Любые расходы (съёмка, печать, иллюстратор) приносим отдельно, со сметой, на ваше согласование.</li>
+      <li>Сайт меняем сначала в тестовом проекте Tilda, на живой сайт — только после согласования.</li>
+    </ol>
+  </div>
+</section>
+
+<footer class="foot">
+  <p><b>Источники.</b> Сайты брендов открыты 04.11.2026 через Playwright. Скриншоты — внутренний референс, в материалы бренда они не попадают. Полный разбор 18 брендов с HEX, шрифтами и ссылками и разбор 10 трендов — в <code>brand/research-2026.md</code>. Цены, сроки и рейтинг в макетах взяты из <code>analiz/04-konkurenty-i-nisha.md</code> и <code>analiz/01-vyvody-iz-materialov.md</code>. Имена и цифры детей в макетах вымышлены.</p>
+  <p>Фото изделий — Juliette's. Шрифты Google Fonts распространяются по лицензии SIL Open Font License, коммерческое использование бесплатно.</p>
+  <p>* Instagram — продукт компании Meta Platforms Inc., деятельность которой запрещена на территории Российской Федерации как экстремистская.</p>
+</footer>
+
+</div>
