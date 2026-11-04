@@ -1,0 +1,354 @@
+<title>Брендбук Juliette's jewelry</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Cormorant+SC:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: брендбук как альбом — узкая колонка текста, широкие развороты с образцами; страница сама оформлена в обновлённом стиле.
+   Одна светлая тема намеренно: это эталон фирменных цветов, они должны выглядеть одинаково у всех. */
+:root {
+  color-scheme: light;
+  --coral: #F28B6E;        /* Коралл Juliette's — главный */
+  --coral-deep: #A84A35;   /* Коралл глубокий — ссылки, кнопки с белым текстом */
+  --powder: #FBEFEA;       /* Пудра — фон */
+  --gold: #C8916F;         /* Красное золото — линии, иконки, только декор */
+  --graphite: #2E2A2B;     /* Графит — основной текст */
+  --grey: #6B6365;         /* Тёплый серый — второстепенный текст */
+  --white: #FFFFFF;
+  --line: #EADBD4;
+  --bad: #9B3B2E; --good: #2F6B4A;
+  --f-display: "Cormorant Garamond", "Georgia", "Times New Roman", serif;
+  --f-sc: "Cormorant SC", "Cormorant Garamond", "Georgia", serif;
+  --f-body: "Manrope", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+* { box-sizing: border-box }
+body { background: var(--powder); color: var(--graphite); font-family: var(--f-body); font-size: 15.5px; line-height: 1.6; font-variant-numeric: lining-nums }
+.wrap { max-width: 1100px; margin: 0 auto; padding-block: 36px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.wrap > *, section > *, .grid > *, .two > * { min-width: 0 }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 500; margin: 0; text-wrap: balance; line-height: 1.1 }
+h1 { font-size: clamp(38px, 6.4vw, 64px) }
+h2 { font-size: clamp(28px, 4.2vw, 40px) }
+h3 { font-size: 23px; line-height: 1.2 }
+p { margin: 0 }
+.lead { font-size: 17px; max-width: 64ch; color: var(--graphite) }
+.muted { color: var(--grey) }
+.sc { font-family: var(--f-sc); letter-spacing: .14em; font-weight: 600; font-size: 13px; color: var(--grey) }
+section { display: grid; gap: 22px; padding-top: 56px; margin-top: 56px; border-top: 1px solid var(--line) }
+.sec-head { display: grid; gap: 10px; max-width: 70ch }
+.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) }
+.two { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); align-items: start }
+.two.tight { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)) }
+.card { background: var(--white); border-radius: 4px; padding: 20px; display: grid; gap: 12px; align-content: start }
+.tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .04em; padding: 2px 10px; border-radius: 999px; width: fit-content }
+.tag.now { background: #F1E4DF; color: var(--grey) }
+.tag.new { background: var(--coral); color: var(--graphite) }
+.tag.ask { background: #FFF1CC; color: #7A5600 }
+ul.clean { margin: 0; padding-left: 18px; display: grid; gap: 6px }
+.x { color: var(--bad); font-weight: 600 } .v { color: var(--good); font-weight: 600 }
+
+/* Гравировочная строка — фирменный элемент */
+.engr { display: flex; align-items: center; gap: 14px; font-family: var(--f-sc); font-weight: 600; letter-spacing: .16em; font-size: 14px; color: var(--graphite) }
+.engr::before, .engr::after { content: ""; height: 1px; background: var(--gold); flex: 1; min-width: 18px }
+.engr.left::before { display: none }
+.engr.small { font-size: 11px; gap: 10px; letter-spacing: .14em }
+.engr.light { color: var(--white) }
+
+/* Обложка */
+.cover { display: grid; gap: 22px; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: center }
+@media (max-width: 760px) { .cover { grid-template-columns: 1fr } }
+.cover .photo { background: var(--white); border-radius: 4px; overflow: hidden; aspect-ratio: 4 / 3.4 }
+.cover .photo img { width: 100%; height: 100%; object-fit: cover; display: block }
+.status { display: inline-flex; gap: 8px; align-items: center; background: #FFF1CC; color: #7A5600; font-weight: 600; font-size: 13px; padding: 5px 12px; border-radius: 999px; width: fit-content }
+
+/* Цвета */
+.sw { border-radius: 4px; overflow: hidden; background: var(--white); display: grid }
+.sw .chip { height: 110px; display: flex; align-items: flex-end; padding: 10px 12px; font-weight: 600; font-size: 13px }
+.sw .meta { padding: 12px; display: grid; gap: 4px; font-size: 13.5px }
+.sw code, code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px }
+.old-row { display: flex; flex-wrap: wrap; gap: 10px }
+.old { display: grid; gap: 6px; justify-items: center; width: 108px; text-align: center; font-size: 12px; color: var(--grey) }
+.old i { width: 56px; height: 56px; border-radius: 4px; display: block }
+
+/* Шрифты */
+.type-a { font-family: var(--f-display); font-size: clamp(54px, 9vw, 96px); line-height: 1; font-weight: 500 }
+.type-b { font-family: var(--f-body); font-size: clamp(40px, 7vw, 72px); line-height: 1; font-weight: 600 }
+.scale { display: grid; gap: 14px }
+.scale div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 12px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 12px }
+.scale span { font-size: 12px; color: var(--grey) }
+
+/* Логотип */
+.logo-box { background: var(--white); border-radius: 4px; display: grid; place-items: center; padding: 28px; min-height: 180px }
+.logo-box img { max-width: 100%; height: auto; display: block }
+.logo-box.powder { background: var(--powder); border: 1px solid var(--line) }
+.logo-box.dark { background: var(--graphite) }
+.mono { width: 92px; height: 92px; background: var(--coral); display: grid; place-items: center; font-family: var(--f-display); font-size: 58px; color: var(--graphite); line-height: 1 }
+.mono.round { border-radius: 50% }
+.wm { display: grid; gap: 6px; justify-items: center }
+.wm .sq { width: 46px; height: 46px; background: var(--coral) }
+.wm .name { font-family: var(--f-sc); font-weight: 500; font-size: clamp(17px, 2vw, 22px); letter-spacing: .04em; line-height: 1; white-space: nowrap }
+.wm .sub { font-family: var(--f-body); font-size: 13px; letter-spacing: .18em; color: var(--grey) }
+.wm.light .name { color: var(--white) } .wm.light .sub { color: #CFC6C7 }
+
+/* Фото */
+.ph { border-radius: 4px; overflow: hidden; background: var(--white); position: relative }
+.ph img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover }
+.ph .lbl { position: absolute; left: 10px; top: 10px }
+.cap { font-size: 13px; color: var(--grey); margin-top: 8px }
+
+/* Тон */
+.tone { display: grid; gap: 10px }
+.tone .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px }
+.tone .say { background: var(--white); border-radius: 4px; padding: 14px 16px; font-size: 14.5px; border-left: 3px solid var(--good) }
+.tone .no { background: var(--white); border-radius: 4px; padding: 14px 16px; font-size: 14.5px; border-left: 3px solid var(--bad); color: var(--grey) }
+
+/* Применение */
+.rail { display: flex; gap: 18px; overflow-x: auto; padding-bottom: 10px; align-items: flex-start }
+.rail > * { flex: none }
+.post { width: 270px; aspect-ratio: 4 / 5; background: var(--white); position: relative; overflow: hidden; box-shadow: 0 8px 24px rgba(46, 42, 43, .08) }
+.post img { width: 100%; height: 66%; object-fit: cover; display: block }
+.post .txt { position: absolute; left: 18px; right: 18px; bottom: 16px; display: grid; gap: 8px }
+.post .h { font-family: var(--f-display); font-size: 25px; line-height: 1.1 }
+.post .sq { position: absolute; top: 14px; left: 14px; width: 14px; height: 14px; background: var(--coral) }
+.post.powder { background: var(--powder) }
+.post.coral { background: var(--coral) }
+.post.coral .txt { top: 20px; bottom: auto }
+.post.coral img { position: absolute; bottom: 0; height: 58% }
+.story { width: 180px; aspect-ratio: 9 / 16; background: var(--graphite); color: var(--white); position: relative; overflow: hidden; box-shadow: 0 8px 24px rgba(46, 42, 43, .12) }
+.story img { position: absolute; top: 14%; width: 100%; height: 50%; object-fit: cover }
+.story .txt { position: absolute; left: 14px; right: 14px; bottom: 16px; display: grid; gap: 8px }
+.story .h { font-family: var(--f-display); font-size: 22px; line-height: 1.12 }
+.story .btn { background: var(--coral); color: var(--graphite); font-weight: 700; font-size: 12px; padding: 7px 12px; width: fit-content }
+.cardbox { width: 300px; aspect-ratio: 85 / 55; background: var(--white); padding: 18px 20px; display: grid; align-content: space-between; box-shadow: 0 8px 24px rgba(46, 42, 43, .08) }
+.cardbox .h { font-family: var(--f-display); font-size: 21px; line-height: 1.15 }
+.cardbox small { font-size: 11px; color: var(--grey); line-height: 1.4 }
+
+/* Сайт: было / стало */
+.site-new { background: var(--white); border-radius: 4px; overflow: hidden; display: grid }
+.site-new .hdr { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--line); flex-wrap: wrap }
+.site-new .hdr img { height: 30px; width: auto }
+.site-new .nav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; font-weight: 600; color: var(--graphite) }
+.site-new .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--powder); align-items: center }
+@media (max-width: 560px) { .site-new .hero { grid-template-columns: 1fr } }
+.site-new .hero .t { padding: 26px 22px; display: grid; gap: 14px }
+.site-new .hero .h { font-family: var(--f-display); font-size: 32px; line-height: 1.05 }
+.site-new .hero img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 1 }
+.btn-dark { background: var(--graphite); color: var(--white); font-weight: 700; font-size: 13px; padding: 10px 16px; width: fit-content }
+.btn-line { border: 1px solid var(--graphite); font-weight: 700; font-size: 13px; padding: 9px 16px; width: fit-content }
+.btns { display: flex; gap: 10px; flex-wrap: wrap }
+.site-now img { width: 100%; display: block; border-radius: 4px }
+
+.decide { background: var(--white); border-radius: 4px; padding: 24px; display: grid; gap: 14px }
+.decide ol { margin: 0; padding-left: 20px; display: grid; gap: 10px }
+.foot { font-size: 12px; color: var(--grey); margin-top: 40px }
+</style>
+
+<div class="wrap">
+  <header class="cover">
+    <div style="display:grid; gap:18px">
+      <span class="sc">Juliette's jewelry · ювелирная студия</span>
+      <h1>Брендбук 2.0</h1>
+      <div class="engr left">Семья · Мастерство · Память</div>
+      <p class="lead">Обновление бренда, а не новый бренд. Сохраняем то, что клиенты уже узнают: коралловый квадрат и антикву в логотипе. Наводим порядок: один коралл вместо шести, понятные шрифты, правила для фото и текстов. Добавляем фирменный элемент, который есть только у Juliette's, — гравировочную строку.</p>
+      <div class="status">Черновик на согласование · 4 ноября 2026</div>
+    </div>
+    <div class="photo"><img src="{{P_ENGRAVE}}" alt="Браслет с фигурками детей и гравировкой имени, времени, роста, веса и даты рождения"></div>
+  </header>
+
+  <!-- 1. Аудит -->
+  <section>
+    <div class="sec-head"><span class="sc">01 · Что есть сейчас</span><h2>Бренд за семь лет оброс вариантами</h2>
+      <p class="muted">Сверил брендбук 2019 года, исходники логотипа, сайт, группу ВК и Instagram*. Сильная основа есть, но она расползлась.</p></div>
+    <div class="two">
+      <div class="card"><span class="tag now">Два логотипа</span>
+        <div class="two tight" style="gap:12px">
+          <div class="logo-box" style="min-height:120px; padding:14px"><img src="{{LOGO_2019}}" alt="Логотип 2019 года: бриллиант и рукописная надпись"></div>
+          <div class="logo-box" style="min-height:120px; padding:14px"><img src="{{LOGO_STACK}}" alt="Текущий логотип: коралловый квадрат и надпись антиквой"></div>
+        </div>
+        <p>Слева логотип из брендбука 2019 года: бриллиант и рукописный шрифт Gabriola. Справа текущий: квадрат и антиква с капителью. Старый до сих пор лежит в исходниках, его берут для маркетплейсов и выкладок.</p></div>
+      <div class="card"><span class="tag now">Шесть кораллов</span>
+        <div class="old-row">
+          <div class="old"><i style="background:#F8937A"></i><code>#F8937A</code>брендбук 2019</div>
+          <div class="old"><i style="background:#F99E87"></i><code>#F99E87</code>брендбук 2019</div>
+          <div class="old"><i style="background:#FF7189"></i><code>#FF7189</code>исходник логотипа</div>
+          <div class="old"><i style="background:#F78779"></i><code>#F78779</code>квадрат в шапке сайта</div>
+          <div class="old"><i style="background:#FF8562"></i><code>#FF8562</code>акценты сайта</div>
+          <div class="old"><i style="background:#E58879"></i><code>#E58879</code>кнопка «Отправить»</div>
+        </div>
+        <p>Квадрат в исходнике логотипа розовый, а на сайте — коралловый. Белый текст на любом из этих оттенков читается плохо: контраст 2,2–2,6 при норме 4,5.</p></div>
+      <div class="card"><span class="tag now">Шрифты и имя</span>
+        <ul class="clean">
+          <li>Брендбук 2019: Gabriola и Cambria. Сайт: Roboto и Arial. Общего между ними нет.</li>
+          <li>Имя пишут по-разному: Juliette's, Juliettes, «Juliettes's» (описание группы ВК), Juliette’s.</li>
+          <li>Instagram* называется @mamy_braslets, по имени бывшего бренда. Старый сайт mamy-braslets.ru частично жив.</li>
+        </ul></div>
+      <div class="card"><span class="tag now">Фото и баннеры</span>
+        <ul class="clean">
+          <li><span class="v">Сильная сторона:</span> предметная съёмка на белом, металл и камни переданы честно, гравировку видно.</li>
+          <li><span class="x">Выбивается:</span> баннеры с клипартом цветов и сердечек, тонкий серый Roboto в заголовках, разные кнопки.</li>
+          <li>Брендбук 2019 описывает только логотип, цвета и шрифты. Правил для фото, текстов и шаблонов нет.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 2. Суть -->
+  <section>
+    <div class="sec-head"><span class="sc">02 · Суть бренда</span><h2>Украшения, в которых ваша семья всегда с вами</h2></div>
+    <div class="grid">
+      <div class="card"><h3>Для кого</h3><p>Мамы 24–35 лет покупают себе (70% заказов). Мужья дарят жене, часто в последний момент (28%). Москва и Подмосковье — 73% заказов, остальные — регионы.</p></div>
+      <div class="card"><h3>Что даём</h3><p>Украшение с историей конкретной семьи: фигурки по числу деток, имена, время и дата рождения, рост и вес. Его носят каждый день, а потом передают детям.</p></div>
+      <div class="card"><h3>Почему нам верят</h3><p>Своя мастерская и ручная закрепка, золото 585 и серебро 925 с государственной пробой, срочное изготовление за 4 дня, фото изделия до отправки, предоплата всего 30%.</p></div>
+      <div class="card"><h3>Характер</h3><p>Тёплый, спокойный, точный. Спокойная роскошь без пафоса: говорим о чувствах и о мастерстве, а не о скидках.</p></div>
+    </div>
+    <p class="muted" style="max-width:70ch">Цифры взяты из брифа 2025 года и базы заказов 2018–2025. Формулировку «Украшения, в которых ваша семья всегда с вами» предлагаю как рабочий слоган, рядом с действующим «Браслеты с детками и авторские украшения».</p>
+  </section>
+
+  <!-- 3. Логотип -->
+  <section>
+    <div class="sec-head"><span class="sc">03 · Логотип</span><h2>Сохраняем и наводим порядок</h2>
+      <p class="muted">Логотип 2020 года остаётся. Квадрат красим в единый коралл, задаём версии, поля и запреты. Логотип 2019 года выводим из оборота.</p></div>
+    <div class="grid">
+      <div><div class="logo-box"><img src="{{LOGO_STACK_NEW}}" alt="Основная версия логотипа"></div><p class="cap"><b>Основная</b> — вертикальная: упаковка, сертификаты, обложки.</p></div>
+      <div><div class="logo-box"><img src="{{LOGO_ROW_NEW}}" alt="Горизонтальная версия логотипа" style="width:min(100%, 280px)"></div><p class="cap"><b>Горизонтальная</b> — шапка сайта, подписи в письмах, водяной знак.</p></div>
+      <div><div class="logo-box dark"><div class="wm light"><div class="sq"></div><div class="name">JULIETTE'S JEWELRY</div><div class="sub">ЮВЕЛИРНАЯ СТУДИЯ</div></div></div><p class="cap"><b>На тёмном</b> — надпись белая, квадрат коралловый. Нужен вектор в белом (сделает дизайнер).</p></div>
+      <div><div class="logo-box powder" style="gap:14px; display:flex; justify-content:center"><div class="mono">J</div><div class="mono round">J</div></div><p class="cap"><span class="tag ask">на решение</span> <b>Знак для аватарок</b>: буква J из логотипа в коралловом квадрате. Сейчас его нет, пустой квадрат на аватарке не читается.</p></div>
+    </div>
+    <div class="two">
+      <div class="card"><h3>Правила</h3><ul class="clean">
+        <li>Охранное поле — половина стороны квадрата со всех сторон.</li>
+        <li>Минимальная ширина горизонтальной версии — 120 px на экране, 30 мм в печати.</li>
+        <li>Фон — белый, пудра или графит. На фото — только на спокойном светлом участке.</li>
+        <li>Квадрат всегда <code>#F28B6E</code>, надпись всегда графит или белая.</li></ul></div>
+      <div class="card"><h3>Нельзя</h3><ul class="clean">
+        <li><span class="x">✕</span> Растягивать, поворачивать, менять пропорции квадрата и надписи.</li>
+        <li><span class="x">✕</span> Красить квадрат в розовый <code>#FF7189</code> и другие старые оттенки.</li>
+        <li><span class="x">✕</span> Ставить логотип 2019 года (бриллиант и рукописный шрифт).</li>
+        <li><span class="x">✕</span> Класть на пёстрый фон, цветы и сердечки.</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 4. Цвета -->
+  <section>
+    <div class="sec-head"><span class="sc">04 · Цвета</span><h2>Один коралл и пять спокойных опор</h2>
+      <p class="muted">Коралл остаётся главным, но работает как поверхность, а не как цвет текста. Для текста — графит. Для кнопок с белым текстом — глубокий коралл.</p></div>
+    <div class="grid">
+      <div class="sw"><div class="chip" style="background:#F28B6E">Коралл Juliette's</div><div class="meta"><code>#F28B6E</code><span>Квадрат логотипа, плашки, фон обложек. Текст на нём — графит (контраст 5,9).</span></div></div>
+      <div class="sw"><div class="chip" style="background:#A84A35; color:#fff">Коралл глубокий</div><div class="meta"><code>#A84A35</code><span>Ссылки и кнопки с белым текстом (контраст 5,7). Цены в карточках.</span></div></div>
+      <div class="sw"><div class="chip" style="background:#FBEFEA; border-bottom:1px solid var(--line)">Пудра</div><div class="meta"><code>#FBEFEA</code><span>Фон сайта и шаблонов вместо серого. Тёплый, не спорит с металлом.</span></div></div>
+      <div class="sw"><div class="chip" style="background:#C8916F">Красное золото</div><div class="meta"><code>#C8916F</code><span>Тонкие линии, иконки, гравировочная строка. Только декор, не для текста.</span></div></div>
+      <div class="sw"><div class="chip" style="background:#2E2A2B; color:#fff">Графит</div><div class="meta"><code>#2E2A2B</code><span>Текст, заголовки, основная кнопка. Вместо чистого чёрного.</span></div></div>
+      <div class="sw"><div class="chip" style="background:#6B6365; color:#fff">Тёплый серый</div><div class="meta"><code>#6B6365</code><span>Подписи и второстепенный текст (контраст 5,8 на белом).</span></div></div>
+    </div>
+    <p class="muted">Пропорция на странице или в посте: белый и пудра — около 70%, графит — 20%, коралл — 10%. Красное золото — только линии.</p>
+  </section>
+
+  <!-- 5. Шрифты -->
+  <section>
+    <div class="sec-head"><span class="sc">05 · Шрифты</span><h2>Антиква для чувства, гротеск для дела</h2>
+      <p class="muted">Оба шрифта бесплатные (Google Fonts), с кириллицей, подключаются в Tilda за минуту. Заменяют Gabriola, Cambria, Roboto и Arial.</p></div>
+    <div class="two">
+      <div class="card"><span class="sc">Заголовки · Cormorant Garamond</span><div class="type-a">Аа Дд 29</div>
+        <p>Перекликается с антиквой в логотипе. Для заголовков, обложек, открыток и гравировочной строки (в версии с капителью — Cormorant SC). Не мельче 20 px.</p></div>
+      <div class="card"><span class="sc">Текст и интерфейс · Manrope</span><div class="type-b">Аа Дд 29</div>
+        <p>Чёткий и современный, хорошо читается на телефоне. Для текста, цен, кнопок и меню. Начертания 400, 600 и 700.</p></div>
+    </div>
+    <div class="card scale">
+      <div><span>Заголовок 1</span><p style="font-family:var(--f-display); font-size:44px; line-height:1.05">Браслеты с детками</p></div>
+      <div><span>Заголовок 2</span><p style="font-family:var(--f-display); font-size:30px; line-height:1.1">Подарок маме на рождение малыша</p></div>
+      <div><span>Текст</span><p style="font-size:16px">Каждую фигурку делаем под вашу семью: имя, время и дата рождения, рост и вес на обороте.</p></div>
+      <div><span>Цена, кнопка</span><p style="font-size:16px; font-weight:700">86 200 ₽ <span class="btn-dark" style="display:inline-block; margin-left:12px">Собрать браслет</span></p></div>
+      <div><span>Подпись</span><p class="sc" style="font-size:13px">Красное золото 585 · 2 фигурки · гравировка</p></div>
+    </div>
+  </section>
+
+  <!-- 6. Фирменный элемент -->
+  <section>
+    <div class="sec-head"><span class="sc">06 · Фирменный элемент</span><h2>Гравировочная строка</h2>
+      <p class="muted">На обороте фигурок вы гравируете имя, время рождения, рост, вес и дату. Это и есть самое узнаваемое в изделии. Переносим этот формат в графику: строка капителью между тонкими линиями цвета красного золота.</p></div>
+    <div class="card" style="gap:22px; padding:30px 24px">
+      <div class="engr">Алиса · 08:40 · 51 см · 3 350 г · 12.03.2026</div>
+      <div class="engr">29 ноября · День матери</div>
+      <div class="engr">Красное золото 585 · 3 фигурки</div>
+      <p class="muted" style="font-size:13px">Где использовать: обложки постов и сторис, подписи к фото, открытки и карточки в коробку, письма, шапки разделов сайта. Данные в примерах условные. Настоящие имена детей — только с согласия семьи.</p>
+    </div>
+  </section>
+
+  <!-- 7. Фото -->
+  <section>
+    <div class="sec-head"><span class="sc">07 · Фото и видео</span><h2>Изделие — главный герой</h2>
+      <p class="muted">Основа — правила из вашего регламента SMM: крупный план, видна гравировка, кулоны не перекрываем текстом. Добавлены правила фона и цвета.</p></div>
+    <div class="grid">
+      <div><div class="ph"><img src="{{P1}}" alt=""><span class="tag new lbl">Каталог</span></div><p class="cap">На белом или пудре, мягкий свет, металл без желтизны и пересвета.</p></div>
+      <div><div class="ph"><img src="{{P_ENGRAVE}}" alt=""><span class="tag new lbl">Гравировка</span></div><p class="cap">Макро оборота: имя и даты читаются. Лучший кадр для соцсетей.</p></div>
+      <div><div class="ph"><img src="{{P5}}" alt=""><span class="tag new lbl">Деталь</span></div><p class="cap">Одна деталь в кадре: фигурка, камень, замок. Без реквизита.</p></div>
+    </div>
+    <div class="two">
+      <div class="card"><h3>Делаем</h3><ul class="clean">
+        <li>Фото на руке: дневной свет, нейтральный маникюр, рукав спокойного цвета.</li>
+        <li>Семья и дети — только с письменного согласия, лица детей не крупным планом.</li>
+        <li>Процесс в мастерской: эскиз, воск, литьё, закрепка, гравировка, полировка.</li>
+        <li>Цвет металла сверяем с эталонами ретуши (lavivion.ru, light-catchers.ru).</li></ul></div>
+      <div class="card"><h3>Не делаем</h3><ul class="clean">
+        <li><span class="x">✕</span> Клипарт цветов, сердечек и бликов поверх фото.</li>
+        <li><span class="x">✕</span> Текст поверх кулонов и гравировки.</li>
+        <li><span class="x">✕</span> Фильтры, меняющие цвет золота и камней.</li>
+        <li><span class="x">✕</span> Стоковые фото чужих детей и семей.</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 8. Тон -->
+  <section>
+    <div class="sec-head"><span class="sc">08 · Как мы говорим</span><h2>Тепло, спокойно, по делу</h2>
+      <p class="muted">Говорим как мастер, который знает семью клиента: на «вы», без давления. В личной переписке «Вы» с большой буквы, в соцсетях с маленькой. Наши слова: детки, фигурки, пяточки, гравировка, мастерская.</p></div>
+    <div class="tone">
+      <div class="pair"><div class="say">«Каждую фигурку делаем под вашу семью. Чтобы браслет успел к 29 ноября, закажите до 11-го».</div><div class="no">«ТОЛЬКО СЕЙЧАС!!! Успей купить браслет мечты по СУПЕРЦЕНЕ 🔥🔥🔥»</div></div>
+      <div class="pair"><div class="say">«Золото 585 с государственной пробой, а фото готового изделия пришлём до отправки».</div><div class="no">«Эксклюзивные премиальные украшения высочайшего качества».</div></div>
+      <div class="pair"><div class="say">«Пришлите имя, время и дату рождения, рост и вес — выгравируем на обороте фигурки».</div><div class="no">«Заполните форму для оформления персонализации изделия».</div></div>
+    </div>
+    <p class="muted">Эмодзи — не больше одного на пост, спокойные: 🤍. Восклицательный знак — не больше одного на текст. Цены пишем полностью: «86 200 ₽».</p>
+  </section>
+
+  <!-- 9. Применение -->
+  <section>
+    <div class="sec-head"><span class="sc">09 · Как это выглядит</span><h2>Посты, сторис, карточка в коробку</h2></div>
+    <div class="rail">
+      <div class="post"><span class="sq"></span><img src="{{P2}}" alt=""><div class="txt"><div class="engr small left">Коллекция «Детки»</div><div class="h">Браслет, в котором трое ваших деток</div></div></div>
+      <div class="post coral"><div class="txt"><div class="engr small left">29 ноября · День матери</div><div class="h">Успейте заказать до 11 ноября</div><p style="font-size:12.5px">Гравировка имён в подарок до 19.11</p></div><img src="{{P1}}" alt=""></div>
+      <div class="post powder"><span class="sq"></span><img src="{{P_ENGRAVE}}" alt=""><div class="txt"><div class="engr small left">Дарья · 22:15 · 52 см</div><div class="h">Всё, что важно, — на обороте</div></div></div>
+      <div class="story"><img src="{{P3}}" alt=""><div class="txt"><div class="engr small left light">Пяточки</div><div class="h">Первый шаг — навсегда с вами</div><div class="btn">Выбрать браслет</div></div></div>
+      <div class="cardbox"><div class="engr small left">Спасибо, что выбрали нас</div><div class="h">Пусть этот браслет хранит вашу историю</div><small>Поделитесь фото на руке или отзывом — нам важно знать, как вам носится украшение. juliettes.ru · 8 800 201-59-38</small></div>
+    </div>
+    <p class="muted" style="max-width:70ch">Карточка в коробку — без вознаграждения за отзыв. Нынешняя «500 ₽ за отзыв» нарушает правила Яндекс Карт и Отзовика.</p>
+  </section>
+
+  <!-- 10. Сайт -->
+  <section>
+    <div class="sec-head"><span class="sc">10 · Сайт</span><h2>Было и стало: первый экран</h2>
+      <p class="muted">Только направление. Полный редизайн — после аудита, в отдельном тестовом проекте Tilda.</p></div>
+    <div class="two">
+      <div class="site-now"><span class="tag now" style="margin-bottom:8px">Сейчас</span><img src="{{SITE_NOW}}" alt="Текущий первый экран juliettes.ru"></div>
+      <div><span class="tag new" style="margin-bottom:8px">Направление</span>
+        <div class="site-new">
+          <div class="hdr"><img src="{{LOGO_ROW_NEW}}" alt="Juliette's jewelry"><div class="nav"><span>Детки</span><span>Пяточки</span><span>Подвески</span><span>Кольца</span><span>Конструктор</span></div></div>
+          <div class="hero"><div class="t"><div class="engr small left">Своя мастерская в Москве</div><div class="h">Браслеты с вашими детками</div><p style="font-size:13.5px">Золото и серебро, имена и даты на обороте. Изготовим за 5–10 дней, срочно — за 4.</p><div class="btns"><span class="btn-dark">Собрать браслет</span><span class="btn-line">Каталог</span></div></div><img src="{{P6}}" alt=""></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- 11. Решения -->
+  <section>
+    <div class="decide">
+      <span class="sc">11 · Что нужно решить</span>
+      <h2>Пять вопросов к вам</h2>
+      <ol>
+        <li><b>Единый коралл <code>#F28B6E</code></b> вместо шести оттенков и розового квадрата в исходнике. Да или нет?</li>
+        <li><b>Шрифты</b> Cormorant Garamond и Manrope вместо Roboto и Arial на сайте и в шаблонах. Да или нет?</li>
+        <li><b>Знак «J» для аватарок</b>: заказать дизайнеру векторную версию (квадратная или круглая)?</li>
+        <li><b>Имя в Instagram*.</b> Ник @mamy_braslets оставляем (30 тыс. подписчиков), а отображаемое имя меняем на «Juliette's jewelry». Согласны?</li>
+        <li><b>Логотип 2019 года</b> убираем из оборота везде, включая маркетплейсы. Да или нет?</li>
+      </ol>
+      <p class="muted">После согласования: обновлю макеты недели 1 под эти правила, запишу токены в репозиторий для всех агентов и подготовлю шаблоны для Canva.</p>
+    </div>
+    <p class="foot">* Instagram — продукт компании Meta Platforms Inc., деятельность которой запрещена на территории Российской Федерации как экстремистская.</p>
+  </section>
+</div>

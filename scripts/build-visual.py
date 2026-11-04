@@ -10,7 +10,8 @@ template, images, out = sys.argv[1:4]
 html = open(template, encoding="utf-8").read()
 for key, uri in json.load(open(images)).items():
     html = html.replace("{{" + key + "}}", uri)
-missing = [p for p in ("{{P%d}}" % i for i in range(1, 20)) if p in html]
+import re
+missing = sorted(set(re.findall(r"\{\{[A-Z0-9_]+\}\}", html)))
 if missing:
     sys.exit("Не хватает фото: " + ", ".join(missing))
 open(out, "w", encoding="utf-8").write(html)
