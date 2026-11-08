@@ -25,6 +25,7 @@ h2{margin:0;font-size:26px;line-height:1.15}
 .lg{display:flex;align-items:flex-end;gap:16px;padding:14px;border-radius:12px;background:var(--pbg)}
 .sw{display:flex;gap:6px}.sw i{width:30px;height:30px;border-radius:6px;border:1px solid var(--line)}
 .hlrow{display:flex;gap:8px;flex-wrap:wrap;padding:12px;border-radius:12px;background:var(--pbg);color:var(--pfg)}
+.hlrow .hl small{white-space:normal;line-height:1.15}
 .phones{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-start}
 .choose{border-top:1px solid var(--line);padding-top:36px;display:grid;gap:10px}
 .choose p{max-width:80ch;margin:0}
@@ -76,7 +77,9 @@ h2{margin:0;font-size:26px;line-height:1.15}
 .an .call::before{content:"";position:absolute;left:-5px;top:50%;width:5px;height:1px;background:#0F2A4A}
 /* комплаенс-метки «пример» / «сверить»: одинаковые во всех концепциях, поверх стилей плиток */
 .phone em.chk{display:inline-block;font:600 6.5px/1.15 -apple-system,"Segoe UI",Arial,sans-serif;font-style:normal;letter-spacing:.03em;text-transform:uppercase;background:#FFE45C;color:#1D1B1A;padding:2px 4px;border-radius:2px;opacity:1;margin:0;vertical-align:middle;white-space:nowrap}
-.phone .tile em.chk{position:absolute;z-index:4;right:4px;bottom:4px;max-width:calc(100% - 8px);overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+/* текст плитки не должен уходить под метку */
+.phone .tile.tx:has(> em.chk){padding-bottom:22px}
+.phone .tile em.chk{position:absolute;z-index:4;right:4px;bottom:4px;max-width:calc(100% - 8px);white-space:normal;text-align:right;box-shadow:0 1px 2px rgba(0,0,0,.25)}
 /* на фото подпись внизу, значок формата справа вверху — метку ставим слева вверху */
 .phone .tile.ph em.chk,.phone .tile.pol em.chk{right:auto;bottom:auto;left:4px;top:4px;max-width:calc(100% - 26px)}
 /* выноски ликбеза и подписи «в наличии» в концепции 8 стоят сверху — там метка справа внизу */
@@ -143,7 +146,7 @@ h2{margin:0;font-size:26px;line-height:1.15}
 .c5 .tx b{font:800 11.5px/1.1 'Unbounded',sans-serif;hyphens:manual}
 .c5 .tx small{font:600 7.5px/1 'Golos Text',sans-serif;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
 .c5 .tx span{font-size:9px}
-.c5 .o{background:#F26B2A;color:#fff}.c5 .n{background:#14213D;color:#fff}.c5 .n b{color:#F26B2A;font-size:13px}
+.c5 .o{background:#F26B2A;color:#fff}.c5 .n{background:#14213D;color:#fff}.c5 .n b{color:#F26B2A;font-size:12px}
 .c5 .w{background:#F3F4F7;color:#14213D}
 .c5 .w ul{list-style:none;padding:0;display:grid;gap:3px;font-size:9.5px}.c5 .w ul li::before{content:"☐ ";color:#F26B2A}
 .c5 .w ul.pr li::before{content:""}.c5 .w ul.pr b{display:block;white-space:nowrap;font:800 10.5px/1.2 'Unbounded',sans-serif;color:#F26B2A}
@@ -163,10 +166,10 @@ h2{margin:0;font-size:26px;line-height:1.15}
 .c6 .pk{background:#F9D5DC}.c6 .lv{background:#D9CCF5}.c6 .mt{background:#CFEBDF}.c6 .bt{background:#FFF0B8}
 .c6 .eq,.c6 .sk,.c6 .tree{display:flex;align-items:center;gap:1px}.c6 .eq i,.c6 .sk>i{font-style:normal;font:700 10px 'Comfortaa'}
 .c6 .sk .draw{width:26px;height:34px;border:1.5px dashed #3A2E5A;border-radius:10px 10px 6px 6px;font:700 6.5px/34px 'Comfortaa';text-align:center}
-.c6 .bub{background:#3A2E5A;color:#FFF0B8;font:700 13px/1 'Comfortaa';padding:8px 12px;border-radius:14px 14px 14px 3px}
+.c6 .bub{background:#3A2E5A;color:#FFF0B8;font:700 13px/1 'Comfortaa';padding:6px 11px;border-radius:14px 14px 14px 3px}
 .c6 .poll{list-style:none;padding:0;display:grid;gap:3px;width:100%}.c6 .poll li{background:#fff;border-radius:999px;padding:3px 6px;font-size:8.5px;text-align:left}.c6 .poll li::before{content:"○ "}
 .c6 .mos{display:grid;grid-template-columns:repeat(2,34px);gap:3px}
-.c6 .img.mn{width:31px;height:31px}.c6 .mos .img.mn{width:34px;height:34px}
+.c6 .img.mn{width:31px;height:31px}.c6 .eqt{padding:6px}.c6 .eq .img.mn{width:22px;height:22px}.c6 .mos .img.mn{width:34px;height:34px}
 
 /* ── 7 Письма: бумага, почерк, сургуч */
 .c7{--pbg:#F7E8E4;--pfg:#5A2E3A;--f1:'Marck Script';--f2:'Literata';--acc:#A8323E;--acc-fg:#fff;--btn:#EED7D1;--tbg:#F2DCD6;--flt:saturate(.9) brightness(1.04) sepia(.08);--hlb:#A8323E;--hlbg:#FFFDF8;--hlfg:#A8323E;--avbg:#A8323E;--avfg:#F7E8E4;--tabl:#EBD3CC;--frb:#D9B3A9;--frf:#8A5A62;--frbg:#F7E8E4}
@@ -206,7 +209,7 @@ h2{margin:0;font-size:26px;line-height:1.15}
 .c9 .vt q{font:italic 400 10.5px/1.3 'Old Standard TT',serif;quotes:"«" "»"}
 .c9 .vt small{font:italic 8px 'Old Standard TT',serif;opacity:.8}
 .c9 .tree{display:flex;align-items:center;gap:2px}.c9 .tree i{font-style:normal;font-size:9px}
-.c9 .tree .mn{border-radius:46%/50%;width:24px;height:30px;filter:sepia(.6)}
+.c9 .tree{gap:1px}.c9 .tree .mn{border-radius:46%/50%;width:21px;height:27px;filter:sepia(.6)}
 
 /* ── 10 Ликбез: чертёж, выноски */
 .c10{--pbg:#F7FAFD;--pfg:#0F2A4A;--f1:'Golos Text';--f2:'JetBrains Mono';--acc:#2F6FE0;--acc-fg:#fff;--btn:#E3ECF7;--tbg:#EAF0F7;--flt:contrast(1.04);--hlb:#2F6FE0;--hlbg:#EAF0F7;--hlfg:#0F2A4A;--avbg:#2F6FE0;--avfg:#fff;--tabl:#E3ECF7;--frb:#9DB5D6;--frf:#3D5A80;--frbg:#EAF0F7}
@@ -215,6 +218,6 @@ h2{margin:0;font-size:26px;line-height:1.15}
 .c10 .bp{background:#EAF0F7;background-image:linear-gradient(#D4E0EE 1px,transparent 1px),linear-gradient(90deg,#D4E0EE 1px,transparent 1px);background-size:12px 12px;color:#0F2A4A}
 .c10 .bp b{font:600 11px/1.2 'Golos Text',sans-serif}.c10 .bp .big{font-size:30px;color:#2F6FE0;line-height:1}
 .c10 .bp span{font:600 9px 'JetBrains Mono',monospace}.c10 .bp small{font:400 7.5px/1.3 'JetBrains Mono',monospace;opacity:.8}
-.c10 .hl b{background:linear-gradient(transparent 55%,#FFE45C 55%)}
-.c10 .bp table{border-collapse:collapse;font:400 7.5px 'JetBrains Mono',monospace;width:100%}.c10 .bp td,.c10 .bp th{padding:1px 2px;text-align:left}
+.c10 .fm b{background:linear-gradient(transparent 55%,#FFE45C 55%)}
+.c10 .bp table{border-collapse:collapse;font:400 7.5px 'JetBrains Mono',monospace;width:100%}.c10 .bp td,.c10 .bp th{padding:1px 1px;text-align:left}.c10 .bp table{font-size:7px}
 .c10 .an{background:#fff}

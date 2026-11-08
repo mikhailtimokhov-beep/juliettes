@@ -30,7 +30,7 @@
 | SEO-004 | 301 с /pugovki-dlya-papi (404, 733 визита из поиска в 2025) | 🔴 2 минуты | ждёт Tilda |
 | SEO-003/1 | Новые сниппеты 12 страниц | 🟡 | на согласовании: https://claude.ai/artifact/JP3gPTBzFXfj1wzSJKc2m8 |
 | CAMP-DM | День матери, недели 1–2 | ⏸ | не согласовано: публикации остановлены до утверждения концепции соцсетей |
-| SOC-001 | 10 концепций соцсетей | 🔴 | на выборе владельца: https://claude.ai/artifact/Jw8647idr3Sy4veFC2bNxJ |
+| SOC-001 | 10 концепций соцсетей: детальная прорисовка (v2) | 🔴 | на выборе владельца: https://claude.ai/artifact/H3o8ZLc3ra5TExhkZp65oC (тексты — v1: https://claude.ai/artifact/Jw8647idr3Sy4veFC2bNxJ) |
 | BRAND-02 | Направления айдентики (4 шт.), затем брендбук | 🔴 | на выборе владельца: https://claude.ai/artifact/RLVMKSwEDb2kwsQabYynLE |
 | SITE-005 | Прототип блока подарочных сертификатов (тестовая страница) | 🟡 | в работе |
 | SEO-005 | mamy-braslets.ru — отдельный проект (не склеиваем) | 🟡 | решение принято |
