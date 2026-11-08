@@ -12,18 +12,23 @@ SVG_PIN = '<svg viewBox="0 0 24 24" class="ic"><path d="M14 3l7 7-3 1-4 4 1 4-2 
 BADGE = {'car': SVG_CAR, 'reel': SVG_REEL, 'pin': SVG_PIN}
 
 USED = set()
-def photo(img, cap='', badge='', pos='center', extra=''):
+# Комплаенс-метка на плитке/в био: «пример» — вымышленный текст, «сверить» — факт ждёт подтверждения владельца.
+def mark(s='сверить'): return f'<em class="chk">{e(s)}</em>'
+def photo(img, cap='', badge='', pos='center', extra='', chk=''):
     USED.add(img)
     b = BADGE.get(badge, '')
     c = f'<span class="cap">{cap}</span>' if cap else ''
-    return f'<div class="tile ph {extra}"><i class="img {img}" style="background-position:{pos}"></i>{c}{b}</div>'
-def text(inner, cls='', badge=''):
-    return f'<div class="tile tx {cls}">{inner}{BADGE.get(badge,"")}</div>'
+    m = mark(chk) if chk else ''
+    return f'<div class="tile ph {extra}"><i class="img {img}" style="background-position:{pos}"></i>{c}{b}{m}</div>'
+def text(inner, cls='', badge='', chk=''):
+    m = mark(chk) if chk else ''
+    return f'<div class="tile tx {cls}">{inner}{BADGE.get(badge,"")}{m}</div>'
 def frame(label, badge=''):
     return f'<div class="tile fr"><span>кадр:<br>{e(label)}</span>{BADGE.get(badge,"")}</div>'
-def polar(img, cap, rot=-3):
+def polar(img, cap, rot=-3, chk=''):
     USED.add(img)
-    return f'<div class="tile pol"><div class="pf" style="transform:rotate({rot}deg)"><i class="img {img}"></i><b>{cap}</b></div><span class="tape"></span></div>'
+    m = mark(chk) if chk else ''
+    return f'<div class="tile pol"><div class="pf" style="transform:rotate({rot}deg)"><i class="img {img}"></i><b>{cap}</b></div><span class="tape"></span>{m}</div>'
 def mini(img):
     USED.add(img); return f'<i class="img {img} mn"></i>'
 
@@ -37,19 +42,19 @@ C.append(dict(n=1, key='c1', name='Мастерская изнутри', idea='�
  tiles=[
   text('<small>серия «Как рождается браслет» · 1/6</small><b>ЭТАП 01<br>ЭСКИЗ</b>', 'k-big', 'pin'),
   frame('эскиз с именами детей на верстаке', 'reel'),
-  photo('IMG_ENGRAVE_07','ЗАГОТОВКА · 925'),
+  photo('IMG_ENGRAVE_07','ЗАГОТОВКА · 925', chk='металл сверить'),
   photo('IMG_ENGRAVE_12','ГРАВИРОВКА','reel'),
   frame('восковая модель фигурки под лампой'),
   text('<small>ОТК · перед отправкой</small><ul><li>проба</li><li>замок</li><li>гравировка</li><li>полировка</li></ul>','k-list'),
   photo('IMG_HEELS22_08','ПАРТИЯ · НЕДЕЛЯ 45'),
   frame('руки мастера: закрепка камня под микроскопом','reel'),
   photo('IMG_RINGS_03','ИМЕНА ВНУТРИ'),
-  text('<b>5–10</b><small>рабочих дней живёт ваш заказ в мастерской</small>','k-num'),
+  text('<b>до 10</b><small>рабочих дней живёт ваш заказ в мастерской · по сайту</small>','k-num'),
   photo('IMG_ENGRAVE_04','ИМЯ · ДАТА · РОСТ · ВЕС'),
   frame('литьё: металл в опоке','reel'),
   photo('IMG_PUGOVKI_00','ПУГОВКА · ПОЛИРОВКА'),
-  text('<small>вопрос мастеру</small><p>— Можно добавить фигурку в готовый браслет?</p><p>— Да. Мастер впаяет новую.</p>','k-qa','car'),
-  photo('IMG_WHITE_06','КРАСНОЕ ЗОЛОТО 585'),
+  text('<small>вопрос мастеру</small><p>— Можно добавить фигурку в готовый браслет?</p><p>— Да. Мастер впаяет новую.</p>','k-qa','car', chk='сверить'),
+  photo('IMG_WHITE_06','КРАСНОЕ ЗОЛОТО 585', chk='металл сверить'),
   photo('IMG_ENGRAVE_15','ГОТОВО'),
   frame('упаковка: бирка и коробка'),
   text('<small>серия · 6/6</small><b>ЭТАП 06<br>ВРУЧЕНИЕ</b>','k-big')]))
@@ -60,11 +65,11 @@ C.append(dict(n=2, key='c2', name='Семейные истории', idea='Жу�
  bio=['<b>Juliette\'s jewelry</b>','Браслеты с вашими детьми · своя мастерская','Каждую пятницу — история одной семьи','Расскажите свою — напишите нам'],
  cta='Рассказать', hl=[('IMG_FRIENDS20_10','Три дочки'),('IMG_CROSS23_15','Папа'),('IMG_HOME_13','Мама'),('IMG_FRIENDS20_11','Сыновья'),('IMG_NY22_01','Новый год')], hlphoto=True,
  tiles=[
-  photo('IMG_FRIENDS20_10','<em>История №12</em> · «Три девочки и один браслет»','car'),
+  photo('IMG_FRIENDS20_10','<em>История №12</em> · «Три девочки и один браслет»','car', chk='пример'),
   text('<q>Я ношу их имена на запястье с того дня, как родилась младшая</q><small>Анна, мама троих · пример</small>','q'),
   photo('IMG_CROSS23_06'),
-  photo('IMG_FRIENDS20_02','«Он заказал его, пока я была в роддоме»','car'),
-  text('<small>пятничная история</small><b>Как Миша выбирал браслет жене за три дня до выписки</b>','t-title'),
+  photo('IMG_FRIENDS20_02','«Он заказал его, пока я была в роддоме»','car', chk='пример'),
+  text('<small>пятничная история</small><b>Как Миша выбирал браслет жене за три дня до выписки</b>','t-title', chk='пример'),
   photo('IMG_HOME_13'),
   photo('IMG_FRIENDS20_11'),
   text('<q>На обороте — рост, вес и 05:40 утра. Это время я не забуду</q><small>пример</small>','q'),
@@ -82,7 +87,7 @@ C.append(dict(n=2, key='c2', name='Семейные истории', idea='Жу�
 C.append(dict(n=3, key='c3', name='Тихая роскошь', idea='Золото в полумраке: тёмные кадры, много воздуха, почти без слов. Работает на средний чек.',
  pal=['#0E1512','#E9E4D8','#B9975B','#2A332E'], fonts='Cormorant Garamond · Jost',
  avatar='<b class="av-j">J</b>',
- bio=['<b>JULIETTE’S</b>','Золото 585 · камни · ручная работа','Выездная консультация с изделиями — по записи','Москва'],
+ bio=['<b>JULIETTE’S</b>','Золото 585 · камни · ручная работа','Консультация ювелира — по записи '+mark('формат сверить'),'Москва'],
  cta='Записаться', hl=[('Au','Золото'),('◇','Камни'),('J','На заказ'),('▢','Упаковка'),('✉','Контакты')],
  tiles=[
   photo('IMG_NY21_06'),
@@ -98,7 +103,7 @@ C.append(dict(n=3, key='c3', name='Тихая роскошь', idea='Золот�
   photo('IMG_NY22_03'),
   photo('IMG_HEELS22_03','','reel'),
   photo('IMG_CROSS23_07'),
-  text('<small>по записи</small><b>Выездная консультация с изделиями</b>','lx'),
+  text('<small>по записи</small><b>Консультация ювелира: видеозвонок или встреча</b>','lx', chk='формат сверить'),
   photo('IMG_NY21_07'),
   photo('IMG_HOME_12'),
   photo('IMG_HEELS22_06'),
@@ -114,7 +119,7 @@ C.append(dict(n=4, key='c4', name='Архив первых шагов', idea='Л
   photo('IMG_ENGRAVE_15','ОБРАЗЕЦ № 214'),
   photo('IMG_PILLOW_00','АРХИВ · 2019'),
   photo('IMG_ENGRAVE_12','ДВЕ ДАТЫ'),
-  text('<small>ПОПОЛНЕНИЕ</small><b>В браслет добавлена третья фигурка</b><span class="stamp">+1</span>','card'),
+  text('<small>ПОПОЛНЕНИЕ</small><b>В браслет добавлена третья фигурка</b><span class="stamp">+1</span><em>пример</em>','card'),
   photo('IMG_RINGS_03','ИМЕНА ВНУТРИ КОЛЬЦА'),
   photo('IMG_PILLOW21_08','АРХИВ · 2021'),
   text('<small>ЧТО ГРАВИРУЕМ</small><ol><li>имя</li><li>дату</li><li>время</li><li>рост</li><li>вес</li></ol>','card','car'),
@@ -137,19 +142,19 @@ C.append(dict(n=5, key='c5', name='Гид для пап', idea='Понятные
  tiles=[
   text('<small>шаг 1</small><b>МЕТАЛЛ</b><span>посмотрите на её кольца</span>','o','car'),
   photo('IMG_PACK_04','Упакуем — дарить можно сразу'),
-  text('<small>до 29.11</small><b>21 день</b><span>успеваем к Дню матери</span>','n'),
+  text('<small>День матери · 29.11</small><b>21 день</b><span>до праздника</span>','n', chk='сроки заказа сверить'),
   photo('IMG_PUGOVKI_08','«Пуговки» — для пап тоже'),
   text('<small>спросите незаметно</small><ul><li>какой металл</li><li>обхват запястья</li><li>имена и даты</li></ul>','w','car'),
   photo('IMG_ALISANY25_04'),
   text('<small>шаг 2</small><b>ФИГУРКИ</b><span>по одной на каждого ребёнка</span>','o','car'),
   photo('IMG_CROSS23_15','Подарок от вас и детей'),
-  text('<b>4 дня</b><span>срочное изготовление</span>','n'),
+  text('<b>4 рабочих дня</b><span>срочное изготовление · по сайту</span>','n', chk='доплату сверить'),
   photo('IMG_PACK_01'),
   text('<small>бюджет</small><ul class="pr"><li>серебро <b>от 17 400 ₽</b></li><li>золото <b>от 54 200 ₽</b></li></ul><em>цены сверить</em>','w'),
   photo('IMG_NY22_07','','reel'),
   text('<small>шаг 3</small><b>ГРАВИ&shy;РОВКА</b><span>имена, даты, рост и вес</span>','o','car'),
   photo('IMG_PUGOVKI_09','Себе тоже можно'),
-  text('<b>Перешлите пост нам</b><span>— поможем выбрать за 5 минут</span>','n'),
+  text('<b>Перешлите пост нам</b><span>— поможем выбрать за 5 минут</span>','n', chk='пример'),
   photo('IMG_ALISANY25_01'),
   text('<small>шаг 4</small><b>РАЗМЕР</b><span>ювелир подскажет, как узнать незаметно</span>','o','car'),
   photo('IMG_PACK_03')]))
@@ -169,7 +174,7 @@ C.append(dict(n=6, key='c6', name='Конструктор семьи', idea='И�
   photo('IMG_NEW24_03'),
   text(sk,'eqt lv','car'),
   photo('IMG_PILLOW_02'),
-  text('<div class="bub">ЭСКИЗ</div><b>напишите нам одно слово</b><small>нарисуем ваш браслет бесплатно</small>','eqt mt'),
+  text('<div class="bub">ЭСКИЗ</div><b>напишите нам одно слово</b><small>нарисуем ваш браслет бесплатно</small>','eqt mt', chk='условия и срок сверить'),
   photo('IMG_PILLOW_06'),
   photo('IMG_NEW24_04','','reel'),
   photo('IMG_PILLOW21_03','выбери сердце'),
@@ -190,7 +195,7 @@ C.append(dict(n=7, key='c7', name='Письма из студии', idea='Гол
  cta='Написать', hl=[('1','Письмо'),('✦','Мастер'),('✉','Ваши письма'),('✿','Новинки'),('✎','Как работаем')],
  tiles=[
   text('<i class="hand">Дорогие мамы!</i><p>На этой неделе в мастерской пахнет воском и ёлкой — начинаем новогодние заказы.</p><span class="seal">J</span>','let','pin'),
-  polar('IMG_ALISA25_00','для Веры',-4),
+  polar('IMG_ALISA25_00','для Веры',-4, chk='пример'),
   photo('IMG_ALISA25_04'),
   text('<i class="hand">P.S.</i><p>Хотите добавить фигурку? Просто ответьте на это письмо.</p>','let'),
   polar('IMG_ALISA25_13','упаковали',3),
@@ -211,27 +216,27 @@ C.append(dict(n=7, key='c7', name='Письма из студии', idea='Гол
 C.append(dict(n=8, key='c8', name='Серебро каждый день', idea='Светлый дневной лайфстайл: украшение, которое не снимают. Модели в наличии, понятная цена.',
  pal=['#F4F6F8','#1C2430','#9EC5E8','#C9D1DA'], fonts='Onest',
  avatar='<b class="av-j">J</b>',
- bio=['<b>Juliette\'s · серебро на каждый день</b>','Модели в наличии — отправка на следующий рабочий день','Серебро 925'],
+ bio=['<b>Juliette\'s · серебро на каждый день</b>','Готовые модели с гравировкой: по Москве 1–3 рабочих дня, регионы — дольше '+mark('по сайту · сверить'),'Серебро 925'],
  cta='В наличии', hl=[('●','В наличии'),('₽','До 25 000'),('◐','На руке'),('✧','Уход'),('★','Отзывы')],
  tiles=[
-  photo('IMG_MODEL20_00','серебро 925'),
-  photo('IMG_NY21_03','в наличии'),
+  photo('IMG_MODEL20_00','серебро 925', chk='металл сверить'),
+  photo('IMG_NY21_03','в наличии', chk='наличие сверить'),
   text('<b>Носить.<br>Не снимать.</b>','s1'),
   photo('IMG_HOME_04'),
   photo('IMG_MODEL20_02','','reel'),
-  photo('IMG_WHITE_01','в наличии'),
+  photo('IMG_WHITE_01','в наличии', chk='наличие сверить'),
   text('<small>уход</small><b>3 правила для серебра</b><span>→</span>','s2','car'),
   photo('IMG_HOME_08'),
   photo('IMG_BALLOONS_00'),
-  photo('IMG_NY21_08','в наличии'),
+  photo('IMG_NY21_08','в наличии', chk='наличие сверить'),
   text('<small>образ дня</small><b>Белая рубашка + браслет с детками</b>','s1'),
   photo('IMG_HOME_02','','reel'),
   photo('IMG_MODEL20_07'),
-  photo('IMG_WHITE_03','в наличии'),
+  photo('IMG_WHITE_03','в наличии', chk='наличие сверить'),
   text('<small>подборка</small><b>Серебро до 25 000 ₽</b><span>→</span>','s2','car'),
   photo('IMG_BALLOONS_04'),
   photo('IMG_HOME_06'),
-  photo('IMG_WHITE_09','в наличии')]))
+  photo('IMG_WHITE_09','в наличии', chk='наличие сверить')]))
 # ───────────── 9. Три поколения
 tree = '<div class="tree">'+mini('IMG_CROSS23_05')+'<i>→</i>'+mini('IMG_FRIENDS20_00')+'<i>→</i>'+mini('IMG_HOME_05')+'</div><b>бабушка · мама · дочь</b>'
 C.append(dict(n=9, key='c9', name='Три поколения', idea='Наследство и семейная память: подарки бабушкам с внуками, маме от взрослых детей. Винтажная плёнка.',
@@ -240,9 +245,9 @@ C.append(dict(n=9, key='c9', name='Три поколения', idea='Насле�
  bio=['<b>Juliette\'s · от бабушки к внукам</b>','Украшения, которые передают по наследству','Браслет бабушке с внуками — в «Подарках»'],
  cta='Подарок', hl=[('IMG_CROSS23_05','Бабушке'),('IMG_NY21_04','Маме'),('IMG_HOME_14','Внукам'),('IMG_FRIENDS20_13','Наследство'),('IMG_NY22_12','Семья')], hlphoto=True,
  tiles=[
-  text(tree,'vt','pin'),
+  text(tree,'vt','pin', chk='пример'),
   photo('IMG_NY21_04'),
-  photo('IMG_CROSS23_05','мама'),
+  photo('IMG_CROSS23_05'),
   text('<q>Этот браслет я подарила маме. Теперь на нём её внуки</q><small>пример</small>','vt'),
   photo('IMG_HOME_09','','reel'),
   photo('IMG_FRIENDS20_13'),
@@ -259,32 +264,33 @@ C.append(dict(n=9, key='c9', name='Три поколения', idea='Насле�
   photo('IMG_CROSS23_03'),
   text('<b class="big">1 · 3</b><small>один браслет · три поколения</small>','vt')]))
 # ───────────── 10. Ювелирный ликбез
-def ann(img, labels, badge=''):
+def ann(img, labels, badge='', chk='сверить'):
     USED.add(img)
     ls = ''.join(f'<span class="call" style="top:{t}%;left:{l}%">{e(x)}</span>' for (x,t,l) in labels)
-    return f'<div class="tile ph an"><i class="img {img}"></i>{ls}{BADGE.get(badge,"")}</div>'
+    m = mark(chk) if chk else ''
+    return f'<div class="tile ph an"><i class="img {img}"></i>{ls}{BADGE.get(badge,"")}{m}</div>'
 C.append(dict(n=10, key='c10', name='Ювелирный ликбез', idea='Экспертный разбор без сложных слов: пробы, камни, родий, из чего складывается цена. Чертёжная сетка и выноски.',
  pal=['#EAF0F7','#0F2A4A','#2F6FE0','#FFE45C'], fonts='Golos Text · JetBrains Mono',
  avatar='<b class="av-j">J</b><small>585 · 925</small>',
  bio=['<b>Juliette\'s · ювелирный ликбез</b>','Пробы, камни, гравировка — без сложных слов','Задайте вопрос — разберём в карусели'],
  cta='Спросить', hl=[('585','Пробы'),('◇','Камни'),('Ab','Гравировка'),('✧','Уход'),('₽','Цена')],
  tiles=[
-  text('<b class="big">585</b><span>= 58,5% золота</span><small>остальное — серебро и медь для прочности</small>','bp','pin'),
+  text('<b class="big">585</b><span>= 58,5% золота</span><small>остальное — лигатура (серебро, медь и другие металлы): она даёт прочность и цвет</small>','bp','pin'),
   ann('IMG_RINGS_00',[('бриллиант',12,8),('пяточки',70,50)]),
   ann('IMG_RINGS_01',[('аметист',12,8)]),
   text('<small>сравнение</small><table><tr><th></th><th>блеск</th><th>цена</th></tr><tr><td>фианит</td><td>●●○</td><td>₽</td></tr><tr><td>кристалл</td><td>●●○</td><td>₽₽</td></tr><tr><td>бриллиант</td><td>●●●</td><td>₽₽₽</td></tr></table>','bp','car'),
-  ann('IMG_ENGRAVE_12',[('гравировка',14,6),('замок',78,52)]),
+  ann('IMG_ENGRAVE_12',[('гравировка',14,6),('замок',78,52)], chk=''),
   ann('IMG_WHITE_06',[('красное золото',10,6)],'reel'),
   text('<small>родий</small><b>Почему белое золото блестит холодно</b><span>покрытие родием</span>','bp','car'),
   ann('IMG_RINGS_06',[('гранат',12,8)]),
   ann('IMG_PUGOVKI_02',[('серебро 925',12,6)]),
   text('<small>формула цены</small><b>металл + камни + работа + гравировка</b>','bp hl'),
-  ann('IMG_RINGS_07',[('камень',12,8)]),
-  ann('IMG_ENGRAVE_09',[('сердце',16,8),('имя',60,46)]),
+  ann('IMG_RINGS_07',[('камень',12,8)], chk=''),
+  ann('IMG_ENGRAVE_09',[('сердце',16,8),('имя',60,46)], chk=''),
   text('<b class="big">925</b><span>= 92,5% серебра</span>','bp'),
   ann('IMG_RINGS_09',[('чёрный бриллиант',12,6)]),
   ann('IMG_WHITE_00',[('серебро',12,6)]),
-  text('<small>как проверить</small><b>клеймо пробы + УИН в ГИИС ДМДК</b>','bp','car'),
+  text('<small>как проверить</small><b>клеймо пробы + УИН в ГИИС ДМДК</b>','bp','car', chk='УИН на бирке сверить'),
   ann('IMG_RINGS_08',[('аметист',12,8)]),
   ann('IMG_ENGRAVE_13',[('кр. золото',12,6)])]))
 
@@ -340,9 +346,9 @@ print(f'''<title>Соцсети Juliette's: 10 концепций</title>
 <div class="wrap">
 <header class="top"><span class="eyebrow">Juliette's jewelry · соцсети · SOC-001 · версия 2</span>
 <h1>10 концепций соцсетей: детальная прорисовка</h1>
-<p class="lead">Каждая концепция показана как живой профиль: логотип-аватар, обложки «Актуального», шапка профиля и две страницы ленты — 18 публикаций. Все фото — из вашей медиатеки (съёмки 2019–2025). Где нужного кадра пока нет, стоит заглушка «кадр: …» — её закроет новый контент 2025–2026, который вы загрузите на диск. Цифры подписчиков и публикаций в шапке — для примера; цены и факты взяты с сайта. Тексты, рубрики, затраты и риски каждой концепции — в первой версии: https://claude.ai/artifact/Jw8647idr3Sy4veFC2bNxJ</p>
+<p class="lead">Каждая концепция показана как живой профиль Instagram*: логотип-аватар, обложки «Актуального», шапка профиля и две страницы ленты — 18 публикаций. Все фото — из вашей медиатеки (съёмки 2019–2025). Где нужного кадра пока нет, стоит заглушка «кадр: …» — её закроет новый контент 2025–2026, который вы загрузите на диск. Цифры подписчиков и публикаций в шапке — для примера. Цены и сроки сверены с сайтом и материалами студии на 04.11.2026; жёлтая метка «сверить» — факт, который вы подтверждаете до публикации, «пример» — вымышленный текст. Тексты, рубрики, затраты и риски каждой концепции — в первой версии: https://claude.ai/artifact/Jw8647idr3Sy4veFC2bNxJ</p>
 <nav class="nav">{nav}</nav></header>
 {secs}
 <section class="choose"><h2>Как выбрать</h2><p>Ответьте одной строкой: номер концепции или сочетание, например «Соцсети: 1 + 4» или «Соцсети: 6, но в цветах 3». После выбора агент соберёт контент-план и шаблоны по выбранной концепции; публикации стартуют только после вашего «да».</p>
-<p class="foot">* Instagram и Reels — продукты компании Meta Platforms Inc., деятельность которой запрещена на территории Российской Федерации как экстремистская. Макеты — внутренний документ для выбора концепции. Цитаты и имена с пометкой «пример» вымышлены; в реальных публикациях — только с согласия клиентов.</p></section>
+<p class="foot">* Instagram — продукт компании Meta Platforms Inc., деятельность которой запрещена на территории Российской Федерации как экстремистская. Reels — функция Instagram*. Макеты — внутренний документ для выбора концепции. Цитаты, имена и истории с пометкой «пример» вымышлены и к людям на фото отношения не имеют; в реальных публикациях — только дословные отзывы и истории с согласия клиентов. Фото детей и семей — из съёмок бренда: перед каждой реальной публикацией каждого человека на фото сверяем с реестром согласий; фамилию, город и дату рождения ребёнка вместе не публикуем. Сроки — по странице «Доставка и оплата» на сайте; «срочно — 4 рабочих дня» публикуем после того, как вы подтвердите, есть ли доплата.</p></section>
 </div>''')
